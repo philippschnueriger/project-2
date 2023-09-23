@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "project-2-30dc2": {
+      "hosting": {
+        "project-2": [
+          "project-2-30dc2"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "project-2-30dc2"
+  }
+}
