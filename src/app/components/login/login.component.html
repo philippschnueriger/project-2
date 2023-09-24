@@ -1,4 +1,5 @@
-<p>login works!</p>
+
+
 
 <h3>Sign In</h3>
 <div class="formGroup">
@@ -29,4 +30,18 @@
         value="Log in"
         (click)="login(userName.value, userPassword.value)"
     />
+    <input
+        type="button"
+        class="btn btnPrimary"
+        value="Sign Up"
+        (click)="signUp(userName.value, userPassword.value)"
+    />
 </div>
+
+<input
+        type="button"
+        class="btn btnPrimary"
+        value="Logout"
+        (click)="logout()"
+    />
+<div *ngIf="user">logged in as {{ user.email }}</div>
