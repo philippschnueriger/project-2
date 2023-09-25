@@ -1,0 +1,20 @@
+<p>user-profile works!</p>
+
+<input
+type="button"
+class="btn btnPrimary"
+value="Save Data"
+(click)="saveData()"
+/>
+<input
+type="button"
+class="btn btnPrimary"
+value="Get Data"
+(click)="getData()"
+/>
+
+<div *ngIf="data">
+<p> {{data.name }}</p>
+<p> {{data.country }}</p>
+<p> {{data.state }}</p>
+</div>
