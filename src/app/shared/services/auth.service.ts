@@ -3,6 +3,7 @@ import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, user,
 import { User } from 'firebase/auth';
 import { Observable, from } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { FirestoreService } from './firestore.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { catchError } from 'rxjs/operators';
 export class AuthService {
   user$: Observable<User | null>;
 
-  constructor(private afAuth: Auth) {
+  constructor(private afAuth: Auth, private FirestoreService: FirestoreService) {
     this.user$ = user(afAuth);
   }
 
@@ -39,6 +40,7 @@ export class AuthService {
   }
 
   logout(): Observable<void> {
+    this.FirestoreService.clearData();
     return from(this.afAuth.signOut()).pipe(
       catchError((error) => {
         console.error('Logout Error:', error);

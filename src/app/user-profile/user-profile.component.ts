@@ -17,6 +17,12 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.authService.user$.subscribe((user) => {
       this.user = user;
+      if (this.user) {
+        this.firestoreService.getUserData(this.user.uid);
+      }
+    });
+    this.firestoreService.userData$.subscribe((userData) => {
+      this.data = userData;
     });
   }
 
@@ -26,9 +32,7 @@ export class UserProfileComponent implements OnInit {
   }
   async getData() {
     let uid = this.user?.uid ? this.user?.uid : "";
-    this.data = await this.firestoreService.getUserData(uid);
-    console.log("data")
-    console.log(this.data)
+    await this.firestoreService.getUserData(uid);
   }
 
 }
