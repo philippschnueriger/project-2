@@ -1,6 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { User } from 'firebase/auth';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +11,24 @@ import { User } from 'firebase/auth';
 export class LoginComponent implements OnInit {
   user: User | null = null; 
   error: string | null = null;
+  loginForm: FormGroup;
 
-  constructor(private authService: AuthService) {}
+
+  constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    });
+  }
 
   ngOnInit() {
     this.authService.user$.subscribe((user) => {
       this.user = user;
     });
+  }
+
+  onSubmit() {
+    this.login(this.loginForm.value.email, this.loginForm.value.password)
   }
 
   signUp(email: string, password: string) {
@@ -29,13 +41,15 @@ export class LoginComponent implements OnInit {
       }
   };
 
-  login(email: string, password: string) {
+  async login(email: string, password: string) {
     try {
-      this.authService.login(email, password)
-      console.log('User is logged in');
+      await this.authService.login(email, password)
+      this.error = null;
       } catch (error: any) {
-        this.error = error.message; 
-        console.log(this.error)
+        if (error == "Firebase: Error (auth/invalid-login-credentials)."){
+          this.error = "Invalid login credentials";
+        } else
+        console.log(error)
       }
   };
   

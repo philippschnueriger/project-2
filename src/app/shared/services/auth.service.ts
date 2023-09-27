@@ -5,6 +5,7 @@ import { Observable, from } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { FirestoreService } from './firestore.service';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,17 +27,14 @@ export class AuthService {
     );
   }
 
-  login(email: string, password: string): Observable<UserCredential> {
-    return from(
-      signInWithEmailAndPassword(this.afAuth, email, password)
-    ).pipe(
-      catchError((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error('Login Error:', errorCode, errorMessage);
-        throw error;
+  async login(email: string, password: string): Promise<UserCredential> {
+    return signInWithEmailAndPassword(this.afAuth, email, password)
+      .then((userCredential) => {
+        return Promise.resolve(userCredential);
       })
-    );
+      .catch((error) => {
+        return Promise.reject(error.message);
+      });
   }
 
   logout(): Observable<void> {

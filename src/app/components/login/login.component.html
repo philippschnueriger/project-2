@@ -1,47 +1,33 @@
-
-
-
-<h3>Sign In</h3>
-<div class="formGroup">
-    <input
-        type="text"
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="formGroup">
+      <label for="userName">Username:</label>
+      <input
+        type="email"
+        id="userName"
         class="formControl"
-        placeholder="Username"
-        #userName
-        required
-    />
-</div>
-
-<div class="formGroup">
-    <input
+        formControlName="email"
+      />
+    </div>
+  
+    <div class="formGroup">
+      <label for="userPassword">Password:</label>
+      <input
         type="password"
+        id="userPassword"
         class="formControl"
-        placeholder="Password"
-        #userPassword
-        required
-    />
-</div>
+        formControlName="password"
+      />
+    </div>
+  
+    <div class="formGroup">
+      <button type="submit" [disabled]="!loginForm.valid">Log in</button>
+    </div>
+  </form>
 
-<!-- Calling SignIn Api from AuthService -->
-<div class="formGroup">
-    <input
-        type="button"
-        class="btn btnPrimary"
-        value="Log in"
-        (click)="login(userName.value, userPassword.value)"
-    />
-    <input
-        type="button"
-        class="btn btnPrimary"
-        value="Sign Up"
-        (click)="signUp(userName.value, userPassword.value)"
-    />
-</div>
+  <button (click)="logout()">Logout</button>
 
-<input
-        type="button"
-        class="btn btnPrimary"
-        value="Logout"
-        (click)="logout()"
-    />
-<div *ngIf="user">logged in as {{ user.email }}</div>
+  <div *ngIf="user">logged in as {{ user.email }}</div>
+  <div>
+    {{ error }}
+  </div>
+  
