@@ -31,13 +31,21 @@ export class LoginComponent implements OnInit {
     this.login(this.loginForm.value.email, this.loginForm.value.password)
   }
 
-  signUp(email: string, password: string) {
+  onSignUp() {
+    this.signUp(this.loginForm.value.email, this.loginForm.value.password)
+  }
+
+  async signUp(email: string, password: string) {
     try {
-      this.authService.signUp(email, password)
-      console.log('User signed up successfully');
+      await this.authService.signUp(email, password)
+      this.error = null;
       } catch (error: any) {
-        this.error = error.message; 
-        console.log(this.error)
+        if (error == "Firebase: Error (auth/email-already-in-use)."){
+          this.error = "Email already in use";
+        } else {
+        this.error = "unknown error"
+        console.log(error)
+        }
       }
   };
 
@@ -48,18 +56,20 @@ export class LoginComponent implements OnInit {
       } catch (error: any) {
         if (error == "Firebase: Error (auth/invalid-login-credentials)."){
           this.error = "Invalid login credentials";
-        } else
+        } else {
+        this.error = "unknown error"
         console.log(error)
+        }
       }
   };
   
-  logout() {
+  async logout() {
     try {
-      this.authService.logout()
-      console.log('User is logged out');
+      await this.authService.logout()
+      this.error = null;
     } catch (error: any) {
-      this.error = error.message; 
-      console.log(this.error)
+      this.error = "unknown error"
+      console.log(error)
     }
   }
 }

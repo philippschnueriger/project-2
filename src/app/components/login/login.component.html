@@ -22,8 +22,10 @@
     <div class="formGroup">
       <button type="submit" [disabled]="!loginForm.valid">Log in</button>
     </div>
+    <div class="formGroup">
+      <button type="button" [disabled]="!loginForm.valid" (click)="onSignUp()">Sign up</button>
+    </div>
   </form>
-
   <button (click)="logout()">Logout</button>
 
   <div *ngIf="user">logged in as {{ user.email }}</div>
