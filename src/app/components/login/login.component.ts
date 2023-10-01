@@ -2,6 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { User } from 'firebase/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
   async signUp(email: string, password: string) {
     try {
       await this.authService.signUp(email, password)
+      this.router.navigate(['/profile']);
       this.error = null;
       } catch (error: any) {
         if (error == "Firebase: Error (auth/email-already-in-use)."){
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit {
   async login(email: string, password: string) {
     try {
       await this.authService.login(email, password)
+      this.router.navigate(['/profile']);
       this.error = null;
       } catch (error: any) {
         if (error == "Firebase: Error (auth/invalid-login-credentials)."){

@@ -1,5 +1,16 @@
+<h1>profile</h1>
+
 <div *ngIf="data">
 <p> {{data.name }}</p>
 <p> {{data.country }}</p>
 <p> {{data.state }}</p>
 </div>
+
+<div *ngIf="user">
+    <p> {{user.email }}</p>
+</div>
+
+<button  
+        type="button"
+        routerLink="/"
+>Home</button>

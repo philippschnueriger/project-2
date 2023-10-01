@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, user, UserCredential } from '@angular/fire/auth';
 import { User } from 'firebase/auth';
-import { Observable, from } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { FirestoreService } from './firestore.service';
 
 
@@ -10,9 +10,14 @@ import { FirestoreService } from './firestore.service';
 })
 export class AuthService {
   user$: Observable<User | null>;
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
   constructor(private afAuth: Auth, private FirestoreService: FirestoreService) {
     this.user$ = user(afAuth);
+  }
+  
+  isAuthenticated(): boolean {
+    return !!this.afAuth.currentUser
   }
 
   async signUp(email: string, password: string): Promise<UserCredential> {
