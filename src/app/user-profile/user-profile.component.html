@@ -2,13 +2,50 @@
 
 <div *ngIf="data">
 <p> {{data.name }}</p>
-<p> {{data.country }}</p>
 <p> {{data.state }}</p>
+<p> {{data.country }}</p>
+
 </div>
 
 <div *ngIf="user">
     <p> {{user.email }}</p>
 </div>
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="formGroup">
+      <label for="userName">Username:</label>
+      <input
+        type="text"
+        id="userName"
+        class="formControl"
+        formControlName="name"
+        [(ngModel)]="name"
+      />
+    </div>  
+    <div class="formGroup">
+      <label for="userState">State:</label>
+      <input
+        type="text"
+        id="userState"
+        class="formControl"
+        formControlName="state"
+        [(ngModel)]="state"
+      />
+    </div>  
+    <div class="formGroup">
+      <label for="userCountry">Country:</label>
+      <input
+        type="text"
+        id="userCountry"
+        class="formControl"
+        formControlName="country"
+        [(ngModel)]="country"
+      />
+    </div>
+    <div class="formGroup">
+      <button type="submit">Submit</button>
+    </div>
+  </form>
 
 <button  
         type="button"
