@@ -1,39 +1,36 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="formGroup">
-      <label for="userName">Username:</label>
-      <input
+      <tui-input
         type="email"
         id="userName"
         class="formControl"
         formControlName="email"
-      />
+      >Username</tui-input>
     </div>
   
     <div class="formGroup">
-      <label for="userPassword">Password:</label>
-      <input
-        type="password"
-        id="userPassword"
-        class="formControl"
-        formControlName="password"
-      />
+      <tui-input-password type="password"
+      id="userPassword"
+      class="formControl"
+      formControlName="password">Password</tui-input-password>
+
     </div>
   
     <div class="formGroup">
-      <button type="submit" [disabled]="!loginForm.valid">Log in</button>
+      <button tuiButton type="submit" [disabled]="!loginForm.valid">Log in</button>
     </div>
     <div class="formGroup">
-      <button type="button" [disabled]="!loginForm.valid" (click)="onSignUp()">Sign up</button>
+      <button tuiButton type="button" [disabled]="!loginForm.valid" (click)="onSignUp()">Sign up</button>
     </div>
   </form>
-  <button (click)="logout()">Logout</button>
+  <button tuiButton (click)="logout()">Logout</button>
 
   <div *ngIf="user">logged in as {{ user.email }}</div>
   <div>
     {{ error }}
   </div>
 
-  <button  
+  <button tuiButton
         type="button"
         routerLink="/profile"
 >Profile</button>

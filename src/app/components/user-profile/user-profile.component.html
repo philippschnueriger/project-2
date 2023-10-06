@@ -14,7 +14,7 @@
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <div class="formGroup">
       <label for="userName">Username:</label>
-      <input
+      <tui-input
         type="text"
         id="userName"
         class="formControl"
@@ -24,7 +24,7 @@
     </div>  
     <div class="formGroup">
       <label for="userState">State:</label>
-      <input
+      <tui-input
         type="text"
         id="userState"
         class="formControl"
@@ -34,7 +34,7 @@
     </div>  
     <div class="formGroup">
       <label for="userCountry">Country:</label>
-      <input
+      <tui-input
         type="text"
         id="userCountry"
         class="formControl"
@@ -43,11 +43,11 @@
       />
     </div>
     <div class="formGroup">
-      <button type="submit">Submit</button>
+      <button tuiButton type="submit">Submit</button>
     </div>
   </form>
 
-<button  
+<button tuiButton
         type="button"
         routerLink="/"
 >Home</button>
