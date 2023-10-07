@@ -1,11 +1,26 @@
 <tui-root>
-<h1>project-2</h1>
-<!-- <ul>
-  <li class="text" *ngFor="let item of items$ | async">
-    {{item.name}}
-  </li>
-</ul> -->
-<router-outlet></router-outlet>
-
-
+  <header>
+    <div class="container">
+      <div class="logo" routerLink="/">
+        <h1>TripSearch</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/profile">Profile</a></li>
+          <li><a routerLink="/login">Login</a></li> 
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      <a href="https://github.com/philippschnueriger" target="_blank">About</a>
+    </div>
+  </footer>
 </tui-root>
