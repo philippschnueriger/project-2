@@ -12,7 +12,7 @@ export class SearchFormComponent implements OnInit {
   constructor(private router: Router) {
   }
   
-  search = { cityFrom: 'ZRH', cityTo: 'FRA', departureDate: '23/12/2023', trains: undefined };
+  search = { cityFrom: 'ZRH', cityTo: 'FRA', departureDate: '23/12/2023', trains: false };
 
   searchForm!: FormGroup;
 
