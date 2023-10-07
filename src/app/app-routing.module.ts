@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './shared/auth.guard';
+import { ResultsComponent } from './components/search-results/search-results.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,11 @@ const routes: Routes = [
         path: '',
         component: HomeComponent,
         title: 'Home'
+      },
+      {
+        path: 'results',
+        component: ResultsComponent,
+        title: 'Results'
       },
     {
     path: 'login',

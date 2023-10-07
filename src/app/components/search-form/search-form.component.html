@@ -1,0 +1,98 @@
+  
+<form [formGroup]="searchForm" #formDir="ngForm">
+    <div [hidden]="formDir.submitted">
+      <div
+        class="cross-validation"
+        [class.cross-validation-error]="searchForm.errors?.['identityRevealed'] && (searchForm.touched || searchForm.dirty)"
+      >
+        <div class="form-group">
+          <tui-input
+            type="text"
+            id="cityFrom"
+            class="form-control"
+            formControlName="cityFrom"
+            required
+          >From</tui-input>
+          <div
+            *ngIf="cityFrom.invalid && (cityFrom.dirty || cityFrom.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="cityFrom.errors?.['required']">From is required.</div>
+            <div
+              *ngIf="cityFrom.errors?.['minlength'] || cityFrom.errors?.['maxlength']"
+            >
+              Identificator must be 3 characters long.
+            </div>
+  
+            <div *ngIf="cityFrom.errors?.['forbiddenName']">
+              Identificator cannot be XYZ.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <tui-input
+            type="text"
+            id="cityTo"
+            class="form-control"
+            formControlName="cityTo"
+            required
+          >To</tui-input>
+  
+          <div
+            *ngIf="cityTo.invalid && (cityTo.dirty || cityTo.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="cityTo.errors?.['required']">From is required.</div>
+            <div
+              *ngIf="cityTo.errors?.['minlength'] || cityTo.errors?.['maxlength']"
+            >
+              Identificator must be 3 characters long.
+            </div>
+  
+            <div *ngIf="cityTo.errors?.['forbiddenName']">
+              Identificator cannot be XYZ.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <tui-input
+            type="text"
+            id="cityTo"
+            class="form-control"
+            formControlName="departureDate"
+            required
+          >DepartureDate</tui-input> 
+        </div>
+        <div class="form-group">
+          <label for="trains">Trains only</label>
+          <tui-checkbox id="trains" formControlName="trains"></tui-checkbox>
+      </div>
+      </div>
+      <button
+        tuiButton
+        type="button"
+        class="btn btn-default"
+        (click)="formDir.resetForm({})"
+      >
+        Reset
+      </button>
+  
+      <button
+        tuiButton
+        type="submit"
+        class="btn btn-default"
+        (click)="loadData()"
+        [disabled]="searchForm.invalid"
+      >
+        Submit
+      </button>
+      
+    </div>
+  </form>
+    
+    <!-- 
+    Copyright Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at https://angular.io/license
+    -->
+    

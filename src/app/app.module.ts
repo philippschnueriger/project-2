@@ -16,14 +16,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './components/home/home.component';
 
 import { TuiButtonModule } from "@taiga-ui/core";
-import { TuiInputModule, TuiInputPasswordModule } from "@taiga-ui/kit";
+import { TuiInputModule, TuiInputPasswordModule, TuiCheckboxModule, TuiIslandModule } from "@taiga-ui/kit";
+import { SearchFormComponent } from './components/search-form/search-form.component';
+import { ResultsComponent } from './components/search-results/search-results.component';
+import { SearchResultItemComponent } from './components/search-result-item/search-result-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     UserProfileComponent,
-    HomeComponent
+    HomeComponent,
+    SearchFormComponent,
+    ResultsComponent,
+    SearchResultItemComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,9 @@ import { TuiInputModule, TuiInputPasswordModule } from "@taiga-ui/kit";
       TuiAlertModule,
       TuiButtonModule,
       TuiInputModule,
-      TuiInputPasswordModule
+      TuiInputPasswordModule,
+      TuiCheckboxModule,
+      TuiIslandModule
 ],
   providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
   bootstrap: [AppComponent]

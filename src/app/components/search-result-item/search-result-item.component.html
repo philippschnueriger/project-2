@@ -1,0 +1,16 @@
+<div>
+    <tui-island>
+        <h1>{{ item.cityFrom }} - {{ item.cityTo }}</h1>
+        <h2>CHF {{ item.price }} | {{ getDuration(item.duration) }}</h2>
+        <div *ngFor="let leg of item.route">
+            <p><b>{{ leg.cityFrom }} - {{ leg.cityTo }}</b></p>
+            <p>{{leg.airline}} ({{leg.vehicle_type}})</p>
+            <p>Departure: {{ leg.local_departure | date:'dd.MM.yy hh:mm' }}</p>
+            <p>Arrival: {{ leg.local_arrival | date:'dd.MM.yy hh:mm' }}</p>
+        </div>
+        <a href="{{ item.deep_link }}" target="_blank">
+            <button tuiButton>Book</button>
+        </a>
+    </tui-island> 
+</div>
+      
