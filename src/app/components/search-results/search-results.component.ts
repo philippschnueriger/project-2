@@ -16,6 +16,8 @@ export class ResultsComponent implements OnInit {
   cityTo = '';
   departureDate = '';
 
+  loading = false;
+
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
@@ -31,6 +33,7 @@ export class ResultsComponent implements OnInit {
   data: Flight[] = [];
 
   loadData() {
+    this.loading = true;
     this.data = [];
     ApiService.getData(this.cityFrom, this.cityTo, this.departureDate).then(
       (response) => {
@@ -51,7 +54,8 @@ export class ResultsComponent implements OnInit {
           };
           this.data.push(flight);
         }
-      }
+        this.loading = false;
+      },
     );
   }
 }
