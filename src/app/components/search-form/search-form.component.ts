@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from './forbidden-name.directive';
 import { Router } from '@angular/router';
+import {TuiDay} from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-search-form',
@@ -12,7 +13,8 @@ export class SearchFormComponent implements OnInit {
   constructor(private router: Router) {
   }
   
-  search = { cityFrom: 'ZRH', cityTo: 'FRA', departureDate: '23/12/2023', trains: false };
+  search = { cityFrom: 'ZRH', cityTo: 'FRA', departureDate: TuiDay.currentLocal(), trains: false };
+  min = TuiDay.currentLocal();
 
   searchForm!: FormGroup;
 
@@ -33,7 +35,7 @@ export class SearchFormComponent implements OnInit {
         ]),
         departureDate: new FormControl(this.search.departureDate, [
           Validators.required,
-          Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
+          //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
         ]),
         trains: new FormControl(this.search.trains, [
           Validators.required
@@ -46,7 +48,7 @@ export class SearchFormComponent implements OnInit {
     this.router.navigate(
       ['/results'],
       {
-        queryParams: { cityFrom: this.cityFrom.value, cityTo: this.cityTo.value, departureDate: this.departureDate.value, trains: this.trains.value },
+        queryParams: { cityFrom: this.cityFrom.value, cityTo: this.cityTo.value, departureDate: this.departureDate.value.toString().replace(/\./g, '/'), trains: this.trains.value },
       }
     );
   }

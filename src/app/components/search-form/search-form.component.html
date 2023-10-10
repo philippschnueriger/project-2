@@ -1,4 +1,3 @@
-  
 <form [formGroup]="searchForm" #formDir="ngForm">
     <div [hidden]="formDir.submitted">
       <div
@@ -55,13 +54,13 @@
           </div>
         </div>
         <div class="form-group">
-          <tui-input
-            type="text"
-            id="cityTo"
-            class="form-control"
-            formControlName="departureDate"
-            required
-          >DepartureDate</tui-input> 
+          <tui-input-date
+        formControlName="departureDate"
+        tuiTextfieldSize="l"
+        [min]="min"
+    >
+        Departure date
+          </tui-input-date>
         </div>
         <div class="form-group">
           <label for="trains">Trains only</label>
