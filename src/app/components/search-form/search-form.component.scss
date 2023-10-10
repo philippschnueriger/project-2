@@ -5,6 +5,7 @@
 
 form > div {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 .form-container {
@@ -18,5 +19,5 @@ tui-input {
 }
 
 button {
-    margin: 20px;
+    margin: 20px 20px 20px 0;
 }
