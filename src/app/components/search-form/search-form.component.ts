@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from './forbidden-name.directive';
 import { Router } from '@angular/router';
 import {TuiDay} from '@taiga-ui/cdk';
+import ApiService from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-search-form',
@@ -13,7 +14,7 @@ export class SearchFormComponent implements OnInit {
   constructor(private router: Router) {
   }
   
-  search = { cityFrom: 'ZRH', cityTo: 'FRA', departureDate: TuiDay.currentLocal(), trains: false };
+  search = { cityFrom: 'Zürich', cityTo: 'Frankfurt', departureDate: TuiDay.currentLocal(), trains: false };
   min = TuiDay.currentLocal();
 
   searchForm!: FormGroup;
@@ -24,13 +25,11 @@ export class SearchFormComponent implements OnInit {
         cityFrom: new FormControl(this.search.cityFrom, [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(3),
           forbiddenNameValidator(/XYZ/i),
         ]),
         cityTo: new FormControl(this.search.cityTo, [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(3),
           forbiddenNameValidator(/XYZ/i),
         ]),
         departureDate: new FormControl(this.search.departureDate, [
@@ -44,11 +43,20 @@ export class SearchFormComponent implements OnInit {
     ); // <-- add custom validator at the FormGroup level
   }
 
-  loadData() {
+  async loadData() {
+    const cityFrom = await ApiService.getLocationId(this.cityFrom.value)
+    const cityTo = await ApiService.getLocationId(this.cityTo.value)
+    const departureDate = this.departureDate.value.toString().replace(/\./g, '/');
+    const trains = this.trains.value;
     this.router.navigate(
       ['/results'],
       {
-        queryParams: { cityFrom: this.cityFrom.value, cityTo: this.cityTo.value, departureDate: this.departureDate.value.toString().replace(/\./g, '/'), trains: this.trains.value },
+        queryParams: {
+          cityFrom: cityFrom,
+          cityTo: cityTo,
+          departureDate: departureDate,
+          trains: trains
+        },
       }
     );
   }

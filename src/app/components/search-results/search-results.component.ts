@@ -25,7 +25,6 @@ export class ResultsComponent implements OnInit {
         this.cityFrom = params['cityFrom'];
         this.cityTo = params['cityTo'];
         this.departureDate = params['departureDate'];
-        console.log(this.departureDate); // price
       }
     );
     this.loadData();

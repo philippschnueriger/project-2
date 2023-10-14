@@ -7,7 +7,6 @@ class ApiService {
   }
   baseUrl = 'https://api.tequila.kiwi.com';
   async getData(from = 'ZRH', to = 'FRA', departureDate = '10/12/2023', trains = false) {
-    console.log("api.service.ts")
     let vehicles = '';
     if (trains) {
       vehicles = '&vehicle_type=train';
@@ -19,6 +18,14 @@ class ApiService {
       .then((response) => {
         console.log(response.data)
         return response.data;
+      })
+      .catch((error) => console.log(error));
+  }
+  async getLocationId(location: string) {
+    return await axios
+      .get(`${this.baseUrl}/locations/query?term=${location}`)
+      .then((response) => {
+        return response.data.locations[0].code;
       })
       .catch((error) => console.log(error));
   }
