@@ -19,7 +19,7 @@ import { TuiButtonModule } from "@taiga-ui/core";
 import { TuiInputModule, TuiInputPasswordModule, TuiCheckboxModule, TuiIslandModule, TuiInputDateModule } from "@taiga-ui/kit";
 import { SearchFormComponent } from './components/search-form/search-form.component';
 import { ResultsComponent } from './components/search-results/search-results.component';
-import { SearchResultItemComponent } from './components/search-result-item/search-result-item.component';
+import { ConnectionCardComponent } from './components/connection-card/connection-card.component';
 import { CommonModule } from "@angular/common";
 
 @NgModule({
@@ -30,7 +30,7 @@ import { CommonModule } from "@angular/common";
     HomeComponent,
     SearchFormComponent,
     ResultsComponent,
-    SearchResultItemComponent
+    ConnectionCardComponent
   ],
   imports: [
     BrowserModule,

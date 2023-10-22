@@ -5,11 +5,11 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { User } from 'firebase/auth';
 
 @Component({
-  selector: 'app-search-result-item',
-  templateUrl: './search-result-item.component.html',
-  styleUrls: ['./search-result-item.component.scss']
+  selector: 'app-connection-card',
+  templateUrl: './connection-card.component.html',
+  styleUrls: ['./connection-card.component.scss']
 })
-export class SearchResultItemComponent {
+export class ConnectionCardComponent {
   user: User | null = null; 
   constructor(private authService: AuthService, private firestoreService: FirestoreService) {
   }
@@ -28,7 +28,6 @@ export class SearchResultItemComponent {
     return `${hours}h ${minutes}m`;
   }
   saveFavouriteConnection() {
-    console.log(this.item);
     if (this.user?.uid) {
       this.firestoreService.saveFavouriteConnection(this.user.uid, this.item);
     }
