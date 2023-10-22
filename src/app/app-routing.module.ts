@@ -5,20 +5,21 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './shared/auth.guard';
 import { ResultsComponent } from './components/search-results/search-results.component';
+import { FavouriteConnectionsComponent } from './components/favourite-connections/favourite-connections.component';
 
 
 const routes: Routes = [
-    {
-        path: '',
-        component: HomeComponent,
-        title: 'Home'
-      },
-      {
-        path: 'results',
-        component: ResultsComponent,
-        title: 'Results'
-      },
-    {
+  {
+    path: '',
+    component: HomeComponent,
+    title: 'Home'
+  },
+  {
+    path: 'results',
+    component: ResultsComponent,
+    title: 'Results'
+  },
+  {
     path: 'login',
     component: LoginComponent,
     title: 'Login'
@@ -27,6 +28,12 @@ const routes: Routes = [
     path: 'profile',
     component: UserProfileComponent,
     title: 'Profile',
+    canActivate: [AuthGuard] 
+  },
+  {
+    path: 'favourites',
+    component: FavouriteConnectionsComponent,
+    title: 'Favorites',
     canActivate: [AuthGuard] 
   }];
 

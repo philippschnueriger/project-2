@@ -21,6 +21,7 @@ import { SearchFormComponent } from './components/search-form/search-form.compon
 import { ResultsComponent } from './components/search-results/search-results.component';
 import { ConnectionCardComponent } from './components/connection-card/connection-card.component';
 import { CommonModule } from "@angular/common";
+import { FavouriteConnectionsComponent } from './components/favourite-connections/favourite-connections.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CommonModule } from "@angular/common";
     HomeComponent,
     SearchFormComponent,
     ResultsComponent,
-    ConnectionCardComponent
+    ConnectionCardComponent,
+    FavouriteConnectionsComponent
   ],
   imports: [
     BrowserModule,
