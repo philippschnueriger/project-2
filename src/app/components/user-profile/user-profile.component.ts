@@ -2,7 +2,7 @@
 import { FirestoreService } from '../../shared/services/firestore.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { User } from 'firebase/auth';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,8 +17,6 @@ export class UserProfileComponent implements OnInit {
   state: string | null = null;
   country: string | null = null;
 
-  favourites: any;
-
   constructor(private authService: AuthService, private firestoreService: FirestoreService, private formBuilder: FormBuilder,) {
     this.profileForm = this.formBuilder.group({
       name: "",
@@ -31,13 +29,9 @@ export class UserProfileComponent implements OnInit {
     this.authService.user$.subscribe((user) => {
       this.user = user;
       this.getData();
-      this.getFavouriteConnections();
     });
     this.firestoreService.userData$.subscribe((userData) => {
       this.data = userData;
-    });
-    this.firestoreService.favourites$.subscribe((favourites) => {
-      this.favourites = favourites;
     });
   }
 
@@ -64,13 +58,4 @@ export class UserProfileComponent implements OnInit {
       console.log("no uid")
     }
   }
-  async getFavouriteConnections() {
-    let uid = this.user?.uid
-    if (uid){
-      await this.firestoreService.getFavouriteConnections(uid);
-    } else {
-      console.log("no uid")
-    }
-  }
-
 }
