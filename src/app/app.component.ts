@@ -14,6 +14,5 @@ export class AppComponent {
   constructor() {
     const aCollection = collection(this.firestore, 'items')
     this.items$ = collectionData(aCollection);
-    console.log(this.items$)
   }
 }

@@ -9,6 +9,9 @@ export class FirestoreService {
     private userDataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     userData$: Observable<any> = this.userDataSubject.asObservable();
 
+    private favouritesSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+    favourites$: Observable<any> = this.favouritesSubject.asObservable();
+
     constructor(private firestore: Firestore) {}
 
     async saveFavouriteConnection(uid: string, data: any): Promise<void> {
@@ -16,7 +19,6 @@ export class FirestoreService {
           const userRef = doc(this.firestore, "users", uid);
           const favouritesRef = collection(userRef, "favourites")
           await addDoc(favouritesRef, data);
-          //await setDoc(doc(this.firestore, "favourite_connections", uid), data);
           return;
       } catch (error: any) {
           console.log(error);
@@ -28,12 +30,7 @@ export class FirestoreService {
         const userRef = doc(this.firestore, "users", uid);
         const favouritesRef = collection(userRef, "favourites")
         const querySnapshot = await getDocs(favouritesRef)
-        console.log("querySnapshot received")
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          console.log(data); 
-        });
-
+        this.favouritesSubject.next(querySnapshot.docs.map(doc => doc.data()));
       } catch (error: any) {
         console.error('Error loading user data', error);
         throw error;

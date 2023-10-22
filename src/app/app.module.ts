@@ -20,6 +20,7 @@ import { TuiInputModule, TuiInputPasswordModule, TuiCheckboxModule, TuiIslandMod
 import { SearchFormComponent } from './components/search-form/search-form.component';
 import { ResultsComponent } from './components/search-results/search-results.component';
 import { SearchResultItemComponent } from './components/search-result-item/search-result-item.component';
+import { CommonModule } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { SearchResultItemComponent } from './components/search-result-item/searc
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    CommonModule,
     ReactiveFormsModule,
     AppRoutingModule,
       BrowserAnimationsModule,

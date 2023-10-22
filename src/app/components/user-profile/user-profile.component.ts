@@ -36,6 +36,9 @@ export class UserProfileComponent implements OnInit {
     this.firestoreService.userData$.subscribe((userData) => {
       this.data = userData;
     });
+    this.firestoreService.favourites$.subscribe((favourites) => {
+      this.favourites = favourites;
+    });
   }
 
   onSubmit() {
@@ -64,8 +67,7 @@ export class UserProfileComponent implements OnInit {
   async getFavouriteConnections() {
     let uid = this.user?.uid
     if (uid){
-      this.favourites = await this.firestoreService.getFavouriteConnections(uid);
-      console.log(this.favourites)
+      await this.firestoreService.getFavouriteConnections(uid);
     } else {
       console.log("no uid")
     }
