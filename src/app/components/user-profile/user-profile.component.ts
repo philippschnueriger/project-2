@@ -17,6 +17,8 @@ export class UserProfileComponent implements OnInit {
   state: string | null = null;
   country: string | null = null;
 
+  favourites: any;
+
   constructor(private authService: AuthService, private firestoreService: FirestoreService, private formBuilder: FormBuilder,) {
     this.profileForm = this.formBuilder.group({
       name: "",
@@ -29,6 +31,7 @@ export class UserProfileComponent implements OnInit {
     this.authService.user$.subscribe((user) => {
       this.user = user;
       this.getData();
+      this.getFavouriteConnections();
     });
     this.firestoreService.userData$.subscribe((userData) => {
       this.data = userData;
@@ -54,6 +57,15 @@ export class UserProfileComponent implements OnInit {
       this.name = this.data.name;
       this.state = this.data.state;
       this.country = this.data.country;
+    } else {
+      console.log("no uid")
+    }
+  }
+  async getFavouriteConnections() {
+    let uid = this.user?.uid
+    if (uid){
+      this.favourites = await this.firestoreService.getFavouriteConnections(uid);
+      console.log(this.favourites)
     } else {
       console.log("no uid")
     }
