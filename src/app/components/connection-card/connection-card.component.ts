@@ -10,6 +10,9 @@ import { User } from 'firebase/auth';
   styleUrls: ['./connection-card.component.scss']
 })
 export class ConnectionCardComponent {
+  @Input() item!: Flight;
+  @Input() docId!: string;
+  @Input() deleteOption: boolean = false;
   user: User | null = null; 
   constructor(private authService: AuthService, private firestoreService: FirestoreService) {
   }
@@ -18,7 +21,6 @@ export class ConnectionCardComponent {
       this.user = user;
     });
   }
-  @Input() item!: Flight;
   getDuration(duration: any) {
     if (duration === undefined) {
       return '';
@@ -31,5 +33,9 @@ export class ConnectionCardComponent {
     if (this.user?.uid) {
       this.firestoreService.saveFavouriteConnection(this.user.uid, this.item);
     }
+  }
+  deleteFavouriteConnection() {
+    console.log("delete")
+    console.log(this.item.id)
   }
 }

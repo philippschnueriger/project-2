@@ -11,7 +11,8 @@
         <a href="{{ item.deep_link }}" target="_blank">
             <button tuiButton>Book</button>
         </a>
-        <button tuiButton (click)="saveFavouriteConnection()">Save</button>
+        <button tuiButton *ngIf="!deleteOption" (click)="saveFavouriteConnection()">Save</button>
+        <button tuiButton *ngIf="deleteOption" (click)="deleteFavouriteConnection()">Delete</button>
     </tui-island> 
 </div>
       

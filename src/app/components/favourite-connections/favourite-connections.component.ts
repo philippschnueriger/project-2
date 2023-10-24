@@ -32,6 +32,7 @@ export class FavouriteConnectionsComponent implements OnInit {
     } else {
       console.log("no uid")
     }
+    console.log(this.favourites)
   }
 
 }
