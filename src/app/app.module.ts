@@ -16,12 +16,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './components/home/home.component';
 
 import { TuiButtonModule } from "@taiga-ui/core";
-import { TuiInputModule, TuiInputPasswordModule, TuiCheckboxModule, TuiIslandModule, TuiInputDateModule } from "@taiga-ui/kit";
+import { TuiInputModule, TuiInputPasswordModule, TuiCheckboxModule, TuiIslandModule, TuiInputDateModule, TuiCarouselModule } from "@taiga-ui/kit";
 import { SearchFormComponent } from './components/search-form/search-form.component';
 import { ResultsComponent } from './components/search-results/search-results.component';
 import { ConnectionCardComponent } from './components/connection-card/connection-card.component';
 import { CommonModule } from "@angular/common";
 import { FavouriteConnectionsComponent } from './components/favourite-connections/favourite-connections.component';
+import { PopularDestinationsComponent } from './components/popular-destinations/popular-destinations.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FavouriteConnectionsComponent } from './components/favourite-connection
     SearchFormComponent,
     ResultsComponent,
     ConnectionCardComponent,
-    FavouriteConnectionsComponent
+    FavouriteConnectionsComponent,
+    PopularDestinationsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { FavouriteConnectionsComponent } from './components/favourite-connection
       TuiCheckboxModule,
       TuiIslandModule,
       TuiLoaderModule,
-      TuiInputDateModule
+      TuiInputDateModule,
+      TuiCarouselModule
 ],
   providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
   bootstrap: [AppComponent]
