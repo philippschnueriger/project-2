@@ -1,12 +1,14 @@
 import { environment } from '../../../environments/environment'
 import axios from 'axios';
+import {TuiDay} from '@taiga-ui/cdk';
 
 class ApiService {
   constructor() {
     axios.defaults.headers.common['apikey'] = environment.kiwi.apiKey;
   }
   baseUrl = 'https://api.tequila.kiwi.com';
-  async getData(from = 'ZRH', to = 'FRA', departureDate = '10/12/2023', trains = false) {
+  nextWeek = TuiDay.currentLocal().append({ day: 7 });
+  async getData(from = 'ZRH', to = '', departureDate = this.nextWeek.toString().replace(/\./g, '/'), trains = false) {
     let vehicles = '';
     if (trains) {
       vehicles = '&vehicle_type=train';
@@ -25,7 +27,7 @@ class ApiService {
     return await axios
       .get(`${this.baseUrl}/locations/query?term=${location}`)
       .then((response) => {
-        return response.data.locations[0].code;
+        return response.data.locations[0].id;
       })
       .catch((error) => console.log(error));
   }

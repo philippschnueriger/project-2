@@ -14,7 +14,7 @@ export class SearchFormComponent implements OnInit {
   constructor(private router: Router) {
   }
   
-  search = { cityFrom: 'Zürich', cityTo: 'Frankfurt', departureDate: TuiDay.currentLocal(), trains: false };
+  search = { cityFrom: 'Zürich', cityTo: 'Frankfurt', departureDate: TuiDay.currentLocal().append({ day: 1 }), trains: false };
   min = TuiDay.currentLocal();
 
   searchForm!: FormGroup;

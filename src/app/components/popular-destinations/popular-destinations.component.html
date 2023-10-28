@@ -12,8 +12,7 @@
                 <img src="../../../assets/images/{{ item }}.png" />
             </div>
             <h3> {{ item }}</h3>
-            <button tuiButton>Search</button>
-            
+            <button tuiButton (click)="exploreDestination(item)">Search</button>
         </tui-island>
     </ng-container>
 </tui-carousel>
