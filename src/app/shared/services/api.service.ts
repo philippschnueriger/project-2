@@ -38,6 +38,19 @@ class ApiService {
       })
       .catch((error) => console.log(error));
   }
+  async validateBookingToken(booking_token: string) {
+    const bnum = "0"
+    const adults = "1"
+    return await axios
+      .get(`${this.baseUrl}/v2/booking/check_flights?booking_token=${booking_token}&bnum=${bnum}&adults=${adults}`)
+      .then((response) => {
+        if (response.data.status === 'error') {
+          return false;
+        }
+        return true;
+      })
+      .catch((error) => console.log(error));
+  }
 }
 
 export default new ApiService();

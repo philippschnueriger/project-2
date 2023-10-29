@@ -9,10 +9,11 @@
             <p>Arrival: {{ leg.local_arrival | date:'dd.MM.yy hh:mm' }}</p>
         </div>
         <a href="{{ item.deep_link }}" target="_blank">
-            <button tuiButton>Book</button>
+            <button tuiButton [disabled]="!isConnectionAvailable">Book</button>
         </a>
         <button tuiButton *ngIf="!deleteOption" (click)="saveFavouriteConnection()">Save</button>
         <button tuiButton *ngIf="deleteOption" (click)="deleteFavouriteConnection()">Delete</button>
+        <p *ngIf="!isConnectionAvailable">This connection is not available anymore</p>
     </tui-island> 
 </div>
       
