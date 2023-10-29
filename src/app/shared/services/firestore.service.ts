@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, doc, setDoc, getDoc, getDocs, collection, collectionData, addDoc} from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, getDoc, getDocs, collection, collectionData, addDoc, query, where, deleteDoc} from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -31,6 +31,27 @@ export class FirestoreService {
         const favouritesRef = collection(userRef, "favourites")
         const querySnapshot = await getDocs(favouritesRef)
         this.favouritesSubject.next(querySnapshot.docs.map(doc => doc.data()));
+      } catch (error: any) {
+        console.error('Error loading user data', error);
+        throw error;
+       }
+    }
+
+    async deleteFavouriteConnection(uid: string, id: string): Promise<void> {
+      try {
+        const userRef = doc(this.firestore, "users", uid);
+        const favouritesRef = collection(userRef, "favourites")
+        const q = query(favouritesRef, where('id', '==', id));
+        const querySnapshot = await getDocs(q)
+
+        if (querySnapshot.size > 0) {
+          const docId = querySnapshot.docs[0].id;
+          const docToDeleteRef = doc(favouritesRef, docId);
+          await deleteDoc(docToDeleteRef);
+          this.getFavouriteConnections(uid);
+        } else {
+          console.log("No documents found with the specified ID.");
+        }
       } catch (error: any) {
         console.error('Error loading user data', error);
         throw error;

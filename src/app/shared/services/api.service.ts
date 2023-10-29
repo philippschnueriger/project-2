@@ -18,7 +18,6 @@ class ApiService {
         `${this.baseUrl}/v2/search?fly_from=${from}&fly_to=${to}&date_from=${departureDate}&date_to=${departureDate}&curr=CHF${vehicles}`
       )
       .then((response) => {
-        console.log(response.data)
         return response.data;
       })
       .catch((error) => console.log(error));

@@ -21,7 +21,7 @@ export class ResultsComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        console.log(params); // { orderby: "price" }
+        //console.log(params); // { orderby: "price" }
         this.cityFrom = params['cityFrom'];
         this.cityTo = params['cityTo'];
         this.departureDate = params['departureDate'];

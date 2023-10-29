@@ -35,7 +35,8 @@ export class ConnectionCardComponent {
     }
   }
   deleteFavouriteConnection() {
-    console.log("delete")
-    console.log(this.item.id)
+    if (this.user?.uid) {
+      this.firestoreService.deleteFavouriteConnection(this.user?.uid, this.item.id);
+    };
   }
 }
