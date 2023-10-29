@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, user, UserCredential } from '@angular/fire/auth';
 import { User } from 'firebase/auth';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FirestoreService } from './firestore.service';
 
 
@@ -10,7 +10,6 @@ import { FirestoreService } from './firestore.service';
 })
 export class AuthService {
   user$: Observable<User | null>;
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
   constructor(private afAuth: Auth, private FirestoreService: FirestoreService) {
     this.user$ = user(afAuth);
@@ -21,7 +20,7 @@ export class AuthService {
   }
 
   async signUp(email: string, password: string): Promise<UserCredential> {
-    return createUserWithEmailAndPassword(this.afAuth, email, password)
+    return await createUserWithEmailAndPassword(this.afAuth, email, password)
       .then((userCredential) => {
         return Promise.resolve(userCredential);
       })
@@ -31,7 +30,7 @@ export class AuthService {
   }
 
   async login(email: string, password: string): Promise<UserCredential> {
-    return signInWithEmailAndPassword(this.afAuth, email, password)
+    return await signInWithEmailAndPassword(this.afAuth, email, password)
       .then((userCredential) => {
         return Promise.resolve(userCredential);
       })
@@ -42,10 +41,9 @@ export class AuthService {
 
   async logout(): Promise<void> {
     try {
-      this.FirestoreService.clearData();
+      await this.FirestoreService.clearData();
       await this.afAuth.signOut();
       return Promise.resolve()
-      
     } catch (error: any) {
       return Promise.reject(error.message);
     }

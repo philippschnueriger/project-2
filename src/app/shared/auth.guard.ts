@@ -11,10 +11,10 @@ export class AuthGuard {
 
   canActivate(): boolean {
     if (this.authService.isAuthenticated()) {
-      return true; // User is authenticated, allow access
+      return true;
     } else {
-      this.router.navigate(['/login']); // User is not authenticated, redirect to login
-      return false; // Block access
+      this.router.navigate(['/login']);
+      return false;
     }
   }
 }

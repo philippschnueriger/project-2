@@ -21,7 +21,6 @@ export class ResultsComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        //console.log(params); // { orderby: "price" }
         this.cityFrom = params['cityFrom'];
         this.cityTo = params['cityTo'];
         this.departureDate = params['departureDate'];
@@ -36,10 +35,7 @@ export class ResultsComponent implements OnInit {
     this.data = [];
     ApiService.getData(this.cityFrom, this.cityTo, this.departureDate).then(
       (response) => {
-        //console.log(response.data);
         for (let item of response.data) {
-          //console.log(item);
-
           let flight: Flight = {
             id: item.id,
             cityFrom: item.cityFrom,

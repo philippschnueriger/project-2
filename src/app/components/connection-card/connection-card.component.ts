@@ -22,7 +22,9 @@ export class ConnectionCardComponent {
     this.authService.user$.subscribe((user) => {
       this.user = user;
     });
-    this.validateBookingToken();
+    if (this.deleteOption) {
+      this.validateBookingToken();
+    }
   }
   getDuration(duration: any) {
     if (duration === undefined) {

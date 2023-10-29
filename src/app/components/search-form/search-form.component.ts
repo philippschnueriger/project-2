@@ -40,7 +40,7 @@ export class SearchFormComponent implements OnInit {
           Validators.required
         ]),
       },
-    ); // <-- add custom validator at the FormGroup level
+    );
   }
 
   async loadData() {
