@@ -1,5 +1,7 @@
 # Project2
 
+Preview: https://project-2-30dc2.web.app/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
 
 ## Development server
