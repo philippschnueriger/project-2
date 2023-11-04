@@ -6,7 +6,7 @@ class ApiService {
   constructor() {
     axios.defaults.headers.common['apikey'] = environment.kiwi.apiKey;
   }
-  baseUrl = 'https://api.tequila.kiwi.com';
+  baseUrl = environment.kiwi.baseUrl;
   nextWeek = TuiDay.currentLocal().append({ day: 7 });
   async getData(from = 'ZRH', to = '', departureDate = this.nextWeek.toString().replace(/\./g, '/'), trains = false) {
     const vehicles = trains ? '&vehicle_type=train' : '';
