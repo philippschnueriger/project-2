@@ -47,3 +47,5 @@ Thumbs.db
 *-debug.log
 .runtimeconfig.json
 environment.ts
+credentials.json
+
