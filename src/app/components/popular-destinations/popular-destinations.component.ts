@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {TuiDay} from '@taiga-ui/cdk';
-import ApiService from '../../shared/services/api.service';
+import { ApiService } from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-popular-destinations',
@@ -9,7 +9,7 @@ import ApiService from '../../shared/services/api.service';
   styleUrls: ['./popular-destinations.component.scss']
 })
 export class PopularDestinationsComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private apiService: ApiService) {}
 
   index = 0;
   readonly items = [
@@ -24,7 +24,7 @@ export class PopularDestinationsComponent {
 
   async exploreDestination(destination: string) {
     const nextWeek = TuiDay.currentLocal().append({ day: 7 });
-    const cityTo = await ApiService.getLocationId(destination)
+    const cityTo = await this.apiService.getLocationId(destination)
     this.router.navigate(
       ['/results'],
       {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Flight } from '../../shared/flight';
 import { ActivatedRoute } from '@angular/router';
-import ApiService from '../../shared/services/api.service';
+import { ApiService } from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-results',
@@ -10,7 +10,7 @@ import ApiService from '../../shared/services/api.service';
 })
 export class ResultsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private apiService: ApiService) { }
 
   cityFrom = '';
   cityTo = '';
@@ -33,7 +33,7 @@ export class ResultsComponent implements OnInit {
   loadData() {
     this.loading = true;
     this.data = [];
-    ApiService.getData(this.cityFrom, this.cityTo, this.departureDate).then(
+    this.apiService.getData(this.cityFrom, this.cityTo, this.departureDate).then(
       (response) => {
         for (let item of response.data) {
           let flight: Flight = {

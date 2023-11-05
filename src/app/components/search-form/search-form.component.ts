@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from './forbidden-name.directive';
 import { Router } from '@angular/router';
 import {TuiDay} from '@taiga-ui/cdk';
-import ApiService from '../../shared/services/api.service';
+import { ApiService } from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-search-form',
@@ -11,7 +11,7 @@ import ApiService from '../../shared/services/api.service';
   styleUrls: ['./search-form.component.scss']
 })
 export class SearchFormComponent implements OnInit {
-  constructor(private router: Router) {
+  constructor(private router: Router, private apiService: ApiService) {
   }
   
   search = { cityFrom: 'Zürich', cityTo: 'Frankfurt', departureDate: TuiDay.currentLocal().append({ day: 1 }), trains: false };
@@ -44,8 +44,8 @@ export class SearchFormComponent implements OnInit {
   }
 
   async loadData() {
-    const cityFrom = await ApiService.getLocationId(this.cityFrom.value)
-    const cityTo = await ApiService.getLocationId(this.cityTo.value)
+    const cityFrom = await this.apiService.getLocationId(this.cityFrom.value)
+    const cityTo = await this.apiService.getLocationId(this.cityTo.value)
     const departureDate = this.departureDate.value.toString().replace(/\./g, '/');
     const trains = this.trains.value;
     this.router.navigate(

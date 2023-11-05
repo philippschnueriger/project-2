@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Flight } from '../../shared/flight';
 import { FirestoreService } from '../../shared/services/firestore.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import ApiService from '../../shared/services/api.service';
+import { ApiService } from '../../shared/services/api.service';
 import { User } from 'firebase/auth';
 
 @Component({
@@ -16,7 +16,7 @@ export class ConnectionCardComponent {
   @Input() deleteOption: boolean = false;
   user: User | null = null; 
   isConnectionAvailable: boolean = true;
-  constructor(private authService: AuthService, private firestoreService: FirestoreService) {
+  constructor(private authService: AuthService, private firestoreService: FirestoreService, private apiService: ApiService) {
   }
   ngOnInit() {
     this.authService.user$.subscribe((user) => {
@@ -49,7 +49,7 @@ export class ConnectionCardComponent {
       const booking_token = this.item.deep_link.match(/booking_token=([^&]*)/)?.[1];
       if (booking_token) {
         try {
-          const response = await ApiService.validateBookingToken(booking_token);
+          const response = await this.apiService.validateBookingToken(booking_token);
           if (response === true) {
             this.isConnectionAvailable = true;
           } else {

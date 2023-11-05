@@ -1,8 +1,13 @@
+import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment'
 import axios from 'axios';
 import {TuiDay} from '@taiga-ui/cdk';
 
-class ApiService {
+@Injectable({
+  providedIn: 'root'
+})
+
+export class ApiService {
   constructor() {
     axios.defaults.headers.common['apikey'] = environment.kiwi.apiKey;
   }
@@ -41,5 +46,3 @@ class ApiService {
       .catch((error) => console.log(error));
   }
 }
-
-export default new ApiService();
