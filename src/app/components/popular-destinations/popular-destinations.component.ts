@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {TuiDay} from '@taiga-ui/cdk';
 import { ApiService } from '../../shared/services/api.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-popular-destinations',
@@ -24,13 +25,21 @@ export class PopularDestinationsComponent {
 
   async exploreDestination(destination: string) {
     const nextWeek = TuiDay.currentLocal().append({ day: 7 });
-    const cityTo = await this.apiService.getLocationId(destination)
+    let cityToId = '';
+    try {
+      const data$ = this.apiService.getLocationId(destination);
+      const data: any = await firstValueFrom(data$);
+      cityToId = data.locations[0].id;
+      console.log(cityToId)
+    } catch (error) {
+      console.error('Error getting location ID:', error);
+    }
     this.router.navigate(
       ['/results'],
       {
         queryParams: {
           cityFrom: 'ZRH',
-          cityTo: cityTo,
+          cityTo: cityToId,
           departureDate: nextWeek.toString().replace(/\./g, '/'),
         },
       }
