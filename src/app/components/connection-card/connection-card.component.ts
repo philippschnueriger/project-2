@@ -50,7 +50,7 @@ export class ConnectionCardComponent {
       if (booking_token) {
         try {
           const response = await this.apiService.validateBookingToken(booking_token);
-          if (response === true) {
+          if (response) {
             this.isConnectionAvailable = true;
           } else {
             this.isConnectionAvailable = false;

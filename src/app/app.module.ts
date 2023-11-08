@@ -18,6 +18,8 @@ import { ConnectionCardComponent } from './components/connection-card/connection
 import { CommonModule } from "@angular/common";
 import { FavouriteConnectionsComponent } from './components/favourite-connections/favourite-connections.component';
 import { PopularDestinationsComponent } from './components/popular-destinations/popular-destinations.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ApiInterceptor } from './shared/services/http-interceptor';
 
 @NgModule({
   declarations: [
@@ -40,9 +42,16 @@ import { PopularDestinationsComponent } from './components/popular-destinations/
     ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    TuiModule
+    TuiModule,
+    HttpClientModule
 ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

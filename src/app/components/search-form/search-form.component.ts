@@ -4,6 +4,7 @@ import { forbiddenNameValidator } from './forbidden-name.directive';
 import { Router } from '@angular/router';
 import {TuiDay} from '@taiga-ui/cdk';
 import { ApiService } from '../../shared/services/api.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-search-form',
@@ -44,16 +45,31 @@ export class SearchFormComponent implements OnInit {
   }
 
   async loadData() {
-    const cityFrom = await this.apiService.getLocationId(this.cityFrom.value)
-    const cityTo = await this.apiService.getLocationId(this.cityTo.value)
+    let cityFromId = '';
+    let cityToId = '';
+    try {
+      const data$ = this.apiService.getLocationId(this.cityFrom.value);
+      const data: any = await firstValueFrom(data$);
+      cityFromId = data.locations[0].id;
+    } catch (error) {
+      console.error('Error getting location ID:', error);
+    }
+    try {
+      const data$ = this.apiService.getLocationId(this.cityTo.value);
+      const data: any = await firstValueFrom(data$);
+      cityToId = data.locations[0].id;
+      console.log(cityToId)
+    } catch (error) {
+      console.error('Error getting location ID:', error);
+    }
     const departureDate = this.departureDate.value.toString().replace(/\./g, '/');
     const trains = this.trains.value;
     this.router.navigate(
       ['/results'],
       {
         queryParams: {
-          cityFrom: cityFrom,
-          cityTo: cityTo,
+          cityFrom: cityFromId,
+          cityTo: cityToId,
           departureDate: departureDate,
           trains: trains
         },

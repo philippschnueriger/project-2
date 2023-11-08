@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Flight } from '../../shared/flight';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../shared/services/api.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-results',
@@ -30,28 +31,34 @@ export class ResultsComponent implements OnInit {
   }
   data: Flight[] = [];
 
-  loadData() {
+  async loadData() {
     this.loading = true;
     this.data = [];
-    this.apiService.getData(this.cityFrom, this.cityTo, this.departureDate).then(
-      (response) => {
-        for (let item of response.data) {
-          let flight: Flight = {
-            id: item.id,
-            cityFrom: item.cityFrom,
-            cityTo: item.cityTo,
-            price: item.price,
-            deep_link: item.deep_link,
-            local_departure: item.local_departure,
-            local_arrival: item.local_arrival,
-            route: item.route,
-            duration: item.duration.total,
-          };
-          this.data.push(flight);
-        }
-        this.loading = false;
-      },
-    );
+    
+
+const data$ = this.apiService.getData(this.cityFrom, this.cityTo, this.departureDate);
+
+try {
+  const response: any = await firstValueFrom(data$);
+  for (let item of response.data) {
+    let flight: Flight = {
+      id: item.id,
+      cityFrom: item.cityFrom,
+      cityTo: item.cityTo,
+      price: item.price,
+      deep_link: item.deep_link,
+      local_departure: item.local_departure,
+      local_arrival: item.local_arrival,
+      route: item.route,
+      duration: item.duration.total,
+    };
+    this.data.push(flight);
+  }
+  this.loading = false;
+} catch (error) {
+  console.error('Error fetching data:', error);
+}
+
   }
 }
 
