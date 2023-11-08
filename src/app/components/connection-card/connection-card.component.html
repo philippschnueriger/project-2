@@ -2,6 +2,8 @@
     <tui-island>
         <h1>{{ item.cityFrom }} - {{ item.cityTo }}</h1>
         <h2>CHF {{ item.price }} | {{ getDuration(item.duration) }}</h2>
+        <button *ngIf="!deleteOption" class="favourite" tuiMarkerIcon src="tuiIconStarLarge" (click)="saveFavouriteConnection()" mode="link"></button>
+        <button *ngIf="deleteOption" class="favourite" tuiMarkerIcon src="tuiIconStarLarge" (click)="deleteFavouriteConnection()" mode="primary"></button>
         <div *ngFor="let leg of item.route">
             <p><b>{{ leg.cityFrom }} - {{ leg.cityTo }}</b></p>
             <p>{{leg.airline}} ({{leg.vehicle_type}})</p>
@@ -11,8 +13,6 @@
         <a href="{{ item.deep_link }}" target="_blank">
             <button tuiButton [disabled]="!isConnectionAvailable">Book</button>
         </a>
-        <button tuiButton *ngIf="!deleteOption" (click)="saveFavouriteConnection()">Save</button>
-        <button tuiButton *ngIf="deleteOption" (click)="deleteFavouriteConnection()">Delete</button>
         <p *ngIf="!isConnectionAvailable">This connection is not available anymore</p>
     </tui-island> 
 </div>

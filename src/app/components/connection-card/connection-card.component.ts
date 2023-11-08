@@ -38,11 +38,13 @@ export class ConnectionCardComponent {
     if (this.user?.uid) {
       this.firestoreService.saveFavouriteConnection(this.user.uid, this.item);
     }
+    this.deleteOption = true;
   }
   deleteFavouriteConnection() {
     if (this.user?.uid) {
       this.firestoreService.deleteFavouriteConnection(this.user?.uid, this.item.id);
     };
+    this.deleteOption = false;
   }
   async validateBookingToken() {
     if (this.item.deep_link) {
