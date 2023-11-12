@@ -63,7 +63,12 @@
         Departure date
           </tui-input-date>
         </div>
-        <div>
+        <div class="form-group">
+          <tui-input-number formControlName="adults" [min]="1" [max]="9" value="1">
+            Adults
+          </tui-input-number>
+        </div>
+        <div class="form-group">
           <tui-select tuiTextfieldSize="m" formControlName="bookingClass">
             Booking Class
             <input

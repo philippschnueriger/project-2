@@ -5,18 +5,25 @@ import { Router } from '@angular/router';
 import {TuiDay} from '@taiga-ui/cdk';
 import { ApiService } from '../../shared/services/api.service';
 import { firstValueFrom } from 'rxjs';
+import {tuiInputNumberOptionsProvider} from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-search-form',
   templateUrl: './search-form.component.html',
-  styleUrls: ['./search-form.component.scss']
+  styleUrls: ['./search-form.component.scss'],
+  providers: [
+    tuiInputNumberOptionsProvider({
+        decimal: 'never',
+        step: 1,
+    }),
+],
 })
 export class SearchFormComponent implements OnInit {
   constructor(private router: Router, private apiService: ApiService) {
     
   }
   
-  search = { cityFrom: 'Zürich', cityTo: 'Frankfurt', departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', trains: false };
+  search = { cityFrom: 'Zürich', cityTo: 'Frankfurt', departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', adults: 1, trains: false };
   min = TuiDay.currentLocal();
   bookingClasses = [
     'Economy',
@@ -66,6 +73,9 @@ export class SearchFormComponent implements OnInit {
         bookingClass: new FormControl(this.search.bookingClass, [
           Validators.required
         ]),
+        adults: new FormControl(this.search.adults, [
+          Validators.required
+        ]),
         trains: new FormControl(this.search.trains, [
           Validators.required
         ]),
@@ -87,12 +97,12 @@ export class SearchFormComponent implements OnInit {
       const data$ = this.apiService.getLocationId(this.cityTo.value);
       const data: any = await firstValueFrom(data$);
       cityToId = data.locations[0].id;
-      console.log(cityToId)
     } catch (error) {
       console.error('Error getting location ID:', error);
     }
     const departureDate = this.departureDate.value.toString().replace(/\./g, '/');
     const bookingClass = this.mapBookingClass(this.bookingClass.value);
+    const adults = this.adults.value;
     const vehicleType = this.mapVehicleType(this.trains.value);
     this.router.navigate(
       ['/results'],
@@ -102,6 +112,7 @@ export class SearchFormComponent implements OnInit {
           cityTo: cityToId,
           departureDate: departureDate,
           bookingClass: bookingClass,
+          adults: adults,
           vehicleType: vehicleType
         },
       }
@@ -119,6 +130,9 @@ export class SearchFormComponent implements OnInit {
   }
   get bookingClass() {
     return this.searchForm.get('bookingClass')!;
+  }
+  get adults() {
+    return this.searchForm.get('adults')!;
   }
   get trains() {
     return this.searchForm.get('trains')!;
