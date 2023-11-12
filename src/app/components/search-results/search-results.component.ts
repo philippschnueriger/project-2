@@ -16,6 +16,8 @@ export class ResultsComponent implements OnInit {
   cityFrom = '';
   cityTo = '';
   departureDate = '';
+  bookingClass = '';
+  vehicleType = '';
 
   loading = false;
 
@@ -25,6 +27,8 @@ export class ResultsComponent implements OnInit {
         this.cityFrom = params['cityFrom'];
         this.cityTo = params['cityTo'];
         this.departureDate = params['departureDate'];
+        this.bookingClass = params['bookingClass'];
+        this.vehicleType = params['vehicleType'];
       }
     );
     this.loadData();
@@ -36,7 +40,7 @@ export class ResultsComponent implements OnInit {
     this.data = [];
     
 
-const data$ = this.apiService.getData(this.cityFrom, this.cityTo, this.departureDate);
+const data$ = this.apiService.getData(this.cityFrom, this.cityTo, this.departureDate, this.bookingClass, this.vehicleType);
 
 try {
   const response: any = await firstValueFrom(data$);

@@ -13,10 +13,36 @@ import { firstValueFrom } from 'rxjs';
 })
 export class SearchFormComponent implements OnInit {
   constructor(private router: Router, private apiService: ApiService) {
+    
   }
   
-  search = { cityFrom: 'Zürich', cityTo: 'Frankfurt', departureDate: TuiDay.currentLocal().append({ day: 1 }), trains: false };
+  search = { cityFrom: 'Zürich', cityTo: 'Frankfurt', departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', trains: false };
   min = TuiDay.currentLocal();
+  bookingClasses = [
+    'Economy',
+    'Premium Economy',
+    'Business Class',
+    'First Class'
+  ];
+
+  mapBookingClass(bookingClass: string): string {
+    switch (bookingClass) {
+      case 'Economy':
+        return 'M';
+      case 'Premium Economy':
+        return 'W';
+      case 'Business Class':
+        return 'C';
+      case 'First Class':
+        return 'F';
+      default:
+        return 'M';
+    }
+  }
+
+  mapVehicleType(trains: boolean): string {
+    return trains ? 'train' : 'aircraft';
+  }
 
   searchForm!: FormGroup;
 
@@ -36,6 +62,9 @@ export class SearchFormComponent implements OnInit {
         departureDate: new FormControl(this.search.departureDate, [
           Validators.required,
           //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
+        ]),
+        bookingClass: new FormControl(this.search.bookingClass, [
+          Validators.required
         ]),
         trains: new FormControl(this.search.trains, [
           Validators.required
@@ -63,7 +92,8 @@ export class SearchFormComponent implements OnInit {
       console.error('Error getting location ID:', error);
     }
     const departureDate = this.departureDate.value.toString().replace(/\./g, '/');
-    const trains = this.trains.value;
+    const bookingClass = this.mapBookingClass(this.bookingClass.value);
+    const vehicleType = this.mapVehicleType(this.trains.value);
     this.router.navigate(
       ['/results'],
       {
@@ -71,7 +101,8 @@ export class SearchFormComponent implements OnInit {
           cityFrom: cityFromId,
           cityTo: cityToId,
           departureDate: departureDate,
-          trains: trains
+          bookingClass: bookingClass,
+          vehicleType: vehicleType
         },
       }
     );
@@ -85,6 +116,9 @@ export class SearchFormComponent implements OnInit {
   }
   get departureDate() {
     return this.searchForm.get('departureDate')!;
+  }
+  get bookingClass() {
+    return this.searchForm.get('bookingClass')!;
   }
   get trains() {
     return this.searchForm.get('trains')!;
