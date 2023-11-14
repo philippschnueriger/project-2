@@ -5,17 +5,21 @@
         [class.cross-validation-error]="searchForm.errors?.['identityRevealed'] && (searchForm.touched || searchForm.dirty)"
       >
         <div class="form-group">
+          <div class="radio-buttons">
           <tui-radio-labeled
+              id="radio-return"
               formControlName="tripmode"
               [item]="tripmodes[0]"
           >
               Return
           </tui-radio-labeled>
           <tui-radio-labeled
+              id="radio-oneway"
               formControlName="tripmode"
               [item]="tripmodes[1]"
           >One-way
         </tui-radio-labeled>
+      </div>
         </div>
         <div class="form-group">
           <tui-input

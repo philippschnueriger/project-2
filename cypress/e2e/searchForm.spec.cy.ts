@@ -3,7 +3,10 @@ describe('Search Form Tests', () => {
       // Visit the page with the form
       cy.visit('/');
     });
-    it('Should submit the form with valid data', () => {  
+    it('One-way: should submit the form with valid data', () => { 
+      // Select one-way
+      cy.get('tui-radio-labeled[id="radio-oneway"]').click();
+
       // Fill in "From" field
       cy.get('#cityFrom').type('{selectall}{del}');
       cy.get('#cityFrom').type('New York');
@@ -23,11 +26,38 @@ describe('Search Form Tests', () => {
       cy.get('button[type=submit]').click();
   
       // Verify that correct url is called
-      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=new-york-city_ny_us&cityTo=los-angeles_ca_us&departureDate=20%2F02%2F3110&trains=true');
+      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=new-york-city_ny_us&cityTo=los-angeles_ca_us&departureDate=20%2F02%2F3110&bookingClass=M&adults=1&vehicleType=train');
+    });
+
+    it('Return: should submit the form with valid data', () => { 
+      // Select return
+      cy.get('#radio-return').click();
+      // Fill in "From" field
+      cy.get('#cityFrom').type('{selectall}{del}');
+      cy.get('#cityFrom').type('New York');
+  
+      // Fill in "To" field
+      cy.get('#cityTo').type('{selectall}{del}');
+      cy.get('#cityTo').type('Los Angeles');
+  
+      // Fill in "Departure Date" field
+      cy.get('#departureAndReturnDate').type('{selectall}{del}');
+      cy.get('#departureAndReturnDate').type('21.11.2024 – 28.11.2024');
+  
+      // Check "Trains only" checkbox
+      cy.get('#trains').click();
+  
+      // Submit the form
+      cy.get('button[type=submit]').click();
+  
+      // Verify that correct url is called
+      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=new-york-city_ny_us&cityTo=los-angeles_ca_us&departureDate=15%2F11%2F2023&bookingClass=M&adults=1&vehicleType=train');
     });
   
     it('Should display error messages for invalid data', () => {
-  
+      // Select one-way
+      cy.get('tui-radio-labeled[id="radio-oneway"]').click();
+
       // Submit the form with empty fields
       cy.get('#cityFrom').type('{selectall}{del}');
       cy.get('button[type=submit]').should('be.disabled')
