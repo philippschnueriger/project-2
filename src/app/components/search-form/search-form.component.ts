@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from './forbidden-name.directive';
 import { Router } from '@angular/router';
-import {TuiDay} from '@taiga-ui/cdk';
+import {TuiDay, TuiDayRange} from '@taiga-ui/cdk';
 import { ApiService } from '../../shared/services/api.service';
 import { firstValueFrom } from 'rxjs';
 import {tuiInputNumberOptionsProvider} from '@taiga-ui/kit';
@@ -22,8 +22,8 @@ export class SearchFormComponent implements OnInit {
   constructor(private router: Router, private apiService: ApiService) {
     
   }
-  
-  search = { cityFrom: 'Zürich', cityTo: 'Frankfurt', departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', adults: 1, trains: false };
+  tripmodes = ['return', 'one-way'];
+  search = { tripmode: this.tripmodes[0], cityFrom: 'Zürich', cityTo: 'Frankfurt', departureAndReturnDate: new TuiDayRange(TuiDay.currentLocal().append({ day: 7 }), TuiDay.currentLocal().append({ day: 14 })), departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', adults: 1, trains: false };
   min = TuiDay.currentLocal();
   bookingClasses = [
     'Economy',
@@ -56,6 +56,7 @@ export class SearchFormComponent implements OnInit {
   ngOnInit(): void {
     this.searchForm = new FormGroup(
       {
+        tripmode: new FormControl(this.search.tripmode),
         cityFrom: new FormControl(this.search.cityFrom, [
           Validators.required,
           Validators.minLength(3),
@@ -65,6 +66,10 @@ export class SearchFormComponent implements OnInit {
           Validators.required,
           Validators.minLength(3),
           forbiddenNameValidator(/XYZ/i),
+        ]),
+        departureAndReturnDate: new FormControl(this.search.departureAndReturnDate, [
+          Validators.required,
+          //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
         ]),
         departureDate: new FormControl(this.search.departureDate, [
           Validators.required,
@@ -119,11 +124,17 @@ export class SearchFormComponent implements OnInit {
     );
   }
 
+  get tripmode() {
+    return this.searchForm.get('tripmode')!;
+  }
   get cityFrom() {
     return this.searchForm.get('cityFrom')!;
   }
   get cityTo() {
     return this.searchForm.get('cityTo')!;
+  }
+  get departureAndReturnDate() {
+    return this.searchForm.get('departureAndReturnDate')!;
   }
   get departureDate() {
     return this.searchForm.get('departureDate')!;

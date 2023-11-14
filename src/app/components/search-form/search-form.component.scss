@@ -18,6 +18,11 @@ tui-input {
     margin: 20px 10px 20px 0;
 }
 
+tui-input-date-range {
+    width: 240px;
+    margin: 20px 10px 20px 0;
+}
+
 tui-input-date {
     width: 240px;
     margin: 20px 10px 20px 0;
@@ -35,4 +40,8 @@ tui-input-number {
 
 button {
     margin: 20px 20px 20px 0;
+}
+
+tui-radio-labeled {
+    width: 100vw;
 }
