@@ -26,7 +26,7 @@ describe('Search Form Tests', () => {
       cy.get('button[type=submit]').click();
   
       // Verify that correct url is called
-      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=new-york-city_ny_us&cityTo=los-angeles_ca_us&departureDate=20%2F02%2F3110&bookingClass=M&adults=1&vehicleType=train');
+      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=new-york-city_ny_us&cityTo=los-angeles_ca_us&departureDate=20%2F02%2F3110&bookingClass=M&adults=1&vehicleType=train&sort=quality');
     });
 
     it('Return: should submit the form with valid data', () => { 
@@ -51,7 +51,7 @@ describe('Search Form Tests', () => {
       cy.get('button[type=submit]').click();
   
       // Verify that correct url is called
-      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=new-york-city_ny_us&cityTo=los-angeles_ca_us&departureDate=15%2F11%2F2023&bookingClass=M&adults=1&vehicleType=train');
+      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=new-york-city_ny_us&cityTo=los-angeles_ca_us&departureDate=18%2F11%2F2023&bookingClass=M&adults=1&vehicleType=train&sort=quality');
     });
   
     it('Should display error messages for invalid data', () => {
