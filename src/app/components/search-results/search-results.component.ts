@@ -19,6 +19,7 @@ export class ResultsComponent implements OnInit {
   bookingClass = '';
   adults = 1;
   vehicleType = '';
+  sort='';
 
   loading = false;
 
@@ -31,6 +32,12 @@ export class ResultsComponent implements OnInit {
         this.bookingClass = params['bookingClass'];
         this.adults = params['adults'];
         this.vehicleType = params['vehicleType'];
+        const newSort = params['sort'];
+
+        if (newSort !== this.sort) {
+          this.sort = newSort;
+          this.loadData();
+        }
       }
     );
     this.loadData();
@@ -41,29 +48,28 @@ export class ResultsComponent implements OnInit {
     this.loading = true;
     this.data = [];
     
+    const data$ = this.apiService.getData(this.cityFrom, this.cityTo, this.departureDate, this.bookingClass, this.adults, this.vehicleType, this.sort);
 
-const data$ = this.apiService.getData(this.cityFrom, this.cityTo, this.departureDate, this.bookingClass, this.adults, this.vehicleType);
-
-try {
-  const response: any = await firstValueFrom(data$);
-  for (let item of response.data) {
-    let flight: Flight = {
-      id: item.id,
-      cityFrom: item.cityFrom,
-      cityTo: item.cityTo,
-      price: item.price,
-      deep_link: item.deep_link,
-      local_departure: item.local_departure,
-      local_arrival: item.local_arrival,
-      route: item.route,
-      duration: item.duration.total,
-    };
-    this.data.push(flight);
-  }
-  this.loading = false;
-} catch (error) {
-  console.error('Error fetching data:', error);
-}
+    try {
+      const response: any = await firstValueFrom(data$);
+      for (let item of response.data) {
+        let flight: Flight = {
+          id: item.id,
+          cityFrom: item.cityFrom,
+          cityTo: item.cityTo,
+          price: item.price,
+          deep_link: item.deep_link,
+          local_departure: item.local_departure,
+          local_arrival: item.local_arrival,
+          route: item.route,
+          duration: item.duration.total,
+        };
+        this.data.push(flight);
+      }
+      this.loading = false;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
 
   }
 }

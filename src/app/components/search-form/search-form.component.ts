@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from './forbidden-name.directive';
 import { Router } from '@angular/router';
@@ -19,11 +19,13 @@ import {tuiInputNumberOptionsProvider} from '@taiga-ui/kit';
 ],
 })
 export class SearchFormComponent implements OnInit {
+  @Input() filters: any;
   constructor(private router: Router, private apiService: ApiService) {
     
   }
   tripmodes = ['return', 'one-way'];
-  search = { tripmode: this.tripmodes[0], cityFrom: 'Zürich', cityTo: 'Frankfurt', departureAndReturnDate: new TuiDayRange(TuiDay.currentLocal().append({ day: 7 }), TuiDay.currentLocal().append({ day: 14 })), departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', adults: 1, trains: false };
+  search = { tripmode: this.tripmodes[0], cityFrom: 'Zürich', cityTo: 'Frankfurt', departureAndReturnDate: new TuiDayRange(TuiDay.currentLocal().append({ day: 7 }), TuiDay.currentLocal().append({ day: 14 })), departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', adults: 1, trains: false};
+  sort = 'quality';
   min = TuiDay.currentLocal();
   bookingClasses = [
     'Economy',
@@ -88,6 +90,11 @@ export class SearchFormComponent implements OnInit {
     );
   }
 
+  updateUrl(option: string): void {
+    this.sort = option;
+    this.loadData();
+  }
+
   async loadData() {
     let cityFromId = '';
     let cityToId = '';
@@ -118,7 +125,8 @@ export class SearchFormComponent implements OnInit {
           departureDate: departureDate,
           bookingClass: bookingClass,
           adults: adults,
-          vehicleType: vehicleType
+          vehicleType: vehicleType,
+          sort: this.sort,
         },
       }
     );

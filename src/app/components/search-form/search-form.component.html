@@ -126,4 +126,9 @@
     
   </div>
 </form>
+<div *ngIf="filters">
+  <button tuiButton (click)="updateUrl('quality')">Best</button>
+<button tuiButton (click)="updateUrl('price')">Cheapest</button>
+<button tuiButton (click)="updateUrl('duration')">Fastest</button>
+</div>
     

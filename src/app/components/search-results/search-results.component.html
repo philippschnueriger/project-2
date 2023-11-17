@@ -5,5 +5,6 @@
     icon="tuiIconArrowLeft"
     routerLink="/"
 ></button>
+<app-search-form [filters]="true"></app-search-form>
 <tui-loader [showLoader]="loading"/>
 <app-connection-card *ngFor="let item of data" [item]="item"></app-connection-card>
