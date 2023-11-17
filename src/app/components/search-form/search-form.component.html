@@ -127,8 +127,8 @@
   </div>
 </form>
 <div *ngIf="filters">
-  <button tuiButton (click)="updateUrl('quality')">Best</button>
-<button tuiButton (click)="updateUrl('price')">Cheapest</button>
-<button tuiButton (click)="updateUrl('duration')">Fastest</button>
+  <button tuiButton (click)="updateUrl('quality')" [appearance]="(sort === 'quality') ? 'secondary' : 'primary'">Best</button>
+  <button tuiButton (click)="updateUrl('price')" [appearance]="(sort === 'price') ? 'secondary' : 'primary'">Cheapest</button>
+  <button tuiButton (click)="updateUrl('duration')" [appearance]="(sort === 'duration') ? 'secondary' : 'primary'">Fastest</button>
 </div>
     
