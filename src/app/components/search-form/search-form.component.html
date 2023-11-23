@@ -6,20 +6,15 @@
     >
       <div class="form-options">
         <div class="form-group">
-          <div class="radio-buttons">
-            <tui-radio-labeled
-              id="radio-return"
-              formControlName="tripmode"
-              [item]="tripmodes[0]"
-            >
-              Return
-            </tui-radio-labeled>
-            <tui-radio-labeled
-              id="radio-oneway"
-              formControlName="tripmode"
-              [item]="tripmodes[1]"
-              >One-way
-            </tui-radio-labeled>
+          <div class="form-group">
+            <tui-select tuiTextfieldSize="m" formControlName="tripmode">
+              Trip mode
+              <input placeholder="Choose your hero" tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="tripmodes"
+              ></tui-data-list-wrapper>
+            </tui-select>
           </div>
           <div class="form-group">
             <tui-input-number
@@ -99,7 +94,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="tripmode.value == 'return'" class="form-group">
+        <div *ngIf="tripmode.value == 'Return'" class="form-group">
           <tui-input-date-range
             id="departureAndReturnDate"
             formControlName="departureAndReturnDate"
@@ -109,7 +104,7 @@
             Dates
           </tui-input-date-range>
         </div>
-        <div *ngIf="tripmode.value == 'one-way'" class="form-group">
+        <div *ngIf="tripmode.value == 'One-way'" class="form-group">
           <tui-input-date
             id="departureDate"
             formControlName="departureDate"

@@ -23,7 +23,7 @@ export class SearchFormComponent implements OnInit {
   constructor(private router: Router, private apiService: ApiService) {
     
   }
-  tripmodes = ['return', 'one-way'];
+  tripmodes = ['Return', 'One-way'];
   search = { tripmode: this.tripmodes[0], cityFrom: 'Zürich', cityTo: 'Frankfurt', departureAndReturnDate: new TuiDayRange(TuiDay.currentLocal().append({ day: 7 }), TuiDay.currentLocal().append({ day: 14 })), departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', adults: 1, trains: false};
   sort = 'quality';
   min = TuiDay.currentLocal();

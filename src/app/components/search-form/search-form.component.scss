@@ -31,6 +31,7 @@ tui-input-date-range {
 }
 
 tui-input-date {
+    --tui-base-01: #F1F3F5;
     width: 240px;
     margin: 20px 10px 20px 0;
 }
@@ -57,12 +58,15 @@ tui-radio-labeled {
 
 .form-options {
     width: 100%;
+    margin-top: 32px;
 }
 .form-options > * {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .form-inputs {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
 }
