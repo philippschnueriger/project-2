@@ -9,8 +9,8 @@ describe('Navigation Tests', () => {
       // Check if the URL has changed to the target page (e.g., favourites page)
       cy.url().should('include', '/login');
   
-      // Check if the content specific to the about page is visible
-      cy.contains('Login').should('be.visible');
+      // Check if the content specific to the login page is visible
+      cy.get('h1').contains('Login').should('be.visible');
   
       // Go back to the previous page
       cy.go('back');
