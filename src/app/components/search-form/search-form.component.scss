@@ -1,7 +1,8 @@
-:host {
-    display: block;
-    width: 100%;
-  }
+:host ::ng-deep [tuiWrapper][data-appearance='textfield'] {
+    box-shadow: none;
+    //background-color: #F1F3F5;
+    border-radius: 10px;
+}
 
 form > div {
     display: flex;
@@ -12,13 +13,19 @@ form > div {
     display: flex;
     flex-wrap: wrap;
 }
+.t-input {
+    color: red;
+}
 
 tui-input {
+    --tui-base-01: #F1F3F5;
     width: 240px;
     margin: 20px 10px 20px 0;
+    //border-radius: 10px;
 }
 
 tui-input-date-range {
+    --tui-base-01: #F1F3F5;
     width: 240px;
     margin: 20px 10px 20px 0;
 }
@@ -29,7 +36,8 @@ tui-input-date {
 }
 
 tui-select {
-    width: 240px;
+    width: 150px;
+    font-size: 12px;
     margin: 20px 10px 20px 0;
 }
 
@@ -39,12 +47,22 @@ tui-input-number {
 }
 
 button {
+    width: 90px;
     margin: 20px 20px 20px 0;
 }
 
 tui-radio-labeled {
     width: 100px;
 }
-.radio-buttons {
-    width: 100vw;
+
+.form-options {
+    width: 100%;
+}
+.form-options > * {
+    display: flex;
+}
+
+.form-inputs {
+    width: 100%;
+    display: flex;
 }
