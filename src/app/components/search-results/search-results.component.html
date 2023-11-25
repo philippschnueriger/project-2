@@ -1,10 +1,18 @@
-<button
+<!-- <button
     tuiIconButton
     appearance="outline"
     type="button"
     icon="tuiIconArrowLeft"
     routerLink="/"
-></button>
+    class="backButton"
+></button> -->
+<button
+    routerLink="/"
+    class="backButton"
+>
+    <img src="../../../assets/icons/down-arrow.svg" class="backArrowIcon"/>
+    <div class="destination">New York</div>
+</button>
 <app-search-form [filters]="true"></app-search-form>
 <tui-loader [showLoader]="loading"/>
 <app-connection-card *ngFor="let item of data" [item]="item"></app-connection-card>

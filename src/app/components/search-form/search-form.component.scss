@@ -69,8 +69,31 @@ tui-radio-labeled {
     width: 100%;
 }
 
+.show-form-inputs {
+    display: none;
+}
+
+.filters {
+    display: flex;
+    button {
+        width: 30%;
+        margin: none;
+        padding: none;
+    }
+}
+
 /* tablets */
 @media (min-width: 768px) {
+
+    .filters {
+        button {
+            width: 150px;
+        }
+    }
+
+    .show-form-inputs {
+        display: block;
+    }
 
     .form-inputs {
         width: 100%;

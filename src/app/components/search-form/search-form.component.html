@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="form-inputs">
+      <div class="form-inputs" [ngClass]="{ 'show-form-inputs': filters }">
         <div class="form-group">
           <tui-input
             type="text"
@@ -127,7 +127,7 @@
     </div>
   </div>
 </form>
-<div *ngIf="filters">
+<div *ngIf="filters" class="filters">
   <button
     tuiButton
     (click)="updateUrl('quality')"

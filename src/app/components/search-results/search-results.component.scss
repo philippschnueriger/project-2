@@ -1,5 +1,30 @@
 :host {
-    display: block;
-    width: 100%;
-    min-height: 100vh;
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.backArrowIcon {
+  position: absolute;
+  left: 20px;
+  margin-top: 4px;
+}
+
+.backButton {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  background-color: #f1f3f5;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* tablets */
+@media (min-width: 768px) {
+  .backButton {
+    display: none;
   }
+}
