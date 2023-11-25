@@ -14,7 +14,7 @@
         </ul>
       </nav>
       <div class="mobile-navbar">
-        <div class="navbar-toggle" onclick="toggleNav()">
+        <div class="navbar-toggle" (click)="toggleNav()">
           <div class="bar"></div>
           <div class="bar"></div>
           <div class="bar"></div>
@@ -33,4 +33,16 @@
       <a href="https://github.com/philippschnueriger" target="_blank">About</a>
     </div>
   </footer>
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav" [ngClass]="{ 'show': mobileNavOpen }">
+    <button class="close-btn" (click)="toggleNav()">
+      <span class="close-icon"></span>
+    </button>
+    <ul class="mobile-nav-links">
+      <li ><a routerLink="/" (click)="toggleNav()">Home</a></li>
+      <li><a routerLink="/favourites" (click)="toggleNav()">Favourites</a></li>
+      <li><a routerLink="/profile" (click)="toggleNav()">Settings</a></li>
+      <li><a routerLink="/login" (click)="toggleNav()">Login</a></li> 
+    </ul>
+  </div>
 </tui-root>

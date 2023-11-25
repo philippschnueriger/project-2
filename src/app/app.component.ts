@@ -10,9 +10,14 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   firestore: Firestore = inject(Firestore)
   items$: Observable<any[]>;
+  mobileNavOpen = false;
 
   constructor() {
     const aCollection = collection(this.firestore, 'items')
     this.items$ = collectionData(aCollection);
+  }
+
+  toggleNav() {
+    this.mobileNavOpen = !this.mobileNavOpen;
   }
 }
