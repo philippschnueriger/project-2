@@ -7,8 +7,8 @@
 
 .image-container {
   position: relative;
-  width: 204px;
-  height: 204px;
+  width: 100%;
+  height: calc(100vw - 40px);
   overflow: hidden;
   border-radius: 10px;
   margin-right: 36px;
@@ -30,4 +30,13 @@
   color: white;
   bottom: 10px;
   left: 10px;
+}
+
+
+/* tablets */
+@media (min-width: 768px) {
+  .image-container {
+    width: 204px;
+    height: 204px;
+  }
 }
