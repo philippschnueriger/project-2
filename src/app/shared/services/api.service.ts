@@ -14,14 +14,16 @@ export class ApiService {
   baseUrl = environment.kiwi.baseUrl;
   nextWeek = TuiDay.currentLocal().append({ day: 7 });
 
-  getData(from = 'ZRH', to = 'FRA', departureDate = this.nextWeek.toString().replace(/\./g, '/'), bookingClass='C', adults=1, vehicleType = 'aircraft', sort='quality') {
+  getData(from = 'ZRH', to = 'FRA', departureDate = this.nextWeek.toString().replace(/\./g, '/'), returnDate = this.nextWeek.toString().replace(/\./g, '/'), bookingClass='C', adults=1, vehicleType = 'aircraft', sort='quality') {
     const url = `${this.baseUrl}/v2/search?fly_from=${from}`
                 + `&fly_to=${to}`
                 + `&date_from=${departureDate}&date_to=${departureDate}`
+                + `&return_from=${returnDate}&return_to=${returnDate}`
                 + `&selected_cabins=${bookingClass}&adults=${adults}`
                 + `&vehicle_type=${vehicleType}`
                 + `&curr=CHF`
                 + `&sort=${sort}`
+                + `&limit=1`
 
     return this.http.get(url);
   }

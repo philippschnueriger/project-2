@@ -4,8 +4,7 @@
   }
 
 tui-island {
-   margin: 20px 20px 20px 0;
-   position: relative;
+  margin: 20px 0;
 }
 
 .favourite {
@@ -14,4 +13,41 @@ tui-island {
   right: 10px;
   border: none;
   background-color: red;
+}
+
+.border {
+  border-bottom: 1px solid black;
+}
+
+.grid-container {
+  margin: 50px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns of equal width */
+  //grid-auto-rows: minmax(20px, auto); /* Row height with minimum 100px */
+  grid-gap: 0px; /* Gap between grid items */
+  /* Optionally, add additional styles like width, margin, etc. */
+}
+
+.grid-item {
+  /* Style each grid item */
+  padding: 10px;
+  text-align: center;
+}
+
+.full-width {
+  grid-column: 1 / span 3; /* Span across all 3 columns */
+  height: 2px;
+}
+
+hr {
+  height: 1px;
+  margin: 0 -15px;
+}
+
+.booking {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 4px;
+  margin-bottom: -10px;
+  align-items: center;
 }

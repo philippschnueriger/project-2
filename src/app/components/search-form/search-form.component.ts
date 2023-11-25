@@ -98,6 +98,8 @@ export class SearchFormComponent implements OnInit {
   async loadData() {
     let cityFromId = '';
     let cityToId = '';
+    let departureDateValue = '';
+    let returnDateValue = '';
     try {
       const data$ = this.apiService.getLocationId(this.cityFrom.value);
       const data: any = await firstValueFrom(data$);
@@ -112,7 +114,14 @@ export class SearchFormComponent implements OnInit {
     } catch (error) {
       console.error('Error getting location ID:', error);
     }
-    const departureDate = this.departureDate.value.toString().replace(/\./g, '/');
+    if (this.tripmode.value == "Return"){
+      departureDateValue = this.departureAndReturnDate.value.from.toString().replace(/\./g, '/');
+      returnDateValue = this.departureAndReturnDate.value.to.toString().replace(/\./g, '/');
+    } else {
+      departureDateValue = this.departureDate.value.toString().replace(/\./g, '/');
+    } 
+    console.log(departureDateValue, returnDateValue)
+
     const bookingClass = this.mapBookingClass(this.bookingClass.value);
     const adults = this.adults.value;
     const vehicleType = this.mapVehicleType(this.trains.value);
@@ -122,7 +131,8 @@ export class SearchFormComponent implements OnInit {
         queryParams: {
           cityFrom: cityFromId,
           cityTo: cityToId,
-          departureDate: departureDate,
+          departureDate: departureDateValue,
+          returnDate: returnDateValue,
           bookingClass: bookingClass,
           adults: adults,
           vehicleType: vehicleType,

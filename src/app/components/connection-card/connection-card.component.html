@@ -1,18 +1,51 @@
 <div>
     <tui-island>
-        <h1>{{ item.cityFrom }} - {{ item.cityTo }}</h1>
-        <h2>CHF {{ item.price }} | {{ getDuration(item.duration) }}</h2>
+        <p>{{ tripSummary?.operators }}</p>
+        <!-- <h1>{{ item.cityFrom }} - {{ item.cityTo }}</h1>
+        <h2>CHF {{ item.price }} | {{ getDuration(item.duration) }}</h2> -->
         <button *ngIf="!deleteOption" class="favourite" tuiMarkerIcon src="tuiIconStarLarge" (click)="saveFavouriteConnection()" mode="link"></button>
         <button *ngIf="deleteOption" class="favourite" tuiMarkerIcon src="tuiIconStarLarge" (click)="deleteFavouriteConnection()" mode="primary"></button>
-        <div *ngFor="let leg of item.route">
-            <p><b>{{ leg.cityFrom }} - {{ leg.cityTo }}</b></p>
+       
+        <div class="grid-container">
+            <div class="grid-item">{{ tripSummary?.departure?.departureTime | date:'hh:mm' }}</div>
+            <div class="grid-item border">{{ tripSummary?.departure?.duration }}</div>
+            <div class="grid-item">{{ tripSummary?.departure?.arrivalTime | date:'hh:mm' }}</div>
+            <div class="grid-item">{{ tripSummary?.departure?.from }}</div>
+            <div class="grid-item">Stops: {{ tripSummary?.departure?.stops }}</div>
+            <div class="grid-item">{{ tripSummary?.departure?.to }}</div>
+        </div>
+
+        <div class="grid-container" *ngIf="tripSummary?.return">
+            <div class="grid-item">{{ tripSummary?.return?.departureTime | date:'hh:mm' }}</div>
+            <div class="grid-item border">{{ tripSummary?.return?.duration }}</div>
+            <div class="grid-item">{{ tripSummary?.return?.arrivalTime | date:'hh:mm' }}</div>
+            <div class="grid-item">{{ tripSummary?.return?.from }}</div>
+            <div class="grid-item">Stops: {{ tripSummary?.return?.stops }}</div>
+            <div class="grid-item">{{ tripSummary?.return?.to }}</div>
+        </div>
+
+        <hr />
+
+        <!-- <div *ngFor="let leg of item.route">
+            <div class="grid-container">
+                <div class="grid-item">{{ leg.local_departure | date:'hh:mm' }}</div>
+                <div class="grid-item border">24h</div>
+                <div class="grid-item">15:05</div>
+                <div class="grid-item">{{ leg.flyFrom }}</div>
+                <div class="grid-item">Direct</div>
+                <div class="grid-item">{{ leg.flyTo }}</div>
+            </div>
+             <p><b>{{ leg.cityFrom }} - {{ leg.cityTo }}</b></p>
             <p>{{leg.airline}} ({{leg.vehicle_type}})</p>
             <p>Departure: {{ leg.local_departure | date:'dd.MM.yy hh:mm' }}</p>
             <p>Arrival: {{ leg.local_arrival | date:'dd.MM.yy hh:mm' }}</p>
+        </div> -->
+        <div class="booking">
+            <h2>CHF {{ item.price }} </h2>
+            <a href="{{ item.deep_link }}" target="_blank">
+                <button tuiButton [disabled]="!isConnectionAvailable">Book</button>
+            </a>
         </div>
-        <a href="{{ item.deep_link }}" target="_blank">
-            <button tuiButton [disabled]="!isConnectionAvailable">Book</button>
-        </a>
         <p *ngIf="!isConnectionAvailable">This connection is not available anymore</p>
     </tui-island> 
 </div>
