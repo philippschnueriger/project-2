@@ -34,6 +34,7 @@ export function getTripSummary(item: any) {
       arrivalTime: item.local_arrival || '',
       stops: findIndexByFlyTo(item),
       duration: getDuration(item.duration.departure),
+      route: item.route.slice(0,  findIndexByFlyTo(item)+1),
     },
   };
   if (item.duration.return > 0) {
@@ -45,6 +46,7 @@ export function getTripSummary(item: any) {
       arrivalTime: item.route?.[item.route?.length - 1].local_arrival || '',
       stops: (item.route?.length || 0) - findIndexByFlyTo(item) - 2,
       duration: getDuration(item.duration.return),
+      route: item.route.slice(findIndexByFlyTo(item)+1)
     };
   }
   return tripSummary;

@@ -1,19 +1,19 @@
-<p>{{ tripSummary?.departure?.departureTime | date : "dd/MM/yyyy" }}</p>
+<p>{{ tripSummary?.departureTime | date : "dd/MM/yyyy" }}</p>
 <tui-island>
-  <p>{{ tripSummary?.operators }}</p>
+  <!-- <p>{{ tripSummary?.operators }}</p> -->
   <div class="grid-container">
     <div class="grid-item">
-      {{ tripSummary?.departure?.departureTime | date : "hh:mm" }}
+      {{ tripSummary?.departureTime | date : "hh:mm" }}
     </div>
     <div class="grid-item border">
-      {{ tripSummary?.departure?.duration }}
+      {{ tripSummary?.duration }}
     </div>
     <div class="grid-item">
-      {{ tripSummary?.departure?.arrivalTime | date : "hh:mm" }}
+      {{ tripSummary?.arrivalTime | date : "hh:mm" }}
     </div>
-    <div class="grid-item">{{ tripSummary?.departure?.from }}</div>
-    <div class="grid-item">Stops: {{ tripSummary?.departure?.stops }}</div>
-    <div class="grid-item">{{ tripSummary?.departure?.to }}</div>
+    <div class="grid-item">{{ tripSummary?.from }}</div>
+    <div class="grid-item">Stops: {{ tripSummary?.stops }}</div>
+    <div class="grid-item">{{ tripSummary?.to }}</div>
   </div>
   <button class="expand" (click)="toggleExpand()" [class.rotate-180]="expand">
     <img src="../../../assets/icons/down-arrow.svg" />
@@ -21,7 +21,7 @@
   <div *ngIf="expand">
     <hr />
     <div
-      *ngFor="let leg of item.route; let last = last"
+      *ngFor="let leg of tripSummary.route; let last = last"
       class="connection-details"
     >
       <div>{{ leg.airline }}</div>

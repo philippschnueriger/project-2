@@ -67,14 +67,14 @@
       <h2>Outbound</h2>
       <app-connection-card-detail
         [item]="item"
-        [tripSummary]="tripSummary"
+        [tripSummary]="tripSummary?.departure"
       ></app-connection-card-detail>
     </div>
     <div class="inbound">
       <h2>Inbound</h2>
       <app-connection-card-detail
         [item]="item"
-        [tripSummary]="tripSummary"
+        [tripSummary]="tripSummary?.return"
       ></app-connection-card-detail>
     </div>
     <div class="booking">
