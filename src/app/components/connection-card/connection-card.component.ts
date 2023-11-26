@@ -18,6 +18,8 @@ export class ConnectionCardComponent {
   user: User | null = null; 
   isConnectionAvailable: boolean = true;
   tripSummary: TripSummary  | null = null; 
+  showOverlay: boolean = false;
+  expand: boolean = false;
   constructor(private authService: AuthService, private firestoreService: FirestoreService, private apiService: ApiService) {
   }
   ngOnInit() {
@@ -108,5 +110,13 @@ export class ConnectionCardComponent {
       }
     }
     return tripSummary
+  }
+
+  toggleOverlay() {
+    this.showOverlay = !this.showOverlay;
+  }
+
+  toggleExpand() {
+    this.expand = !this.expand;
   }
 }
