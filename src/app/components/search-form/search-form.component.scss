@@ -75,6 +75,7 @@ tui-radio-labeled {
 
 .filters {
     display: flex;
+    width: calc(100vw - 40px);
     button {
         width: 30%;
         margin: none;

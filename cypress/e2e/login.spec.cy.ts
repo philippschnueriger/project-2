@@ -19,13 +19,14 @@ describe('Login Functionality', () => {
       cy.get('button[type=submit]').click();
   
       // Assuming there's a success message or redirect after successful login
-      cy.url().should('have.string', '/profile');
+      cy.url().should('have.string', '/favourites');
     });
 
     it('Should successfully log out', () => {        
         // Assuming there's a logout button
-        cy.get('#logout').click();
-    
+        cy.get(".logout").click()
+        // Try to visit favourites
+        cy.visit('/favourites');
         // Assuming there's a success message or redirect after successful login
         cy.url().should('have.string', '/login');
       });

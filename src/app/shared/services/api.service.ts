@@ -23,7 +23,7 @@ export class ApiService {
                 + `&vehicle_type=${vehicleType}`
                 + `&curr=CHF`
                 + `&sort=${sort}`
-                + `&limit=1`
+                + `&limit=20`
 
     return this.http.get(url);
   }

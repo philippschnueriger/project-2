@@ -51,7 +51,8 @@ describe('Search Form Tests', () => {
       cy.get('button[type=submit]').click();
   
       // Verify that correct url is called
-      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=new-york-city_ny_us&cityTo=los-angeles_ca_us&departureDate=25%2F11%2F2023&bookingClass=M&adults=1&vehicleType=train&sort=quality');
+      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=new-york-city_ny_us&cityTo=los-angeles_ca_us&departureDate=21%2F11%2F2024&returnDate=28%2F11%2F2024&bookingClass=M&adults=1&vehicleType=train&sort=quality');
+
     });
   
     it.skip('Should display error messages for invalid data', () => {
