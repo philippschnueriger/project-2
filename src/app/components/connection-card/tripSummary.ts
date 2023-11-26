@@ -36,7 +36,9 @@ export interface TripSummary {
       arrivalTime: string;
       stops: number;
       duration: string;
-      route?: Route[];
+      route: Route[];
+      operators?: string;
+      layover?: string;
     };
     return?: {
       from: string;
@@ -45,6 +47,8 @@ export interface TripSummary {
       arrivalTime: string | undefined;
       stops: number;
       duration: string;
-      route?: Route[];
+      route: Route[];
+      operators?: string;
+      layover?: string;
     };
   }

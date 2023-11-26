@@ -1,6 +1,6 @@
 <p>{{ tripSummary?.departureTime | date : "dd/MM/yyyy" }}</p>
 <tui-island>
-  <!-- <p>{{ tripSummary?.operators }}</p> -->
+  <p>{{ tripSummary?.operators }}</p>
   <div class="grid-container">
     <div class="grid-item">
       {{ tripSummary?.departureTime | date : "hh:mm" }}
@@ -41,7 +41,7 @@
           >
         </div>
       </div>
-      <div class="layover" *ngIf="!last">7h21 <b>Connect in airport</b></div>
+      <div class="layover" *ngIf="!last"> {{ leg.layover }} <b>Transfer time</b></div>
     </div>
   </div>
 </tui-island>
