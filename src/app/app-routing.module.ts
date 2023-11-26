@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './shared/auth.guard';
 import { ResultsComponent } from './components/search-results/search-results.component';
 import { FavouriteConnectionsComponent } from './components/favourite-connections/favourite-connections.component';
+import { DestinationsComponent } from './components/destinations/destinations.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,11 @@ const routes: Routes = [
     path: 'results',
     component: ResultsComponent,
     title: 'Results'
+  },
+  {
+    path: 'destinations',
+    component: DestinationsComponent,
+    title: 'Destinations'
   },
   {
     path: 'login',

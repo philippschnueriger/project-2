@@ -36,6 +36,21 @@
   margin-top: 20px;
 }
 
+.showMoreButton {
+  position: relative;
+  width: 96px;
+  height: 43px;
+  border-radius: 10px;
+  border: 1px solid #E5EBF0;
+  background: #FFF;
+}
+
+.align-right {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 100px;
+}
+
 /* tablets */
 @media (min-width: 768px) {
   .image-container {
