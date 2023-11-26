@@ -1,13 +1,18 @@
 <div class="home">
-        <h1>Where do you want to go?</h1>
-        <app-search-form></app-search-form>
-        <tui-island>
-                <p>Can't decide where to go?</p>
-                <h1>Explore</h1>
-                <h1>Everywhere</h1>
-                <br />
-                <br />
-                <button tuiButton (click)="exploreDestinations()">Explore</button>
-        </tui-island>
-        <app-popular-destinations></app-popular-destinations>
+  <h1>Where do you want to go?</h1>
+  <app-search-form></app-search-form>
+  <div class="image-container">
+    <img src="../../../assets/images/explore.jpg" alt="Image" />
+    <div class="overlay">
+      <h1>Explore Everywhere</h1>
+      <button tuiButton (click)="exploreDestinations()">Explore</button>
+    </div>
+  </div>
+  <h2>Popular right now</h2>
+  <app-popular-destinations></app-popular-destinations>
+  <div class="align-right">
+    <button class="showMoreButton" [routerLink]="['/destinations']">
+      Show more
+    </button>
+  </div>
 </div>

@@ -1,18 +1,10 @@
-
-<h2>Popular right now<h2>
-<tui-carousel
-    [duration]="4000"
-    [(index)]="index"
-    [itemsCount]="3"
-    [draggable]="true"
->
-    <ng-container *ngFor="let item of items">
-        <tui-island *tuiItem>
-            <div class="image-container">
-                <img src="../../../assets/images/{{ item }}.png" />
-            </div>
-            <h3> {{ item }}</h3>
-            <button tuiButton (click)="exploreDestination(item)">Search</button>
-        </tui-island>
-    </ng-container>
-</tui-carousel>
+<div class="container">
+<div *ngFor="let item of items">
+  <div class="image-container" (click)="exploreDestination(item)">
+    <img src="../../../assets/images/{{ item }}.png" alt="Image" />
+    <div class="overlay">
+      <div>{{ item }}</div>
+    </div>
+  </div>
+</div>
+</div>

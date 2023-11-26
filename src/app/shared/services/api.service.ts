@@ -1,45 +1,42 @@
+import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment'
-import axios from 'axios';
-import {TuiDay} from '@taiga-ui/cdk';
+import { HttpClient } from '@angular/common/http';
+import { TuiDay } from '@taiga-ui/cdk';
 
-class ApiService {
-  constructor() {
-    axios.defaults.headers.common['apikey'] = environment.kiwi.apiKey;
-  }
-  baseUrl = 'https://api.tequila.kiwi.com';
+@Injectable({
+  providedIn: 'root'
+})
+
+export class ApiService {
+
+  constructor(private http: HttpClient) { }
+
+  baseUrl = environment.kiwi.baseUrl;
   nextWeek = TuiDay.currentLocal().append({ day: 7 });
-  async getData(from = 'ZRH', to = '', departureDate = this.nextWeek.toString().replace(/\./g, '/'), trains = false) {
-    const vehicles = trains ? '&vehicle_type=train' : '';
-    return await axios
-      .get(
-        `${this.baseUrl}/v2/search?fly_from=${from}&fly_to=${to}&date_from=${departureDate}&date_to=${departureDate}&curr=CHF${vehicles}`
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => console.log(error));
+
+  getData(from = 'ZRH', to = 'FRA', departureDate = this.nextWeek.toString().replace(/\./g, '/'), returnDate = this.nextWeek.toString().replace(/\./g, '/'), bookingClass='C', adults=1, vehicleType = 'aircraft', sort='quality') {
+    const url = `${this.baseUrl}/v2/search?fly_from=${from}`
+                + `&fly_to=${to}`
+                + `&date_from=${departureDate}&date_to=${departureDate}`
+                + `&return_from=${returnDate}&return_to=${returnDate}`
+                + `&selected_cabins=${bookingClass}&adults=${adults}`
+                + `&vehicle_type=${vehicleType}`
+                + `&curr=CHF`
+                + `&sort=${sort}`
+                + `&limit=20`
+
+    return this.http.get(url);
   }
-  async getLocationId(location: string) {
-    return await axios
-      .get(`${this.baseUrl}/locations/query?term=${location}`)
-      .then((response) => {
-        return response.data.locations[0].id;
-      })
-      .catch((error) => console.log(error));
+
+  getLocationId(location: string) {
+    return this.http
+      .get(`${this.baseUrl}/locations/query?term=${location}`);
   }
-  async validateBookingToken(booking_token: string) {
+
+  validateBookingToken(booking_token: string) {
     const bnum = "0"
     const adults = "1"
-    return await axios
-      .get(`${this.baseUrl}/v2/booking/check_flights?booking_token=${booking_token}&bnum=${bnum}&adults=${adults}`)
-      .then((response) => {
-        if (response.data.status === 'error') {
-          return false;
-        }
-        return true;
-      })
-      .catch((error) => console.log(error));
+    return this.http
+      .get(`${this.baseUrl}/v2/booking/check_flights?booking_token=${booking_token}&bnum=${bnum}&adults=${adults}`);
   }
 }
-
-export default new ApiService();

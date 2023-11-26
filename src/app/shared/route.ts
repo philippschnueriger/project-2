@@ -1,5 +1,7 @@
 export interface Route {
     id: string;
+    flyFrom: string;
+    flyTo: string;
     cityFrom: string;
     cityTo: string;
     price: number;

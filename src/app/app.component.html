@@ -2,17 +2,29 @@
   <header>
     <div class="container">
       <div class="logo" routerLink="/">
-        <h1>TripSearch</h1>
+        <img src="assets/logo/logo.svg" alt="logo" />
+        <div>TripSearch</div>
       </div>
       <nav>
-        <ul>
+        <ul class="nav-links">
           <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/destinations">Destinations</a></li>
           <li><a routerLink="/favourites">Favourites</a></li>
-          <li><a routerLink="/profile">Settings</a></li>
-          <li><a routerLink="/login">Login</a></li> 
+          <li *ngIf="!user"><a routerLink="/login">Login</a></li>
+          <li *ngIf="user" (click)="logout()" class="logout">
+            <a routerLink="/login">Logout</a>
+          </li>
         </ul>
       </nav>
+      <div class="mobile-navbar">
+        <div class="navbar-toggle" (click)="toggleNav()">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </div>
     </div>
+    <hr />
   </header>
   <main>
     <div class="container">
@@ -24,4 +36,19 @@
       <a href="https://github.com/philippschnueriger" target="_blank">About</a>
     </div>
   </footer>
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav" [ngClass]="{ show: mobileNavOpen }">
+    <button class="close-btn" (click)="toggleNav()">
+      <span class="close-icon"></span>
+    </button>
+    <ul class="mobile-nav-links">
+      <li><a routerLink="/" (click)="toggleNav()">Home</a></li>
+      <li><a routerLink="/favourites" (click)="toggleNav()">Favourites</a></li>
+      <li>
+        <a routerLink="/destinations" (click)="toggleNav()">Destinations</a>
+      </li>
+      <li *ngIf="!user"><a routerLink="/login" (click)="toggleNav()">Login</a></li>
+      <li *ngIf="user" (click)="logout() " (click)="toggleNav()"><a routerLink="/login">Logout</a></li>
+    </ul>
+  </div>
 </tui-root>

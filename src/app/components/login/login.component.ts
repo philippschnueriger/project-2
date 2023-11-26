@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   async signUp(email: string, password: string) {
     try {
       await this.authService.signUp(email, password)
-      this.router.navigate(['/profile']);
+      this.router.navigate(['/favourites']);
       this.error = null;
       } catch (error: any) {
         if (error == "Firebase: Error (auth/email-already-in-use)."){
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
   async login(email: string, password: string) {
     try {
       await this.authService.login(email, password)
-      this.router.navigate(['/profile']);
+      this.router.navigate(['/favourites']);
       this.error = null;
       } catch (error: any) {
         if (error == "Firebase: Error (auth/invalid-login-credentials)."){

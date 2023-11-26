@@ -1,42 +1,53 @@
-<h1>Login</h1>
+<div class="login">
+  <h1>Welcome to TripSearch</h1>
 
-<div>
-  {{ error }}
-</div>
+  <div>
+    {{ error }}
+  </div>
 
-<div *ngIf="!user">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="!user">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="formGroup">
         <tui-input
           type="email"
           id="userName"
           class="formControl"
           formControlName="email"
-        >Username</tui-input>
+          >Username</tui-input
+        >
       </div>
-    
-      <div class="formGroup">
-        <tui-input-password type="password"
-        id="userPassword"
-        class="formControl"
-        formControlName="password">Password</tui-input-password>
 
+      <div class="formGroup">
+        <tui-input-password
+          type="password"
+          id="userPassword"
+          class="formControl"
+          formControlName="password"
+          >Password</tui-input-password
+        >
       </div>
       <div class="buttons">
         <div class="formGroup">
-          <button tuiButton type="submit" [disabled]="!loginForm.valid">Log in</button>
+          <button tuiButton type="submit" [disabled]="!loginForm.valid">
+            Log in
+          </button>
         </div>
         <div class="formGroup">
-          <button tuiButton type="button" [disabled]="!loginForm.valid" (click)="onSignUp()">Sign up</button>
+          <button
+            tuiButton
+            type="button"
+            [disabled]="!loginForm.valid"
+            (click)="onSignUp()"
+          >
+            Sign up
+          </button>
         </div>
       </div>
-  </form>
+    </form>
+  </div>
+
+  <div *ngIf="user">
+    <div *ngIf="user">logged in as {{ user.email }}</div>
+    <button id="logout" tuiButton (click)="logout()">Logout</button>
+  </div>
 </div>
-
-<div *ngIf="user">
-  <div *ngIf="user">logged in as {{ user.email }}</div>
-  <button tuiButton (click)="logout()">Logout</button>
-</div>
-
-
-  

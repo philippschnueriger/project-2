@@ -1,1 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* mobile devices (default) */
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    line-height: normal;
+    font-size: 16px;
+    width: 100vw;
+  }
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* tablets */
+@media (min-width: 768px) {
+  body {
+    font-size: 18px;
+    
+  }
+}
+
+/* small desktops */
+@media (min-width: 992px) {
+  body {
+    font-size: 20px;
+  }
+  h1 {
+    font-size: 48px;
+}
+}
+
+/* larger desktop screens */
+@media (min-width: 1200px) {
+  body {
+    font-size: 22px;
+
+  }
+}
