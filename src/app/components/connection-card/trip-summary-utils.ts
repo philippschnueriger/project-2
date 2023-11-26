@@ -17,8 +17,8 @@ function getOperators(data: any) {
 
 function calculateLegDuration (route: any) {
   for (let i = 0; i < route.length; i++) {
-    let arrivalTime = new Date(route[i].local_arrival).getTime();
-    let departureTime = new Date(route[i].local_departure).getTime();
+    let arrivalTime = new Date(route[i].utc_arrival).getTime();
+    let departureTime = new Date(route[i].utc_departure).getTime();
     let legDuration = getDuration((arrivalTime - departureTime)/1000);
     route[i].duration = legDuration;
   }
