@@ -33,7 +33,7 @@
             {{ leg.cityFrom }}</b
           >
         </div>
-        <div class="item-detail">1 h</div>
+        <div class="item-detail"> {{ leg.duration }}</div>
         <div class="item-detail">
           <b
             >{{ leg.local_arrival | date : "hh:mm" }} {{ leg.flyTo }}

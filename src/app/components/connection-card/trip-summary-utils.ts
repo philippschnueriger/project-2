@@ -15,6 +15,16 @@ function getOperators(data: any) {
   return uniqueOperators.join(', ');
 }
 
+function calculateLegDuration (route: any) {
+  for (let i = 0; i < route.length; i++) {
+    let arrivalTime = new Date(route[i].local_arrival).getTime();
+    let departureTime = new Date(route[i].local_departure).getTime();
+    let legDuration = getDuration((arrivalTime - departureTime)/1000);
+    route[i].duration = legDuration;
+  }
+  return route;
+}
+
 function getDuration(duration: any) {
   if (duration === undefined) {
     return '';
@@ -34,7 +44,7 @@ function calculateLayoverTime(route: any) {
     let layoverMinutes = Math.floor((layover / (1000 * 60)) % 60);
     route[i].layover = `${layoverHours}h ${layoverMinutes}m`
   }
-  return route
+  return route;
 }
 
 export function getTripSummary(item: any) {
@@ -51,7 +61,9 @@ export function getTripSummary(item: any) {
       operators: "",
     },
   };
-  tripSummary.departure.operators = getOperators(tripSummary.departure.route)
+  tripSummary.departure.operators = getOperators(tripSummary.departure.route);
+  tripSummary.departure.route = calculateLayoverTime(tripSummary.departure.route);
+  tripSummary.departure.route = calculateLegDuration(tripSummary.departure.route)
 
   if (item.duration.return > 0) {
     tripSummary.return = {
@@ -65,9 +77,10 @@ export function getTripSummary(item: any) {
       route: item.route.slice(findIndexByFlyTo(item)+1),
       operators: "",
     };
-    tripSummary.return.operators = getOperators(tripSummary.return.route)
-    tripSummary.return.route = calculateLayoverTime(tripSummary.return.route)
+    tripSummary.return.operators = getOperators(tripSummary.return.route);
+    tripSummary.return.route = calculateLayoverTime(tripSummary.return.route);
+    tripSummary.return.route = calculateLegDuration(tripSummary.return.route)
   }
-  tripSummary.departure.route = calculateLayoverTime(tripSummary.departure.route)
+  
   return tripSummary;
 }
