@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { ApiService } from '../../shared/services/api.service';
 import { User } from 'firebase/auth';
 import { TripSummary } from './tripSummary'
+import { getTripSummary } from './trip-summary-utils';
 
 @Component({
   selector: 'app-connection-card',
@@ -30,16 +31,8 @@ export class ConnectionCardComponent {
       this.validateBookingToken();
     }
     console.log(this.item)
-    console.log(this.getTripSummary())
-    this.tripSummary = this.getTripSummary()
-  }
-  getDuration(duration: any) {
-    if (duration === undefined) {
-      return '';
-    }
-    let hours = Math.floor(duration / 3600);
-    let minutes = Math.floor((duration % 3600) / 60);
-    return `${hours}h ${minutes}m`;
+    console.log(getTripSummary(this.item))
+    this.tripSummary = getTripSummary(this.item)
   }
   saveFavouriteConnection() {
     if (this.user?.uid) {
@@ -71,45 +64,6 @@ export class ConnectionCardComponent {
       }
     }
     return true;
-  }
-  findIndexByFlyTo(data: any) {
-    for (let i = 0; i < data.route.length; i++) {
-      if (data.route[i].flyTo === data.flyTo) {
-        return i;
-      }
-    }
-    return -1;
-  }
-  getOperators(data: any) {
-    const allOperators = data.map((data: any) => data.operating_carrier);
-    const uniqueOperators =  [...new Set(allOperators)];
-    return uniqueOperators.join(", ")
-  }
-
-  
- getTripSummary(){
-    let tripSummary: TripSummary = {
-      operators: this.getOperators(this.item.route),
-      departure: {
-        from: this.item.flyFrom,
-        to: this.item.flyTo,
-        departureTime: this.item.local_departure || "",
-        arrivalTime: this.item.local_arrival || "",
-        stops: this.findIndexByFlyTo(this.item),
-        duration: this.getDuration(this.item.duration.departure)
-      },
-    }
-    if (this.item.duration.return > 0){
-      tripSummary.return = {
-        from: this.item.flyTo,
-        to: this.item.flyFrom,
-        departureTime: this.item.route?.[this.findIndexByFlyTo(this.item)+1].local_departure  || "",
-        arrivalTime: this.item.route?.[this.item.route?.length - 1].local_arrival || "",
-        stops: (this.item.route?.length || 0) - this.findIndexByFlyTo(this.item) - 2,
-        duration: this.getDuration(this.item.duration.return)
-      }
-    }
-    return tripSummary
   }
 
   toggleOverlay() {

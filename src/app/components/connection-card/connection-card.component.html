@@ -93,37 +93,47 @@
         </button>
         <div *ngIf="expand">
           <hr />
-          <div
-            *ngFor="let leg of item.route; let last = last"
-            class="connection-details"
-          >
-            <div>{{ leg.airline }}</div>
-            <div class="grid-container-detail">
-              <div class="item-detail item-1"><hr class="vertical-line" /></div>
-              <div class="item-detail">
-                <b
-                  >{{ leg.local_departure | date : "hh:mm" }} {{ leg.flyFrom }}
-                  {{ leg.cityFrom }}</b
-                >
-              </div>
-              <div class="item-detail">1 h</div>
-              <div class="item-detail">
-                <b
-                  >{{ leg.local_arrival | date : "hh:mm" }} {{ leg.flyTo }}
-                  {{ leg.cityTo }}</b
-                >
-              </div>
-            </div>
-            <div class="layover" *ngIf="!last">
-              7h21 <b>Connect in airport</b>
-            </div>
-          </div>
+          <app-connection-card-detail
+            [item]="item"
+          ></app-connection-card-detail>
         </div>
       </tui-island>
     </div>
     <div class="inbound">
       <h2>Inbound</h2>
-      <tui-island>TBD</tui-island>
+      <p>{{ tripSummary?.departure?.departureTime | date : "dd/MM/yyyy" }}</p>
+      <tui-island>
+        <p>{{ tripSummary?.operators }}</p>
+        <div class="grid-container" (click)="toggleOverlay()">
+          <div class="grid-item">
+            {{ tripSummary?.departure?.departureTime | date : "hh:mm" }}
+          </div>
+          <div class="grid-item border">
+            {{ tripSummary?.departure?.duration }}
+          </div>
+          <div class="grid-item">
+            {{ tripSummary?.departure?.arrivalTime | date : "hh:mm" }}
+          </div>
+          <div class="grid-item">{{ tripSummary?.departure?.from }}</div>
+          <div class="grid-item">
+            Stops: {{ tripSummary?.departure?.stops }}
+          </div>
+          <div class="grid-item">{{ tripSummary?.departure?.to }}</div>
+        </div>
+        <button
+          class="expand"
+          (click)="toggleExpand()"
+          [class.rotate-180]="expand"
+        >
+          <img src="../../../assets/icons/down-arrow.svg" />
+        </button>
+        <div *ngIf="expand">
+          <hr />
+          <app-connection-card-detail
+            [item]="item"
+          ></app-connection-card-detail>
+        </div>
+      </tui-island>
     </div>
     <div class="booking">
       <h2>CHF {{ item.price }}</h2>

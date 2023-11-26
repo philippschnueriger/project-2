@@ -20,6 +20,7 @@ import { FavouriteConnectionsComponent } from './components/favourite-connection
 import { PopularDestinationsComponent } from './components/popular-destinations/popular-destinations.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './shared/services/http-interceptor';
+import { ConnectionCardDetailComponent } from './components/connection-card-detail/connection-card-detail.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ApiInterceptor } from './shared/services/http-interceptor';
     ResultsComponent,
     ConnectionCardComponent,
     FavouriteConnectionsComponent,
-    PopularDestinationsComponent
+    PopularDestinationsComponent,
+    ConnectionCardDetailComponent
   ],
   imports: [
     BrowserModule,
