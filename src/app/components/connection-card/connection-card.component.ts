@@ -30,8 +30,7 @@ export class ConnectionCardComponent {
     if (this.deleteOption) {
       this.validateBookingToken();
     }
-    console.log(this.item)
-    console.log(getTripSummary(this.item))
+    //console.log(getTripSummary(this.item))
     this.tripSummary = getTripSummary(this.item)
   }
   saveFavouriteConnection() {

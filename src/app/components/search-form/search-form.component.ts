@@ -6,6 +6,7 @@ import {TuiDay, TuiDayRange} from '@taiga-ui/cdk';
 import { ApiService } from '../../shared/services/api.service';
 import { firstValueFrom } from 'rxjs';
 import {tuiInputNumberOptionsProvider} from '@taiga-ui/kit';
+import { FormDataService } from 'src/app/shared/services/form-data.service';
 
 @Component({
   selector: 'app-search-form',
@@ -20,7 +21,7 @@ import {tuiInputNumberOptionsProvider} from '@taiga-ui/kit';
 })
 export class SearchFormComponent implements OnInit {
   @Input() filters: any;
-  constructor(private router: Router, private apiService: ApiService) {
+  constructor(private router: Router, private apiService: ApiService , private formDataService: FormDataService) {
     
   }
   tripmodes = ['Return', 'One-way'];
@@ -56,15 +57,16 @@ export class SearchFormComponent implements OnInit {
   searchForm!: FormGroup;
 
   ngOnInit(): void {
+    const formData = this.formDataService.formData;
     this.searchForm = new FormGroup(
       {
-        tripmode: new FormControl(this.search.tripmode),
-        cityFrom: new FormControl(this.search.cityFrom, [
+        tripmode: new FormControl(formData.bookingClass),
+        cityFrom: new FormControl(formData.cityFrom, [
           Validators.required,
           Validators.minLength(3),
           forbiddenNameValidator(/XYZ/i),
         ]),
-        cityTo: new FormControl(this.search.cityTo, [
+        cityTo: new FormControl(formData.cityTo, [
           Validators.required,
           Validators.minLength(3),
           forbiddenNameValidator(/XYZ/i),
@@ -120,7 +122,6 @@ export class SearchFormComponent implements OnInit {
     } else {
       departureDateValue = this.departureDate.value.toString().replace(/\./g, '/');
     } 
-    console.log(departureDateValue, returnDateValue)
 
     const bookingClass = this.mapBookingClass(this.bookingClass.value);
     const adults = this.adults.value;

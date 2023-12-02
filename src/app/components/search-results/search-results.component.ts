@@ -3,6 +3,7 @@ import { Flight } from '../../shared/flight';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../shared/services/api.service';
 import { firstValueFrom } from 'rxjs';
+import { FormDataService } from 'src/app/shared/services/form-data.service';
 
 @Component({
   selector: 'app-results',
@@ -10,8 +11,10 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./search-results.component.scss']
 })
 export class ResultsComponent implements OnInit {
+formCityTo: string | null = null;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService) { }
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private formDataService: FormDataService) {
+  }
 
   cityFrom = '';
   cityTo = '';
@@ -25,6 +28,8 @@ export class ResultsComponent implements OnInit {
   loading = false;
 
   ngOnInit() {
+    const formData = this.formDataService.formData;
+    this.formCityTo = formData.cityTo;
     this.route.queryParams
       .subscribe(params => {
         this.cityFrom = params['cityFrom'];
