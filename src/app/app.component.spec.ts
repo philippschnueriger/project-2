@@ -1,13 +1,9 @@
-import { TuiModule } from './tui.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject} from 'rxjs';
 import { User } from 'firebase/auth';
-import { AppRoutingModule } from './app-routing.module';
+import { AppModule } from './app.module';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -21,10 +17,8 @@ describe('AppComponent', () => {
 
     await TestBed.configureTestingModule({
         imports: [
-            provideFirebaseApp(() => initializeApp(environment.firebase)), 
-            provideFirestore(() => getFirestore()),
-            AppRoutingModule,
-            TuiModule],
+          AppModule
+            ],
       declarations: [AppComponent],
       providers: [
         { provide: AuthService, useValue: authServiceStub },

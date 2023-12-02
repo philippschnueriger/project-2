@@ -21,6 +21,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './shared/services/http-interceptor';
 import { ConnectionCardDetailComponent } from './components/connection-card-detail/connection-card-detail.component';
 import { DestinationsComponent } from './components/destinations/destinations.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { DestinationsComponent } from './components/destinations/destinations.co
     CommonModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     TuiModule,
     HttpClientModule
 ],
