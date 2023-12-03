@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Flight } from '../../shared/flight';
+import { TripSegment } from '../../shared/types/tripSegment';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../shared/services/api.service';
 import { firstValueFrom } from 'rxjs';
@@ -49,7 +49,7 @@ formCityTo: string | null = null;
     );
     this.loadData();
   }
-  data: Flight[] = [];
+  data: TripSegment[] = [];
 
   async loadData() {
     this.loading = true;
@@ -60,7 +60,7 @@ formCityTo: string | null = null;
     try {
       const response: any = await firstValueFrom(data$);
       for (let item of response.data) {
-        let flight: Flight = {
+        let flight: TripSegment = {
           id: item.id,
           flyFrom: item.flyFrom,
           flyTo: item.flyTo,

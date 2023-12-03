@@ -1,6 +1,17 @@
-import { Route } from "./route";
+interface Route {
+  id: string;
+  flyFrom: string;
+  flyTo: string;
+  cityFrom: string;
+  cityTo: string;
+  price: number;
+  airline: string;
+  vehicle_type?: string;
+  local_departure?: string;
+  local_arrival?: string;
+}
 
-export interface Flight {
+export interface TripSegment {
   id: string;
   flyFrom: string,
   flyTo: string,

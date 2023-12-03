@@ -7,6 +7,7 @@ import { ApiService } from '../../shared/services/api.service';
 import { firstValueFrom } from 'rxjs';
 import {tuiInputNumberOptionsProvider} from '@taiga-ui/kit';
 import { FormDataService } from 'src/app/shared/services/form-data.service';
+import { TripMode, BookingClass } from '../../shared/types/enums';
 
 @Component({
   selector: 'app-search-form',
@@ -24,16 +25,13 @@ export class SearchFormComponent implements OnInit {
   constructor(private router: Router, private apiService: ApiService , private formDataService: FormDataService) {
     
   }
-  tripmodes = ['Return', 'One-way'];
-  search = { tripmode: this.tripmodes[0], cityFrom: 'Zürich', cityTo: 'Frankfurt', departureAndReturnDate: new TuiDayRange(TuiDay.currentLocal().append({ day: 7 }), TuiDay.currentLocal().append({ day: 14 })), departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', adults: 1, trains: false};
+  tripModes: string[] = Object.values(TripMode);
+  bookingClasses: string[] = Object.values(BookingClass);
+  
+  search = { tripmode: TripMode.Return, cityFrom: 'Zürich', cityTo: 'Frankfurt', departureAndReturnDate: new TuiDayRange(TuiDay.currentLocal().append({ day: 7 }), TuiDay.currentLocal().append({ day: 14 })), departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', adults: 1, trains: false};
   sort = 'quality';
   min = TuiDay.currentLocal();
-  bookingClasses = [
-    'Economy',
-    'Premium Economy',
-    'Business Class',
-    'First Class'
-  ];
+  
 
   mapBookingClass(bookingClass: string): string {
     switch (bookingClass) {
@@ -60,7 +58,7 @@ export class SearchFormComponent implements OnInit {
     const formData = this.formDataService.formData;
     this.searchForm = new FormGroup(
       {
-        tripmode: new FormControl(formData.bookingClass),
+        tripmode: new FormControl(this.search.tripmode),
         cityFrom: new FormControl(formData.cityFrom, [
           Validators.required,
           Validators.minLength(3),
@@ -90,6 +88,7 @@ export class SearchFormComponent implements OnInit {
         ]),
       },
     );
+    console.log(this.search.tripmode)
   }
 
   updateUrl(option: string): void {
@@ -98,6 +97,8 @@ export class SearchFormComponent implements OnInit {
   }
 
   async loadData() {
+    this.formDataService.setFormData(this.searchForm.value);
+    console.log(this.searchForm.value);
     let cityFromId = '';
     let cityToId = '';
     let departureDateValue = '';

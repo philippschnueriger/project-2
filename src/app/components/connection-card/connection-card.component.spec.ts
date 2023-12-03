@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConnectionCardComponent } from './connection-card.component';
-import { Flight } from '../../shared/flight';
+import { TripSegment } from '../../shared/types/tripSegment';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FirestoreService } from '../../shared/services/firestore.service';
 import { ApiService } from '../../shared/services/api.service';
@@ -58,7 +58,7 @@ describe('ConnectionCardComponent', () => {
       local_arrival: '2023-12-07T19:15:00.000Z',
       route: [{}],
       duration: { departure: 180, return: 180, total: 360 },
-    } as Flight;
+    } as TripSegment;
     fixture.detectChanges();
   });
 

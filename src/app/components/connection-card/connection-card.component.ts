@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Flight } from '../../shared/flight';
+import { TripSegment } from '../../shared/types/tripSegment';
 import { FirestoreService } from '../../shared/services/firestore.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ApiService } from '../../shared/services/api.service';
@@ -13,7 +13,7 @@ import { getTripSummary } from './trip-summary-utils';
   styleUrls: ['./connection-card.component.scss']
 })
 export class ConnectionCardComponent {
-  @Input() item!: Flight;
+  @Input() item!: TripSegment;
   @Input() docId!: string;
   @Input() deleteOption: boolean = false;
   user: User | null = null; 
