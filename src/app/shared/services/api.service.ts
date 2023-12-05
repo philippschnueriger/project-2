@@ -20,7 +20,7 @@ export class ApiService {
                 + `&date_from=${departureDate}&date_to=${departureDate}`
                 + `&return_from=${returnDate}&return_to=${returnDate}`
                 + `&selected_cabins=${bookingClass}&adults=${adults}`
-                + `&vehicle_type=${vehicleType}`
+                + `&vehicle_type=${vehicleType.toLowerCase()}`
                 + `&curr=CHF`
                 + `&sort=${sort}`
                 + `&limit=20`

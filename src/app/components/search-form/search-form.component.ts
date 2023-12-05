@@ -7,7 +7,7 @@ import { ApiService } from '../../shared/services/api.service';
 import { firstValueFrom } from 'rxjs';
 import {tuiInputNumberOptionsProvider} from '@taiga-ui/kit';
 import { FormDataService } from 'src/app/shared/services/form-data.service';
-import { TripMode, BookingClass } from '../../shared/types/enums';
+import { TripMode, BookingClass, VehicleType } from '../../shared/types/enums';
 
 @Component({
   selector: 'app-search-form',
@@ -27,6 +27,7 @@ export class SearchFormComponent implements OnInit {
 
   tripModes: string[] = Object.values(TripMode);
   bookingClasses: string[] = Object.values(BookingClass);
+  vehicleTypes: string[] = Object.values(VehicleType);
   
   sort = 'quality';
   min = TuiDay.currentLocal();
@@ -44,10 +45,6 @@ export class SearchFormComponent implements OnInit {
       default:
         return 'M';
     }
-  }
-
-  mapVehicleType(trains: boolean): string {
-    return trains ? 'train' : 'aircraft';
   }
 
   searchForm!: FormGroup;
@@ -81,7 +78,7 @@ export class SearchFormComponent implements OnInit {
         adults: new FormControl(formData.adults, [
           Validators.required
         ]),
-        trains: new FormControl(formData.vehicleType, [
+        vehicleType: new FormControl(formData.vehicleType, [
           Validators.required
         ]),
       },
@@ -122,7 +119,7 @@ export class SearchFormComponent implements OnInit {
 
     const bookingClass = this.mapBookingClass(this.bookingClass.value);
     const adults = this.adults.value;
-    const vehicleType = this.mapVehicleType(this.trains.value);
+    const vehicleType = this.vehicleType.value;
     this.router.navigate(
       ['/results'],
       {
@@ -161,8 +158,8 @@ export class SearchFormComponent implements OnInit {
   get adults() {
     return this.searchForm.get('adults')!;
   }
-  get trains() {
-    return this.searchForm.get('trains')!;
+  get vehicleType() {
+    return this.searchForm.get('vehicleType')!;
   }
 }
 
