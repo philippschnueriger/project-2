@@ -7,7 +7,7 @@
       <div class="form-options">
         <div class="form-group">
           <div class="form-group">
-            <tui-select tuiTextfieldSize="m" formControlName="tripmode" id="tripmode">
+            <tui-select tuiTextfieldSize="m" formControlName="tripMode" id="tripMode">
               Trip mode
               <input placeholder="Choose your hero" tuiTextfield />
               <tui-data-list-wrapper
@@ -94,7 +94,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="tripmode.value == 'Return'" class="form-group">
+        <div *ngIf="tripMode.value == 'Return'" class="form-group">
           <tui-input-date-range
             id="departureAndReturnDate"
             formControlName="departureAndReturnDate"
@@ -104,7 +104,7 @@
             Dates
           </tui-input-date-range>
         </div>
-        <div *ngIf="tripmode.value == 'One-way'" class="form-group">
+        <div *ngIf="tripMode.value == 'One-way'" class="form-group">
           <tui-input-date
             id="departureDate"
             formControlName="departureDate"

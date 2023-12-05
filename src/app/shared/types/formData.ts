@@ -1,14 +1,14 @@
 import { TuiDay, TuiDayRange } from '@taiga-ui/cdk';
-import { TripMode, BookingClass } from './enums';
+import { TripMode, BookingClass, Sort, VehicleType } from './enums';
 
 export interface FormData {
-  tripmode: TripMode;
+  tripMode: TripMode;
   cityFrom: string;
   cityTo: string;
   departureDate: TuiDay | null;
   departureAndReturnDate: TuiDayRange | null;
   bookingClass: BookingClass;
   adults: number;
-  vehicleType: string;
-  sort: string;
+  vehicleType: VehicleType;
+  sort: Sort;
 }

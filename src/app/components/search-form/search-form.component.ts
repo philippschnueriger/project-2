@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from './forbidden-name.directive';
 import { Router } from '@angular/router';
-import {TuiDay, TuiDayRange} from '@taiga-ui/cdk';
+import {TuiDay} from '@taiga-ui/cdk';
 import { ApiService } from '../../shared/services/api.service';
 import { firstValueFrom } from 'rxjs';
 import {tuiInputNumberOptionsProvider} from '@taiga-ui/kit';
@@ -22,17 +22,15 @@ import { TripMode, BookingClass } from '../../shared/types/enums';
 })
 export class SearchFormComponent implements OnInit {
   @Input() filters: any;
-  constructor(private router: Router, private apiService: ApiService , private formDataService: FormDataService) {
-    
-  }
+
+  constructor(private router: Router, private apiService: ApiService , private formDataService: FormDataService) {}
+
   tripModes: string[] = Object.values(TripMode);
   bookingClasses: string[] = Object.values(BookingClass);
   
-  search = { tripmode: TripMode.Return, cityFrom: 'Zürich', cityTo: 'Frankfurt', departureAndReturnDate: new TuiDayRange(TuiDay.currentLocal().append({ day: 7 }), TuiDay.currentLocal().append({ day: 14 })), departureDate: TuiDay.currentLocal().append({ day: 1 }), bookingClass: 'Economy', adults: 1, trains: false};
   sort = 'quality';
   min = TuiDay.currentLocal();
   
-
   mapBookingClass(bookingClass: string): string {
     switch (bookingClass) {
       case 'Economy':
@@ -58,7 +56,7 @@ export class SearchFormComponent implements OnInit {
     const formData = this.formDataService.formData;
     this.searchForm = new FormGroup(
       {
-        tripmode: new FormControl(this.search.tripmode),
+        tripMode: new FormControl(formData.tripMode),
         cityFrom: new FormControl(formData.cityFrom, [
           Validators.required,
           Validators.minLength(3),
@@ -69,26 +67,25 @@ export class SearchFormComponent implements OnInit {
           Validators.minLength(3),
           forbiddenNameValidator(/XYZ/i),
         ]),
-        departureAndReturnDate: new FormControl(this.search.departureAndReturnDate, [
+        departureAndReturnDate: new FormControl(formData.departureAndReturnDate, [
           Validators.required,
           //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
         ]),
-        departureDate: new FormControl(this.search.departureDate, [
+        departureDate: new FormControl(formData.departureDate, [
           Validators.required,
           //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
         ]),
-        bookingClass: new FormControl(this.search.bookingClass, [
+        bookingClass: new FormControl(formData.bookingClass, [
           Validators.required
         ]),
-        adults: new FormControl(this.search.adults, [
+        adults: new FormControl(formData.adults, [
           Validators.required
         ]),
-        trains: new FormControl(this.search.trains, [
+        trains: new FormControl(formData.vehicleType, [
           Validators.required
         ]),
       },
     );
-    console.log(this.search.tripmode)
   }
 
   updateUrl(option: string): void {
@@ -98,7 +95,6 @@ export class SearchFormComponent implements OnInit {
 
   async loadData() {
     this.formDataService.setFormData(this.searchForm.value);
-    console.log(this.searchForm.value);
     let cityFromId = '';
     let cityToId = '';
     let departureDateValue = '';
@@ -117,7 +113,7 @@ export class SearchFormComponent implements OnInit {
     } catch (error) {
       console.error('Error getting location ID:', error);
     }
-    if (this.tripmode.value == "Return"){
+    if (this.tripMode.value == "Return"){
       departureDateValue = this.departureAndReturnDate.value.from.toString().replace(/\./g, '/');
       returnDateValue = this.departureAndReturnDate.value.to.toString().replace(/\./g, '/');
     } else {
@@ -144,8 +140,8 @@ export class SearchFormComponent implements OnInit {
     );
   }
 
-  get tripmode() {
-    return this.searchForm.get('tripmode')!;
+  get tripMode() {
+    return this.searchForm.get('tripMode')!;
   }
   get cityFrom() {
     return this.searchForm.get('cityFrom')!;
