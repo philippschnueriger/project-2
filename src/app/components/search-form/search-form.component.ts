@@ -29,8 +29,11 @@ export class SearchFormComponent implements OnInit {
   bookingClasses: string[] = Object.values(BookingClass);
   vehicleTypes: string[] = Object.values(VehicleType);
 
-  locations: any[] = [];
-  locations$: any;
+  fromLocations: any[] = [];
+  fromLocations$: any;
+
+  toLocations: any[] = [];
+  toLocations$: any;
 
   selectedLocation: any = "Test"
 
@@ -97,14 +100,25 @@ export class SearchFormComponent implements OnInit {
     this.loadData();
   }
 
-  async searchLocations() {
+  async searchFromLocations() {
     if (this.searchForm.value.cityFrom.length >= 3) {
-      this.locations$ = this.apiService.getLocationId(this.searchForm.value.cityFrom)
-      const locations: any = await firstValueFrom(this.locations$)
-      this.locations = locations.locations;
-      this.locations = this.locations.filter(location => location.type === 'airport' || (location.type === 'city' && location.airports > 1));
+      this.fromLocations$ = this.apiService.getLocationId(this.searchForm.value.cityFrom)
+      const locations: any = await firstValueFrom(this.fromLocations$)
+      this.fromLocations = locations.locations;
+      this.fromLocations = this.fromLocations.filter(location => location.type === 'airport' || (location.type === 'city' && location.airports > 1));
     } else {
-      this.locations = [];
+      this.fromLocations = [];
+    }
+  }
+
+  async searchToLocations() {
+    if (this.searchForm.value.cityTo.length >= 3) {
+      this.toLocations$ = this.apiService.getLocationId(this.searchForm.value.cityTo)
+      const locations: any = await firstValueFrom(this.toLocations$)
+      this.toLocations = locations.locations;
+      this.toLocations = this.toLocations.filter(location => location.type === 'airport' || (location.type === 'city' && location.airports > 1));
+    } else {
+      this.toLocations = [];
     }
   }
 
@@ -179,10 +193,11 @@ export class SearchFormComponent implements OnInit {
   get vehicleType() {
     return this.searchForm.get('vehicleType')!;
   }
-  onClick(location: any): void {
-    console.log("click")
-    this.searchForm.value.form = location.name
-    console.log(location.name);
+  setFromLocation(location: any): void {
+    this.searchForm.value.cityFrom = location.name
+  }
+  setToLocation(location: any): void {
+    this.searchForm.value.cityTo = location.name
   }
   
 }

@@ -65,16 +65,16 @@
             class="form-control"
             formControlName="cityFrom"
             required
-            (input)="searchLocations()"
+            (input)="searchFromLocations()"
           >
             From
             <ng-container *ngIf="items?.length">
               <tui-data-list *tuiDataList>
                 <button
-                  *ngFor="let item of locations"
+                  *ngFor="let item of fromLocations"
                   tuiOption
                   [value]="item.name"
-                  (click)="onClick(item)"
+                  (click)="setFromLocation(item)"
                 >
                   <span *ngIf="item.type == 'city'" class="name"
                     >{{ item.name }} (All)</span
@@ -88,6 +88,35 @@
           </tui-input>
         </div>
         <div class="form-group">
+          <tui-input
+            type="text"
+            id="cityTo"
+            class="form-control"
+            formControlName="cityTo"
+            required
+            (input)="searchToLocations()"
+          >
+            From
+            <ng-container *ngIf="items?.length">
+              <tui-data-list *tuiDataList>
+                <button
+                  *ngFor="let item of toLocations"
+                  tuiOption
+                  [value]="item.name"
+                  (click)="setToLocation(item)"
+                >
+                  <span *ngIf="item.type == 'city'" class="name"
+                    >{{ item.name }} (All)</span
+                  >
+                  <span *ngIf="item.type != 'city'" class="name"
+                    >{{ item.name }} {{ item.code }}</span
+                  >
+                </button>
+              </tui-data-list>
+            </ng-container>
+          </tui-input>
+        </div>
+        <!-- <div class="form-group">
           <tui-input
             type="text"
             id="cityTo"
@@ -112,7 +141,7 @@
               Identificator cannot be XYZ.
             </div>
           </div>
-        </div>
+        </div> -->
         <div *ngIf="tripMode.value == 'Return'" class="form-group">
           <tui-input-date-range
             id="departureAndReturnDate"
