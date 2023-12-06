@@ -30,7 +30,7 @@ export class ApiService {
 
   getLocationId(location: string) {
     return this.http
-      .get(`${this.baseUrl}/locations/query?term=${location}`);
+      .get(`${this.baseUrl}/locations/query?term=${location}&limit=10`);
   }
 
   validateBookingToken(booking_token: string) {

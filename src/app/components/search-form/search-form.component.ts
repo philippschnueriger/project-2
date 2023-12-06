@@ -4,7 +4,7 @@ import { forbiddenNameValidator } from './forbidden-name.directive';
 import { Router } from '@angular/router';
 import {TuiDay} from '@taiga-ui/cdk';
 import { ApiService } from '../../shared/services/api.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, throttleTime } from 'rxjs';
 import {tuiInputNumberOptionsProvider} from '@taiga-ui/kit';
 import { FormDataService } from 'src/app/shared/services/form-data.service';
 import { TripMode, BookingClass, VehicleType } from '../../shared/types/enums';
@@ -28,6 +28,11 @@ export class SearchFormComponent implements OnInit {
   tripModes: string[] = Object.values(TripMode);
   bookingClasses: string[] = Object.values(BookingClass);
   vehicleTypes: string[] = Object.values(VehicleType);
+
+  locations: any[] = [];
+  locations$: any;
+
+  items: string[] = ['Quality', 'Price', 'Duration'];
   
   sort = 'quality';
   min = TuiDay.currentLocal();
@@ -53,6 +58,7 @@ export class SearchFormComponent implements OnInit {
     const formData = this.formDataService.formData;
     this.searchForm = new FormGroup(
       {
+        form: new FormControl(''),
         tripMode: new FormControl(formData.tripMode),
         cityFrom: new FormControl(formData.cityFrom, [
           Validators.required,
@@ -88,6 +94,25 @@ export class SearchFormComponent implements OnInit {
   updateUrl(option: string): void {
     this.sort = option;
     this.loadData();
+  }
+
+  async searchLocations() {
+    if (this.searchForm.value.form.length >= 3) {
+      this.locations$ = this.apiService.getLocationId(this.searchForm.value.form);
+      const locations: any = await firstValueFrom(this.locations$)
+      this.locations = locations.locations;
+      //this.locations = this.locations.filter(location => location.icao);
+      console.log(this.locations);
+      // this.apiService.getLocationId(this.searchForm.value.form)
+      // .pipe(
+      //   throttleTime(3000) // Adjust time in milliseconds (1 second in this case)
+      // )
+      //   .subscribe((data: any) => {
+      //     this.locations$ = data; // Assuming data contains location results
+      //   });
+    } else {
+      this.locations = [];
+    }
   }
 
   async loadData() {
@@ -161,5 +186,9 @@ export class SearchFormComponent implements OnInit {
   get vehicleType() {
     return this.searchForm.get('vehicleType')!;
   }
+  onClick(name: any): void {
+    console.log(name);
+  }
+  
 }
 

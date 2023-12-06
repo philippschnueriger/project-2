@@ -50,6 +50,31 @@
       </div>
 
       <div class="form-inputs" [ngClass]="{ 'show-form-inputs': filters }">
+        <!-- <tui-input
+            *tuiLet="items$ | async as items"
+            class="b-form"
+            formControlName="control"
+        > -->
+        <tui-input
+            class="b-form"
+            formControlName="form"
+            (input)="searchLocations()"
+        >
+            From
+            <ng-container *ngIf="items?.length">
+                <tui-data-list *tuiDataList>
+                    <button
+                        *ngFor="let item of locations"
+                        tuiOption
+                        [value]="item"
+                        (click)="onClick(item)"
+                        
+                    >
+                        <span class="name">{{ item.name }} {{ item.code }}</span>
+                    </button>
+                </tui-data-list>
+            </ng-container>
+        </tui-input>
         <div class="form-group">
           <tui-input
             type="text"
