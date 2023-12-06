@@ -66,11 +66,11 @@
                     <button
                         *ngFor="let item of locations"
                         tuiOption
-                        [value]="item"
+                        [value]="item.name"
                         (click)="onClick(item)"
-                        
                     >
-                        <span class="name">{{ item.name }} {{ item.code }}</span>
+                        <span *ngIf="item.type == 'city'" class="name">{{ item.name }} (All)</span>
+                        <span *ngIf="item.type != 'city'" class="name">{{ item.name }} {{ item.code }}</span>
                     </button>
                 </tui-data-list>
             </ng-container>

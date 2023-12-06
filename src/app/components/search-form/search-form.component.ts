@@ -32,6 +32,8 @@ export class SearchFormComponent implements OnInit {
   locations: any[] = [];
   locations$: any;
 
+  selectedLocation: any = "Test"
+
   items: string[] = ['Quality', 'Price', 'Duration'];
   
   sort = 'quality';
@@ -98,18 +100,10 @@ export class SearchFormComponent implements OnInit {
 
   async searchLocations() {
     if (this.searchForm.value.form.length >= 3) {
-      this.locations$ = this.apiService.getLocationId(this.searchForm.value.form);
+      this.locations$ = this.apiService.getLocationId(this.searchForm.value.form)
       const locations: any = await firstValueFrom(this.locations$)
       this.locations = locations.locations;
-      //this.locations = this.locations.filter(location => location.icao);
-      console.log(this.locations);
-      // this.apiService.getLocationId(this.searchForm.value.form)
-      // .pipe(
-      //   throttleTime(3000) // Adjust time in milliseconds (1 second in this case)
-      // )
-      //   .subscribe((data: any) => {
-      //     this.locations$ = data; // Assuming data contains location results
-      //   });
+      this.locations = this.locations.filter(location => location.type === 'airport' || (location.type === 'city' && location.airports > 1));
     } else {
       this.locations = [];
     }
@@ -186,8 +180,10 @@ export class SearchFormComponent implements OnInit {
   get vehicleType() {
     return this.searchForm.get('vehicleType')!;
   }
-  onClick(name: any): void {
-    console.log(name);
+  onClick(location: any): void {
+    console.log("click")
+    this.searchForm.value.form = location.name
+    console.log(location.name);
   }
   
 }
