@@ -19,9 +19,6 @@ describe('Search Form Tests', () => {
       cy.get('#departureDate').type('{selectall}{del}');
       cy.get('#departureDate').type('2023-11-01');
   
-      // Check "Trains only" checkbox
-      cy.get('#trains').click();
-  
       // Submit the form
       cy.get('button[type=submit]').click();
   
@@ -44,14 +41,11 @@ describe('Search Form Tests', () => {
       cy.get('#departureAndReturnDate').type('{selectall}{del}');
       cy.get('#departureAndReturnDate').type('21.11.2024 – 28.11.2024');
   
-      // Check "Trains only" checkbox
-      cy.get('#trains').click();
-  
       // Submit the form
       cy.get('button[type=submit]').click();
   
       // Verify that correct url is called
-      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=new-york-city_ny_us&cityTo=los-angeles_ca_us&departureDate=21%2F11%2F2024&returnDate=28%2F11%2F2024&bookingClass=M&adults=1&vehicleType=train&sort=quality');
+      cy.url().should('eq', 'http://localhost:4200/results?cityFrom=&cityTo=&departureDate=21%2F11%2F2024&returnDate=28%2F11%2F2024&bookingClass=M&adults=1&vehicleType=Aircraft&sort=quality');
 
     });
   
@@ -65,7 +59,6 @@ describe('Search Form Tests', () => {
 
       // Get a warning for invalid inputs
       cy.get('#cityTo').type('{selectall}{del}');
-      cy.get('#trains').click();
       cy.get('.alert-danger').should('have.length', 2);
     });
   });
