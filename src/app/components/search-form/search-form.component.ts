@@ -60,7 +60,6 @@ export class SearchFormComponent implements OnInit {
     const formData = this.formDataService.formData;
     this.searchForm = new FormGroup(
       {
-        form: new FormControl(''),
         tripMode: new FormControl(formData.tripMode),
         cityFrom: new FormControl(formData.cityFrom, [
           Validators.required,
@@ -99,8 +98,8 @@ export class SearchFormComponent implements OnInit {
   }
 
   async searchLocations() {
-    if (this.searchForm.value.form.length >= 3) {
-      this.locations$ = this.apiService.getLocationId(this.searchForm.value.form)
+    if (this.searchForm.value.cityFrom.length >= 3) {
+      this.locations$ = this.apiService.getLocationId(this.searchForm.value.cityFrom)
       const locations: any = await firstValueFrom(this.locations$)
       this.locations = locations.locations;
       this.locations = this.locations.filter(location => location.type === 'airport' || (location.type === 'city' && location.airports > 1));

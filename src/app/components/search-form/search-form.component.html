@@ -7,7 +7,11 @@
       <div class="form-options">
         <div class="form-group">
           <div class="form-group">
-            <tui-select tuiTextfieldSize="m" formControlName="tripMode" id="tripMode">
+            <tui-select
+              tuiTextfieldSize="m"
+              formControlName="tripMode"
+              id="tripMode"
+            >
               Trip mode
               <input placeholder="Choose your hero" tuiTextfield />
               <tui-data-list-wrapper
@@ -37,7 +41,11 @@
             </tui-select>
           </div>
           <div class="form-group">
-            <tui-select tuiTextfieldSize="m" formControlName="vehicleType" id="vehicleType">
+            <tui-select
+              tuiTextfieldSize="m"
+              formControlName="vehicleType"
+              id="vehicleType"
+            >
               Vehicle type
               <input placeholder="Choose your hero" tuiTextfield />
               <tui-data-list-wrapper
@@ -50,31 +58,6 @@
       </div>
 
       <div class="form-inputs" [ngClass]="{ 'show-form-inputs': filters }">
-        <!-- <tui-input
-            *tuiLet="items$ | async as items"
-            class="b-form"
-            formControlName="control"
-        > -->
-        <tui-input
-            class="b-form"
-            formControlName="form"
-            (input)="searchLocations()"
-        >
-            From
-            <ng-container *ngIf="items?.length">
-                <tui-data-list *tuiDataList>
-                    <button
-                        *ngFor="let item of locations"
-                        tuiOption
-                        [value]="item.name"
-                        (click)="onClick(item)"
-                    >
-                        <span *ngIf="item.type == 'city'" class="name">{{ item.name }} (All)</span>
-                        <span *ngIf="item.type != 'city'" class="name">{{ item.name }} {{ item.code }}</span>
-                    </button>
-                </tui-data-list>
-            </ng-container>
-        </tui-input>
         <div class="form-group">
           <tui-input
             type="text"
@@ -82,22 +65,27 @@
             class="form-control"
             formControlName="cityFrom"
             required
-            >From
-          </tui-input>
-          <div
-            *ngIf="cityFrom.invalid && (cityFrom.dirty || cityFrom.touched)"
-            class="alert alert-danger"
+            (input)="searchLocations()"
           >
-            <div *ngIf="cityFrom.errors?.['required']">From is required.</div>
-            <div
-              *ngIf="cityFrom.errors?.['minlength'] || cityFrom.errors?.['maxlength']"
-            >
-              Identificator must be 3 characters long.
-            </div>
-            <div *ngIf="cityFrom.errors?.['forbiddenName']">
-              Identificator cannot be XYZ.
-            </div>
-          </div>
+            From
+            <ng-container *ngIf="items?.length">
+              <tui-data-list *tuiDataList>
+                <button
+                  *ngFor="let item of locations"
+                  tuiOption
+                  [value]="item.name"
+                  (click)="onClick(item)"
+                >
+                  <span *ngIf="item.type == 'city'" class="name"
+                    >{{ item.name }} (All)</span
+                  >
+                  <span *ngIf="item.type != 'city'" class="name"
+                    >{{ item.name }} {{ item.code }}</span
+                  >
+                </button>
+              </tui-data-list>
+            </ng-container>
+          </tui-input>
         </div>
         <div class="form-group">
           <tui-input
