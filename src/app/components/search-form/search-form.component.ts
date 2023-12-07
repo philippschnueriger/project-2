@@ -4,7 +4,7 @@ import { forbiddenNameValidator } from './forbidden-name.directive';
 import { Router } from '@angular/router';
 import {TuiDay} from '@taiga-ui/cdk';
 import { ApiService } from '../../shared/services/api.service';
-import { firstValueFrom, throttleTime } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import {tuiInputNumberOptionsProvider} from '@taiga-ui/kit';
 import { FormDataService } from 'src/app/shared/services/form-data.service';
 import { TripMode, BookingClass, VehicleType } from '../../shared/types/enums';

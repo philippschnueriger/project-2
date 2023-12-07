@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { TuiLetModule } from '@taiga-ui/cdk';
-import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER, TuiLoaderModule, TuiDataListModule } from "@taiga-ui/core";
+import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER, TuiLoaderModule, TuiDataListModule, TuiTextfieldControllerModule } from "@taiga-ui/core";
 import { TuiButtonModule } from "@taiga-ui/core";
 import { TuiInputModule, TuiInputPasswordModule, TuiCheckboxModule, TuiIslandModule, TuiInputDateModule, TuiMarkerIconModule, TuiSelectModule, TuiDataListWrapperModule, TuiInputNumberModule, TuiRadioLabeledModule, TuiInputDateRangeModule } from "@taiga-ui/kit";
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
@@ -25,7 +25,8 @@ import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
     TuiInputNumberModule,
     TuiRadioLabeledModule,
     TuiInputDateRangeModule,
-    TuiLetModule
+    TuiLetModule,
+    TuiTextfieldControllerModule,
   ],
   exports: [
     TuiRootModule,
@@ -45,7 +46,8 @@ import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
     TuiInputNumberModule,
     TuiRadioLabeledModule,
     TuiInputDateRangeModule,
-    TuiLetModule
+    TuiLetModule,
+    TuiTextfieldControllerModule
   ],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }]
 })
