@@ -68,8 +68,13 @@ export class ApiService {
 
   async locationExists(location: string): Promise<boolean> {
     try {
-      const response: any = await firstValueFrom(this.getLocationId(location));
-      return response.locations.length > 0;
+      let response: any = await firstValueFrom(this.getLocationId(location));
+      response = response.locations.filter(
+        (location: any) =>
+          location.type === 'airport' ||
+          (location.type === 'city' && location.airports > 1)
+      );
+      return response.length > 0;
     } catch (error) {
       console.error('Error occurred while checking location existence:', error);
       return false; // Return false in case of an error
