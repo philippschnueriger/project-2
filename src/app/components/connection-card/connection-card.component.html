@@ -1,22 +1,12 @@
 <div>
   <tui-island>
     <p>{{ tripSummary?.operators }}</p>
-    <button
-      *ngIf="!deleteOption"
-      class="favourite"
-      tuiMarkerIcon
-      src="tuiIconStarLarge"
-      (click)="saveFavouriteConnection()"
-      mode="link"
-    ></button>
-    <button
-      *ngIf="deleteOption"
-      class="favourite"
-      tuiMarkerIcon
-      src="tuiIconStarLarge"
-      (click)="deleteFavouriteConnection()"
-      mode="primary"
-    ></button>
+    <div  *ngIf="!deleteOption" class="favorite-icon" (click)="saveFavouriteConnection()">
+      <img src="../../../assets/icons/favourite-border.svg" alt="Favorite Icon">
+    </div>
+    <div *ngIf="deleteOption" class="favorite-icon" (click)="deleteFavouriteConnection()">
+      <img src="../../../assets/icons/favourite-full.svg" alt="Favorite Icon">
+    </div>
 
     <div class="grid-container" (click)="toggleOverlay()">
       <div class="grid-item">
