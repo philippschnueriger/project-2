@@ -98,12 +98,37 @@ tui-radio-labeled {
 .filters {
   display: flex;
   width: calc(100vw - 40px);
+  button:nth-child(1) {
+    width: 33%;
+    max-width: 150px;
+    border-radius: 10px 0px 0px 10px;
+  }
+  button:last-child {
+    width: 33%;
+    max-width: 150px;
+    border-radius: 0px 10px 10px 0px;
+  }
   button {
-    width: 30%;
+    width: 34%;
+    max-width: 150px;
+    height: 50px;
+    color: #3373e2;
+    background-color: #ffffff;
+    border: 1px solid #3373E2;
     margin: none;
     padding: none;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 125% */
+  }
+  .active {
+    color: #ffffff;
+    background-color: #3373e2;
   }
 }
+
+
 
 /* tablets */
 @media (min-width: 768px) {

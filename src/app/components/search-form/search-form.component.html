@@ -190,23 +190,23 @@
 </form>
 <div *ngIf="filters" class="filters">
   <button
-    tuiButton
     (click)="updateUrl('quality')"
-    [appearance]="sort === 'quality' ? 'secondary' : 'primary'"
+    class="filterButton"
+    [class.active]="sort === 'quality'"
   >
     Best
   </button>
   <button
-    tuiButton
     (click)="updateUrl('price')"
-    [appearance]="sort === 'price' ? 'secondary' : 'primary'"
+    class="filterButton"
+    [class.active]="sort === 'price'"
   >
     Cheapest
   </button>
   <button
-    tuiButton
     (click)="updateUrl('duration')"
-    [appearance]="sort === 'duration' ? 'secondary' : 'primary'"
+    class="filterButton"
+    [class.active]="sort === 'duration'"
   >
     Fastest
   </button>
