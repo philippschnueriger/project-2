@@ -20,6 +20,7 @@ export class ApiService {
     returnDate = this.nextWeek.toString().replace(/\./g, '/'),
     bookingClass = 'C',
     adults = 1,
+    children = 0,
     vehicleType = 'aircraft',
     sort = 'quality'
   ) {
@@ -28,7 +29,9 @@ export class ApiService {
       `&fly_to=${to}` +
       `&date_from=${departureDate}&date_to=${departureDate}` +
       `&return_from=${returnDate}&return_to=${returnDate}` +
-      `&selected_cabins=${bookingClass}&adults=${adults}` +
+      `&selected_cabins=${bookingClass}` + 
+      `&adults=${adults}` +
+      `&children=${children}` +
       `&vehicle_type=${vehicleType.toLowerCase()}` +
       `&curr=CHF` +
       `&sort=${sort}` +

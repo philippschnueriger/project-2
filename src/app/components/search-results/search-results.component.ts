@@ -8,13 +8,16 @@ import { FormDataService } from 'src/app/shared/services/form-data.service';
 @Component({
   selector: 'app-results',
   templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.scss']
+  styleUrls: ['./search-results.component.scss'],
 })
 export class ResultsComponent implements OnInit {
-formCityTo: string | null = null;
+  formCityTo: string | null = null;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private formDataService: FormDataService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    private formDataService: FormDataService
+  ) {}
 
   cityFrom = '';
   cityTo = '';
@@ -22,31 +25,31 @@ formCityTo: string | null = null;
   returnDate = '';
   bookingClass = '';
   adults = 1;
+  children = 0;
   vehicleType = '';
-  sort='';
+  sort = '';
 
   loading = false;
 
   ngOnInit() {
     const formData = this.formDataService.formData;
     this.formCityTo = formData.cityTo;
-    this.route.queryParams
-      .subscribe(params => {
-        this.cityFrom = params['cityFrom'];
-        this.cityTo = params['cityTo'];
-        this.departureDate = params['departureDate'];
-        this.returnDate = params['returnDate'];
-        this.bookingClass = params['bookingClass'];
-        this.adults = params['adults'];
-        this.vehicleType = params['vehicleType'];
-        const newSort = params['sort'];
+    this.route.queryParams.subscribe((params) => {
+      this.cityFrom = params['cityFrom'];
+      this.cityTo = params['cityTo'];
+      this.departureDate = params['departureDate'];
+      this.returnDate = params['returnDate'];
+      this.bookingClass = params['bookingClass'];
+      this.adults = params['adults'];
+      this.children = params['children'];
+      this.vehicleType = params['vehicleType'];
+      const newSort = params['sort'];
 
-        if (newSort !== this.sort) {
-          this.sort = newSort;
-          this.loadData();
-        }
+      if (newSort !== this.sort) {
+        this.sort = newSort;
+        this.loadData();
       }
-    );
+    });
     this.loadData();
   }
   data: TripSegment[] = [];
@@ -54,8 +57,18 @@ formCityTo: string | null = null;
   async loadData() {
     this.loading = true;
     this.data = [];
-    
-    const data$ = this.apiService.getData(this.cityFrom, this.cityTo, this.departureDate, this.returnDate, this.bookingClass, this.adults, this.vehicleType, this.sort);
+
+    const data$ = this.apiService.getData(
+      this.cityFrom,
+      this.cityTo,
+      this.departureDate,
+      this.returnDate,
+      this.bookingClass,
+      this.adults,
+      this.children,
+      this.vehicleType,
+      this.sort
+    );
 
     try {
       const response: any = await firstValueFrom(data$);
@@ -79,7 +92,5 @@ formCityTo: string | null = null;
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-
   }
 }
-

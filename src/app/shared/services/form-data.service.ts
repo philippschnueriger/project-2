@@ -19,7 +19,6 @@ export class FormDataService {
     bookingClass: BookingClass.Economy,
     adults: 1,
     children: 0,
-    bags: 0,
     vehicleType: VehicleType.Aircraft,
     sort: Sort.Price
   };
@@ -38,7 +37,6 @@ export class FormDataService {
       bookingClass: BookingClass.Economy,
       adults: 1,
       children: 0,
-      bags: 0,
       vehicleType: VehicleType.Aircraft,
       sort: Sort.Price
     };

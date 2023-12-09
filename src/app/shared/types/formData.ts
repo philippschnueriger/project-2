@@ -10,7 +10,6 @@ export interface FormData {
   bookingClass: BookingClass;
   adults: number;
   children: number;
-  bags: number;
   vehicleType: VehicleType;
   sort: Sort;
 }
