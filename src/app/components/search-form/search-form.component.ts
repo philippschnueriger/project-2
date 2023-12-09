@@ -83,11 +83,10 @@ export class SearchFormComponent implements OnInit {
       //   Validators.minLength(3),
       //   this.locationExistsValidator(this.searchForm.value.cityFrom),
       // ]),
-      cityTo: new FormControl(formData.cityTo, [
-        Validators.required,
-        Validators.minLength(3),
-        forbiddenNameValidator(/XYZ/i),
-      ]),
+      cityTo: new FormControl(formData.cityTo, {
+        validators: [Validators.required, Validators.minLength(3)],
+        asyncValidators: [locationExistsValidator(this.apiService)],
+      }),
       departureAndReturnDate: new FormControl(formData.departureAndReturnDate, [
         Validators.required,
         //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
