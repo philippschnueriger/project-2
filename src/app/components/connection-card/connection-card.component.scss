@@ -138,3 +138,23 @@ hr {
     margin: auto;
   }
 }
+
+button {
+  height: 40px;
+  width: 70px;
+  color: #ffffff;
+  border-radius: 10px;
+  background: #3373e2;
+  border: none;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 125% */
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #265cb8;
+
+}
