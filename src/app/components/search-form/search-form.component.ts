@@ -100,6 +100,8 @@ export class SearchFormComponent implements OnInit {
         Validators.required,
       ]),
       adults: new FormControl(formData.adults, [Validators.required]),
+      children: new FormControl(formData.children),
+      bags: new FormControl(formData.bags),
       vehicleType: new FormControl(formData.vehicleType, [Validators.required]),
     });
   }
@@ -196,6 +198,8 @@ export class SearchFormComponent implements OnInit {
 
     const bookingClass = this.mapBookingClass(this.bookingClass.value);
     const adults = this.adults.value;
+    const children = this.children.value;
+    const bags = this.bags.value;
     const vehicleType = this.vehicleType.value;
     this.router.navigate(['/results'], {
       queryParams: {
@@ -205,6 +209,8 @@ export class SearchFormComponent implements OnInit {
         returnDate: returnDateValue,
         bookingClass: bookingClass,
         adults: adults,
+        children: children,
+        bags: bags,
         vehicleType: vehicleType,
         sort: this.sort,
       },
@@ -231,6 +237,12 @@ export class SearchFormComponent implements OnInit {
   }
   get adults() {
     return this.searchForm.get('adults')!;
+  }
+  get children() {
+    return this.searchForm.get('children')!;
+  }
+  get bags() {
+    return this.searchForm.get('bags')!;
   }
   get vehicleType() {
     return this.searchForm.get('vehicleType')!;
