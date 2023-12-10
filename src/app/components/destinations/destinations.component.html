@@ -1,12 +1,20 @@
 <h1>Explore new destinations</h1>
 <div class="container">
-<tui-select tuiTextfieldSize="m" formControlName="region" id="region">
-  Regions
-  <tui-data-list-wrapper *tuiDataList [items]="regions"></tui-data-list-wrapper>
-</tui-select>
-<tui-select tuiTextfieldSize="m" formControlName="region" id="region">
-  Order
-  <tui-data-list-wrapper *tuiDataList [items]="order"></tui-data-list-wrapper>
-</tui-select>
+  <form [formGroup]="filters" #formDir="ngForm" class="container">
+    <tui-select tuiTextfieldSize="m" formControlName="region" id="region">
+      Regions
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="regions"
+      ></tui-data-list-wrapper>
+    </tui-select>
+    <tui-select tuiTextfieldSize="m" formControlName="order" id="order">
+      Order
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="order"
+      ></tui-data-list-wrapper>
+    </tui-select>
+  </form>
 </div>
 <app-popular-destinations></app-popular-destinations>
