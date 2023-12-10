@@ -24,6 +24,9 @@ export class PopularDestinationsComponent {
       this.destinationsArray.push(this.destinations[i]);
     }
     this.originalDestinationsArray = [...this.destinationsArray];
+  }
+
+  ngOnInit() {
     this.filterByRegion(this.region);
     this.sort(this.order);
   }
@@ -53,7 +56,10 @@ export class PopularDestinationsComponent {
       this.destinationsArray.sort((a, b) => a.name.localeCompare(b.name));
     } else if (order == "Random"){
       this.destinationsArray.sort(() => Math.random() - 0.5);
-    }
+    } else if (order == "Favourites"){
+      this.destinationsArray.sort((a, b) =>  b.dst_popularity_score - a.dst_popularity_score);
+      this.destinationsArray = this.destinationsArray.slice(0, 5)
+  }
     
     else {
       console.log("filter not found")
