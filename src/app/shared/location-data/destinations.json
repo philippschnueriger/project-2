@@ -1,5 +1,408 @@
 [
     {
+        "id": "new-york-city_ny_us",
+        "active": true,
+        "name": "New York",
+        "slug": "new-york-city-new-york-united-states",
+        "slug_en": "new-york-city-new-york-united-states",
+        "code": "NYC",
+        "alternative_names": [],
+        "rank": 0,
+        "global_rank_dst": 0,
+        "dst_popularity_score": 10823294.0,
+        "timezone": "America/New_York",
+        "population": 8175133,
+        "airports": 4,
+        "stations": 3,
+        "hotels": 1322,
+        "bus_stations": 6,
+        "subdivision": {
+            "id": "NY_US",
+            "name": "New York",
+            "slug": "new-york-united-states",
+            "code": "NY"
+        },
+        "autonomous_territory": null,
+        "country": {
+            "id": "US",
+            "name": "United States",
+            "slug": "united-states",
+            "code": "US"
+        },
+        "region": {
+            "id": "northern-america",
+            "name": "Northern America",
+            "slug": "northern-america"
+        },
+        "continent": {
+            "id": "north-america",
+            "name": "North America",
+            "slug": "north-america",
+            "code": "NA"
+        },
+        "nearby_country": null,
+        "location": {
+            "lat": 40.712784,
+            "lon": -74.005941
+        },
+        "tags": [
+            {
+                "tag": "activities",
+                "month_to": -1,
+                "month_from": -1
+            },
+            {
+                "tag": "events",
+                "month_to": -1,
+                "month_from": -1
+            },
+            {
+                "tag": "family fun",
+                "month_to": -1,
+                "month_from": -1
+            },
+            {
+                "tag": "famous cities",
+                "month_to": -1,
+                "month_from": -1
+            },
+            {
+                "tag": "sightseeing",
+                "month_to": -1,
+                "month_from": -1
+            }
+        ],
+        "alternative_departure_points": [
+            {
+                "id": "TTN",
+                "distance": 100.67,
+                "duration": 5290.3
+            },
+            {
+                "id": "SWF",
+                "distance": 115.41,
+                "duration": 5545.6
+            },
+            {
+                "id": "ZVE",
+                "distance": 134.84,
+                "duration": 6505.3
+            },
+            {
+                "id": "ABE",
+                "distance": 135.37,
+                "duration": 6737.2
+            },
+            {
+                "id": "ZFV",
+                "distance": 154.13,
+                "duration": 7177
+            },
+            {
+                "id": "PHL",
+                "distance": 165.75,
+                "duration": 7872.6
+            },
+            {
+                "id": "ZRP",
+                "distance": 17.22,
+                "duration": 1147.8
+            },
+            {
+                "id": "LGA",
+                "distance": 18.16,
+                "duration": 1206
+            },
+            {
+                "id": "ZRT",
+                "distance": 189.04,
+                "duration": 8937.7
+            },
+            {
+                "id": "ACY",
+                "distance": 198.93,
+                "duration": 9818.7
+            },
+            {
+                "id": "EWR",
+                "distance": 20.48,
+                "duration": 1675.2
+            },
+            {
+                "id": "AVP",
+                "distance": 205.26,
+                "duration": 9824.4
+            },
+            {
+                "id": "BDL",
+                "distance": 216.91,
+                "duration": 10512.8
+            },
+            {
+                "id": "LNS",
+                "distance": 242.62,
+                "duration": 11353.2
+            },
+            {
+                "id": "ALB",
+                "distance": 261.11,
+                "duration": 11898.6
+            },
+            {
+                "id": "ZUG",
+                "distance": 274.55,
+                "duration": 12654.1
+            },
+            {
+                "id": "JFK",
+                "distance": 27.64,
+                "duration": 2870.8
+            },
+            {
+                "id": "ORH",
+                "distance": 287.69,
+                "duration": 13436
+            },
+            {
+                "id": "PVD",
+                "distance": 290.36,
+                "duration": 13729.3
+            },
+            {
+                "id": "BGM",
+                "distance": 298.43,
+                "duration": 14229.4
+            },
+            {
+                "id": "MDT",
+                "distance": 300.15,
+                "duration": 13038.8
+            },
+            {
+                "id": "ZYP",
+                "distance": 5.13,
+                "duration": 703.8
+            },
+            {
+                "id": "HPN",
+                "distance": 64.98,
+                "duration": 3095.2
+            },
+            {
+                "id": "ISP",
+                "distance": 90.85,
+                "duration": 4403.6
+            }
+        ],
+        "providers": [
+            1096,
+            1161,
+            1162,
+            1165,
+            1175,
+            1235,
+            1277,
+            1282,
+            1283
+        ],
+        "car_rentals": [
+            {
+                "provider_id": 1175,
+                "providers_locations": [
+                    "1501461",
+                    "507518",
+                    "696173",
+                    "356246",
+                    "711868",
+                    "757353",
+                    "4421877",
+                    "696168",
+                    "360061",
+                    "366546",
+                    "1250588",
+                    "1088098",
+                    "363016",
+                    "1705961",
+                    "4089285",
+                    "4089309",
+                    "1294538",
+                    "508363",
+                    "4089311",
+                    "1106473",
+                    "3655306",
+                    "981748",
+                    "363056",
+                    "363076",
+                    "363186",
+                    "910798",
+                    "3962030",
+                    "1705861",
+                    "3395426",
+                    "595538",
+                    "3655296",
+                    "4022084",
+                    "1088288",
+                    "344396",
+                    "1150733",
+                    "1048713",
+                    "696233",
+                    "363146",
+                    "363041",
+                    "1088068",
+                    "1705951"
+                ]
+            },
+            {
+                "provider_id": 1175,
+                "providers_locations": [
+                    "1088073",
+                    "1311948",
+                    "4089179",
+                    "820273",
+                    "508333",
+                    "1693351",
+                    "4089287",
+                    "363121",
+                    "4089289",
+                    "952788",
+                    "595663",
+                    "4089291",
+                    "363101",
+                    "1294513",
+                    "756828",
+                    "4022089",
+                    "4089294",
+                    "363006",
+                    "3998326",
+                    "363116",
+                    "1050708",
+                    "363176"
+                ]
+            }
+        ],
+        "type": "city"
+    },
+    {
+        "id": "tokyo_jp",
+        "active": true,
+        "name": "Tokyo",
+        "slug": "tokyo-japan",
+        "slug_en": "tokyo-japan",
+        "code": "TYO",
+        "alternative_names": [
+            "東京"
+        ],
+        "rank": 22,
+        "global_rank_dst": 1,
+        "dst_popularity_score": 9584906.0,
+        "timezone": "Asia/Tokyo",
+        "population": 8336599,
+        "airports": 2,
+        "stations": 1,
+        "hotels": 0,
+        "bus_stations": 0,
+        "subdivision": null,
+        "autonomous_territory": null,
+        "country": {
+            "id": "JP",
+            "name": "Japan",
+            "slug": "japan",
+            "code": "JP"
+        },
+        "region": {
+            "id": "eastern-asia",
+            "name": "Eastern Asia",
+            "slug": "eastern-asia"
+        },
+        "continent": {
+            "id": "asia",
+            "name": "Asia",
+            "slug": "asia",
+            "code": "AS"
+        },
+        "nearby_country": null,
+        "location": {
+            "lat": 35.689487,
+            "lon": 139.691706
+        },
+        "tags": [
+            {
+                "tag": "activities",
+                "month_to": -1,
+                "month_from": -1
+            },
+            {
+                "tag": "family fun",
+                "month_to": -1,
+                "month_from": -1
+            },
+            {
+                "tag": "famous cities",
+                "month_to": -1,
+                "month_from": -1
+            }
+        ],
+        "alternative_departure_points": [
+            {
+                "id": "IBR",
+                "distance": 104.86,
+                "duration": 5159.7
+            },
+            {
+                "id": "MMJ",
+                "distance": 209.07,
+                "duration": 10787.2
+            },
+            {
+                "id": "FSZ",
+                "distance": 211.55,
+                "duration": 9700.7
+            },
+            {
+                "id": "FKS",
+                "distance": 223.94,
+                "duration": 11201
+            },
+            {
+                "id": "HND",
+                "distance": 29.08,
+                "duration": 2782.1
+            },
+            {
+                "id": "NRT",
+                "distance": 76.16,
+                "duration": 3669
+            }
+        ],
+        "providers": [
+            1175,
+            1280,
+            1282
+        ],
+        "car_rentals": [
+            {
+                "provider_id": 1175,
+                "providers_locations": [
+                    "2663626",
+                    "1655303",
+                    "2663616",
+                    "2649613",
+                    "2647193",
+                    "425818",
+                    "2663621",
+                    "2318946",
+                    "425968",
+                    "1905216",
+                    "2650626",
+                    "2651391",
+                    "4188539",
+                    "4188538"
+                ]
+            }
+        ],
+        "type": "city"
+    },
+    {
         "id": "vienna_at",
         "active": true,
         "name": "Vienna",
