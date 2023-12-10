@@ -28,13 +28,13 @@
       </div>
       <div class="buttons">
         <div class="formGroup">
-          <button tuiButton type="submit" [disabled]="!loginForm.valid">
+          <button type="submit" [disabled]="!loginForm.valid">
             Log in
           </button>
         </div>
         <div class="formGroup">
           <button
-            tuiButton
+            class="signUp"
             type="button"
             [disabled]="!loginForm.valid"
             (click)="onSignUp()"
@@ -48,6 +48,6 @@
 
   <div *ngIf="user">
     <div *ngIf="user">logged in as {{ user.email }}</div>
-    <button id="logout" tuiButton (click)="logout()">Logout</button>
+    <button id="logout" (click)="logout()">Logout</button>
   </div>
 </div>
