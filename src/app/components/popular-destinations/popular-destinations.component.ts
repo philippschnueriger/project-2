@@ -13,6 +13,7 @@ import * as data from '../../shared/location-data/destinations.json';
 })
 export class PopularDestinationsComponent {
   @Input() region: string = 'All';
+  @Input() order: string = 'Popularity';
 
   readonly destinations: Destination[];
   originalDestinationsArray: Destination[] = [];
@@ -24,12 +25,16 @@ export class PopularDestinationsComponent {
     }
     this.originalDestinationsArray = [...this.destinationsArray];
     this.filterByRegion(this.region);
+    this.sort(this.order);
   }
 
   ngOnChanges(changes: SimpleChange) {
     if ('region' in changes) {
       this.revertFilter();
       this.filterByRegion(this.region);
+    }
+    if ('order' in changes) {
+      this.sort(this.order);
     }
   }
 
@@ -38,7 +43,22 @@ export class PopularDestinationsComponent {
       this.destinationsArray = this.destinationsArray.filter(
         (obj) => obj.continent.name === region
       );
+      this.sort(this.order)
     }
+  }
+  sort(order: string){
+    if (order === "Popularity"){
+      this.destinationsArray.sort((a, b) =>  b.dst_popularity_score - a.dst_popularity_score)
+    } else if (order == "Alphabetical"){
+      this.destinationsArray.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (order == "Random"){
+      this.destinationsArray.sort(() => Math.random() - 0.5);
+    }
+    
+    else {
+      console.log("filter not found")
+    }
+    
   }
 
   revertFilter() {
