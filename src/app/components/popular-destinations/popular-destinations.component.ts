@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import {TuiDay} from '@taiga-ui/cdk';
 import { ApiService } from '../../shared/services/api.service';
 import { firstValueFrom } from 'rxjs';
+import { Destination } from 'src/app/shared/types/destination'
+import * as data from '../../shared/location-data/destinations.json';
 
 @Component({
   selector: 'app-popular-destinations',
@@ -10,7 +12,14 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./popular-destinations.component.scss']
 })
 export class PopularDestinationsComponent {
-  constructor(private router: Router, private apiService: ApiService) {}
+  readonly destinations: Destination[]
+  destinationsArray: Destination[] = []
+  constructor(private router: Router, private apiService: ApiService) {
+    this.destinations = {...data};
+    for (let i=0; i<this.destinations.length; i++){
+      this.destinationsArray.push(this.destinations[i])
+    }
+  }
 
   index = 0;
   readonly items = [

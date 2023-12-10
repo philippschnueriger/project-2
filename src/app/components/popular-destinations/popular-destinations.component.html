@@ -1,10 +1,10 @@
 <div class="container">
-<div *ngFor="let item of items">
-  <div class="image-container" (click)="exploreDestination(item)">
-    <img src="../../../assets/images/{{ item }}.png" alt="Image" />
-    <div class="overlay">
-      <div>{{ item }}</div>
+  <div *ngFor="let item of destinationsArray">
+    <div class="image-container" (click)="exploreDestination(item.name)">
+      <img src="../../../assets/images/{{ item.name }}.png" alt="Image" />
+      <div class="overlay">
+        <div>{{ item.name }}</div>
+      </div>
     </div>
   </div>
-</div>
 </div>
