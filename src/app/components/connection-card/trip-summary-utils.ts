@@ -1,4 +1,5 @@
 import { TripSummary } from './tripSummary';
+import { airlines } from '../../shared/airline-data/airlines';
 
 function findIndexByFlyTo(data: any) {
   for (let i = 0; i < data.route.length; i++) {
@@ -11,7 +12,11 @@ function findIndexByFlyTo(data: any) {
 
 function getOperators(data: any) {
   const allOperators = data.map((data: any) => data.operating_carrier);
-  const uniqueOperators = [...new Set(allOperators)];
+  const operatorsWithAirlines = allOperators.map((operator: any) => {
+    const airline = airlines.find(airline => airline.iata === operator);
+    return airline?.name || operator;
+  });
+  const uniqueOperators = [...new Set(operatorsWithAirlines)];
   return uniqueOperators.join(', ');
 }
 
