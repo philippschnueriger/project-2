@@ -17,4 +17,6 @@
     </tui-select>
   </form>
 </div>
-<app-popular-destinations></app-popular-destinations>
+<app-popular-destinations
+  [region]="filters.get('region')?.value"
+></app-popular-destinations>
