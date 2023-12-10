@@ -1,2 +1,11 @@
 <h1>Favourite Connections</h1>
+<form [formGroup]="filters" #formDir="ngForm" class="container">
+    <tui-select tuiTextfieldSize="m" formControlName="sort" id="sort">
+      Sort
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="sort"
+      ></tui-data-list-wrapper>
+    </tui-select>
+  </form>
 <app-connection-card *ngFor="let item of favourites" [item]="item" [deleteOption]="true"></app-connection-card>
