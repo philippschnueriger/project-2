@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./destinations.component.scss']
 })
 export class DestinationsComponent {
-
+  regions = ['All', 'Europe', 'Asia']
+  order = ['Popularity', 'Alphabetical', 'Random']
 }

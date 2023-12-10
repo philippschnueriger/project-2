@@ -1,2 +1,12 @@
 <h1>Explore new destinations</h1>
+<div class="container">
+<tui-select tuiTextfieldSize="m" formControlName="region" id="region">
+  Regions
+  <tui-data-list-wrapper *tuiDataList [items]="regions"></tui-data-list-wrapper>
+</tui-select>
+<tui-select tuiTextfieldSize="m" formControlName="region" id="region">
+  Order
+  <tui-data-list-wrapper *tuiDataList [items]="order"></tui-data-list-wrapper>
+</tui-select>
+</div>
 <app-popular-destinations></app-popular-destinations>
