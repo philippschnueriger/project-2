@@ -4,25 +4,30 @@ import { FirestoreService } from '../../shared/services/firestore.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ApiService } from '../../shared/services/api.service';
 import { User } from 'firebase/auth';
-import { TripSummary } from './tripSummary'
+import { TripSummary } from './tripSummary';
 import { getTripSummary } from './trip-summary-utils';
 
 @Component({
   selector: 'app-connection-card',
   templateUrl: './connection-card.component.html',
-  styleUrls: ['./connection-card.component.scss']
+  styleUrls: ['./connection-card.component.scss'],
 })
 export class ConnectionCardComponent {
   @Input() item!: TripSegment;
   @Input() docId!: string;
   @Input() deleteOption: boolean = false;
-  user: User | null = null; 
+  @Input() favourites: boolean = false;
+
+  user: User | null = null;
   isConnectionAvailable: boolean = true;
-  tripSummary: TripSummary  | null = null; 
+  tripSummary: TripSummary | null = null;
   showOverlay: boolean = false;
   expand: boolean = false;
-  constructor(private authService: AuthService, private firestoreService: FirestoreService, private apiService: ApiService) {
-  }
+  constructor(
+    private authService: AuthService,
+    private firestoreService: FirestoreService,
+    private apiService: ApiService
+  ) {}
   ngOnInit() {
     this.authService.user$.subscribe((user) => {
       this.user = user;
@@ -31,7 +36,7 @@ export class ConnectionCardComponent {
       this.validateBookingToken();
     }
     //console.log(getTripSummary(this.item))
-    this.tripSummary = getTripSummary(this.item)
+    this.tripSummary = getTripSummary(this.item);
   }
   saveFavouriteConnection() {
     if (this.user?.uid) {
@@ -41,16 +46,23 @@ export class ConnectionCardComponent {
   }
   deleteFavouriteConnection() {
     if (this.user?.uid) {
-      this.firestoreService.deleteFavouriteConnection(this.user?.uid, this.item.id);
-    };
+      this.firestoreService.deleteFavouriteConnection(
+        this.user?.uid,
+        this.item.id
+      );
+    }
     this.deleteOption = false;
   }
   async validateBookingToken() {
     if (this.item.deep_link) {
-      const booking_token = this.item.deep_link.match(/booking_token=([^&]*)/)?.[1];
+      const booking_token = this.item.deep_link.match(
+        /booking_token=([^&]*)/
+      )?.[1];
       if (booking_token) {
         try {
-          const response = await this.apiService.validateBookingToken(booking_token);
+          const response = await this.apiService.validateBookingToken(
+            booking_token
+          );
           if (response) {
             this.isConnectionAvailable = true;
           } else {

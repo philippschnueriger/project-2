@@ -1,11 +1,32 @@
 <div>
+  <div *ngIf="favourites">
+    <h2>{{ item.cityFrom }} - {{ item.cityTo }}</h2>
+    <p *ngIf="!tripSummary?.return">
+      {{ tripSummary?.departure?.departureTime | date : "dd/MM/yyyy" }}
+    </p>
+    <p *ngIf="tripSummary?.return">
+      {{ tripSummary?.departure?.departureTime | date : "dd/MM/yyyy" }} -
+      {{ tripSummary?.return?.arrivalTime | date : "dd/MM/yyyy" }}
+    </p>
+  </div>
   <tui-island>
     <p>{{ tripSummary?.operators }}</p>
-    <div  *ngIf="!deleteOption" class="favorite-icon" (click)="saveFavouriteConnection()">
-      <img src="../../../assets/icons/favourite-border.svg" alt="Favorite Icon">
+    <div
+      *ngIf="!deleteOption"
+      class="favorite-icon"
+      (click)="saveFavouriteConnection()"
+    >
+      <img
+        src="../../../assets/icons/favourite-border.svg"
+        alt="Favorite Icon"
+      />
     </div>
-    <div *ngIf="deleteOption" class="favorite-icon" (click)="deleteFavouriteConnection()">
-      <img src="../../../assets/icons/favourite-full.svg" alt="Favorite Icon">
+    <div
+      *ngIf="deleteOption"
+      class="favorite-icon"
+      (click)="deleteFavouriteConnection()"
+    >
+      <img src="../../../assets/icons/favourite-full.svg" alt="Favorite Icon" />
     </div>
 
     <div class="grid-container" (click)="toggleOverlay()">
