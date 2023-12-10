@@ -34,13 +34,11 @@ export class FavouriteConnectionsComponent implements OnInit {
       sort: new FormControl(),
     });
     this.filters.get('sort')?.valueChanges.subscribe((newValue: any) => {
-      console.log('New value of sort:', newValue);
       this.sortConnections(this.filters.get('sort')?.value);
     });
   }
 
   sortConnections(sort: string) {
-    console.log(this.favourites);
     if (sort === 'Date') {
       this.favourites.sort(
         (a: any, b: any) => {
@@ -50,7 +48,6 @@ export class FavouriteConnectionsComponent implements OnInit {
         }
       );
     } else if (sort === 'Price') {
-      console.log('sort by price');
       this.favourites.sort((a: any, b: any) => b.price - a.price);
     }
   }
