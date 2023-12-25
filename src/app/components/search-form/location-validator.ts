@@ -1,6 +1,6 @@
 import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { ApiService } from 'src/app/shared/services/api.service';
+import { ApiService } from 'src/app/services/api.service';
 import { catchError, map } from 'rxjs/operators';
 
 export function locationExistsValidator(

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FavouriteConnectionsComponent } from './favourite-connections.component';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { FirestoreService } from '../../shared/services/firestore.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { User } from 'firebase/auth';
 

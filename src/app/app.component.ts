@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
 
 @Component({

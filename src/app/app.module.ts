@@ -18,7 +18,7 @@ import { CommonModule } from "@angular/common";
 import { FavouriteConnectionsComponent } from './components/favourite-connections/favourite-connections.component';
 import { PopularDestinationsComponent } from './components/popular-destinations/popular-destinations.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ApiInterceptor } from './shared/services/http-interceptor';
+import { ApiInterceptor } from './services/http-interceptor';
 import { ConnectionCardDetailComponent } from './components/connection-card-detail/connection-card-detail.component';
 import { DestinationsComponent } from './components/destinations/destinations.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

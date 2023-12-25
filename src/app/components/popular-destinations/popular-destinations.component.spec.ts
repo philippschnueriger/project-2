@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PopularDestinationsComponent } from './popular-destinations.component';
-import { ApiService } from '../../shared/services/api.service';
+import { ApiService } from '../../services/api.service';
 import { of } from 'rxjs';
 import { AppModule } from '../../app.module';
 import { TuiDay } from '@taiga-ui/cdk';

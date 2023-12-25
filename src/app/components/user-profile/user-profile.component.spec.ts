@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserProfileComponent } from './user-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { FirestoreService } from '../../shared/services/firestore.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { of } from 'rxjs';
 import { User } from 'firebase/auth';
 import { AppModule } from 'src/app/app.module';

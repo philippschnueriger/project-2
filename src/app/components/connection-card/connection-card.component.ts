@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { TripSegment } from '../../shared/types/tripSegment';
-import { FirestoreService } from '../../shared/services/firestore.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { ApiService } from '../../shared/services/api.service';
+import { TripSegment } from '../../types/tripSegment';
+import { FirestoreService } from '../../services/firestore.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ApiService } from '../../services/api.service';
 import { User } from 'firebase/auth';
 import { TripSummary } from './tripSummary';
 import { getTripSummary } from './trip-summary-utils';

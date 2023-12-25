@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TripSegment } from '../../shared/types/tripSegment';
+import { TripSegment } from '../../types/tripSegment';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../../shared/services/api.service';
+import { ApiService } from '../../services/api.service';
 import { firstValueFrom } from 'rxjs';
-import { FormDataService } from 'src/app/shared/services/form-data.service';
+import { FormDataService } from 'src/app/services/form-data.service';
 
 @Component({
   selector: 'app-results',
