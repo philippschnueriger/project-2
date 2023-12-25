@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { LoginComponent } from './components/views/login/login.component';
-import { UserProfileComponent } from './components/views/user-profile/user-profile.component';
+import { UserSettingsComponent } from './components/views/user-settings/user-settings.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './components/views/home/home.component';
@@ -27,7 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     LoginComponent,
-    UserProfileComponent,
+    UserSettingsComponent,
     HomeComponent,
     SearchFormComponent,
     ResultsComponent,

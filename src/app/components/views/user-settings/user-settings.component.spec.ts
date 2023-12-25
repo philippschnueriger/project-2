@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserProfileComponent } from './user-profile.component';
+import { UserSettingsComponent } from './user-settings.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from '../../../services/firestore.service';
@@ -7,9 +7,9 @@ import { of } from 'rxjs';
 import { User } from 'firebase/auth';
 import { AppModule } from 'src/app/app.module';
 
-describe('UserProfileComponent', () => {
-  let component: UserProfileComponent;
-  let fixture: ComponentFixture<UserProfileComponent>;
+describe('UserSettingsComponent', () => {
+  let component: UserSettingsComponent;
+  let fixture: ComponentFixture<UserSettingsComponent>;
   let authServiceMock: Partial<AuthService>;
   let firestoreServiceMock: Partial<FirestoreService>;
 
@@ -25,7 +25,7 @@ describe('UserProfileComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [UserProfileComponent],
+      declarations: [UserSettingsComponent],
       imports: [ReactiveFormsModule, AppModule],
       providers: [
         { provide: AuthService, useValue: authServiceMock },
@@ -35,7 +35,7 @@ describe('UserProfileComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserProfileComponent);
+    fixture = TestBed.createComponent(UserSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,11 +5,11 @@ import { User } from 'firebase/auth';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  selector: 'app-user-settings',
+  templateUrl: './user-settings.component.html',
+  styleUrls: ['./user-settings.component.scss']
 })
-export class UserProfileComponent implements OnInit {
+export class UserSettingsComponent implements OnInit {
   user: User | null = null; 
   data: any;
   profileForm: FormGroup;

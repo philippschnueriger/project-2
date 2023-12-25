@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/views/login/login.component';
-import { UserProfileComponent } from './components/views/user-profile/user-profile.component';
+import { UserSettingsComponent } from './components/views/user-settings/user-settings.component';
 import { HomeComponent } from './components/views/home/home.component';
 import { AuthGuard } from './services/auth.guard';
 import { ResultsComponent } from './components/views/search-results/search-results.component';
@@ -32,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    component: UserProfileComponent,
+    component: UserSettingsComponent,
     title: 'Profile',
     canActivate: [AuthGuard] 
   },
