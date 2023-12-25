@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFormComponent } from './search-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppModule } from 'src/app/app.module';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 

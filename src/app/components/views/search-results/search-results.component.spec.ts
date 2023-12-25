@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../../services/api.service';
 import { ResultsComponent } from './search-results.component';
-import { SearchFormComponent } from '../search-form/search-form.component';
+import { SearchFormComponent } from '../../shared/search-form/search-form.component';
 import * as data from 'src/app/data/mock-data.json';
-import { AppModule } from '../../app.module';
+import { AppModule } from '../../../app.module';
 
 describe('ResultsComponent', () => {
   let component: ResultsComponent;

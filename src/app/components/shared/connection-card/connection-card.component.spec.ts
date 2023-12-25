@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConnectionCardComponent } from './connection-card.component';
-import { TripSegment } from '../../types/tripSegment';
+import { TripSegment } from '../../../types/tripSegment';
 import { AuthService } from 'src/app/services/auth.service';
-import { FirestoreService } from '../../services/firestore.service';
-import { ApiService } from '../../services/api.service';
+import { FirestoreService } from '../../../services/firestore.service';
+import { ApiService } from '../../../services/api.service';
 import { of } from 'rxjs';
 import { User } from 'firebase/auth';
 import { AppModule } from 'src/app/app.module';

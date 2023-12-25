@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChange } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiDay } from '@taiga-ui/cdk';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../../services/api.service';
 import { firstValueFrom } from 'rxjs';
 import { Destination } from 'src/app/types/destination';
 import * as data from 'src/app/data/destinations.json';
