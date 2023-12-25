@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { ApiService } from '../../shared/services/api.service';
 import { ResultsComponent } from './search-results.component';
 import { SearchFormComponent } from '../search-form/search-form.component';
-import * as data from '../../shared/mock-data/data.json';
+import * as data from 'src/app/data/mock-data.json';
 import { AppModule } from '../../app.module';
 
 describe('ResultsComponent', () => {

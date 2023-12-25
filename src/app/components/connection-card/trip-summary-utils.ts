@@ -1,5 +1,5 @@
 import { TripSummary } from './tripSummary';
-import { airlines } from '../../shared/airline-data/airlines';
+import { airlines } from 'src/app/data/airlines';
 
 function findIndexByFlyTo(data: any) {
   for (let i = 0; i < data.route.length; i++) {

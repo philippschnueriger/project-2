@@ -4,7 +4,7 @@ import { TuiDay } from '@taiga-ui/cdk';
 import { ApiService } from '../../shared/services/api.service';
 import { firstValueFrom } from 'rxjs';
 import { Destination } from 'src/app/shared/types/destination';
-import * as data from '../../shared/location-data/destinations.json';
+import * as data from 'src/app/data/destinations.json';
 
 @Component({
   selector: 'app-popular-destinations',
