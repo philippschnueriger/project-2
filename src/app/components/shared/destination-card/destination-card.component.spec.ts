@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PopularDestinationsComponent } from './popular-destinations.component';
+import { DestinationCardComponent } from './destination-card.component';
 import { ApiService } from '../../../services/api.service';
 import { of } from 'rxjs';
 import { AppModule } from '../../../app.module';
 import { TuiDay } from '@taiga-ui/cdk';
 import { Router } from '@angular/router';
 
-describe('PopularDestinationsComponent', () => {
-  let component: PopularDestinationsComponent;
-  let fixture: ComponentFixture<PopularDestinationsComponent>;
+describe('DestinationCardComponent', () => {
+  let component: DestinationCardComponent;
+  let fixture: ComponentFixture<DestinationCardComponent>;
   let apiService: jasmine.SpyObj<ApiService>;
   let router: Router;
 
@@ -17,7 +17,7 @@ describe('PopularDestinationsComponent', () => {
     const apiServiceSpy = jasmine.createSpyObj('ApiService', ['getLocationId']);
 
     await TestBed.configureTestingModule({
-      declarations: [PopularDestinationsComponent],
+      declarations: [DestinationCardComponent],
       imports: [RouterTestingModule, AppModule],
       providers: [{ provide: ApiService, useValue: apiServiceSpy }],
     }).compileComponents();
@@ -28,7 +28,7 @@ describe('PopularDestinationsComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PopularDestinationsComponent);
+    fixture = TestBed.createComponent(DestinationCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

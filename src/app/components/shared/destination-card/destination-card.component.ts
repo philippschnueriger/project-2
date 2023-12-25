@@ -7,11 +7,11 @@ import { Destination } from 'src/app/types/destination';
 import * as data from 'src/app/data/destinations.json';
 
 @Component({
-  selector: 'app-popular-destinations',
-  templateUrl: './popular-destinations.component.html',
-  styleUrls: ['./popular-destinations.component.scss'],
+  selector: 'app-destination-card',
+  templateUrl: './destination-card.component.html',
+  styleUrls: ['./destination-card.component.scss'],
 })
-export class PopularDestinationsComponent {
+export class DestinationCardComponent {
   @Input() region: string = 'All';
   @Input() order: string = 'Popularity';
 
