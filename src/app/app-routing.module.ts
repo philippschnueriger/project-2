@@ -5,7 +5,7 @@ import { UserProfileComponent } from './components/views/user-profile/user-profi
 import { HomeComponent } from './components/views/home/home.component';
 import { AuthGuard } from './services/auth.guard';
 import { ResultsComponent } from './components/views/search-results/search-results.component';
-import { FavouriteConnectionsComponent } from './components/views/favourite-connections/favourite-connections.component';
+import { FavouritesComponent } from './components/views/favourites/favourites.component';
 import { DestinationExplorerComponent } from './components/views/destination-explorer/destination-explorer.component';
 
 
@@ -38,7 +38,7 @@ const routes: Routes = [
   },
   {
     path: 'favourites',
-    component: FavouriteConnectionsComponent,
+    component: FavouritesComponent,
     title: 'Favorites',
     canActivate: [AuthGuard] 
   }];

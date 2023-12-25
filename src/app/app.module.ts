@@ -15,7 +15,7 @@ import { SearchFormComponent } from './components/shared/search-form/search-form
 import { ResultsComponent } from './components/views/search-results/search-results.component';
 import { ConnectionCardComponent } from './components/shared/connection-card/connection-card.component';
 import { CommonModule } from "@angular/common";
-import { FavouriteConnectionsComponent } from './components/views/favourite-connections/favourite-connections.component';
+import { FavouritesComponent } from './components/views/favourites/favourites.component';
 import { DestinationCardComponent } from './components/shared/destination-card/destination-card.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './services/http-interceptor';
@@ -32,7 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SearchFormComponent,
     ResultsComponent,
     ConnectionCardComponent,
-    FavouriteConnectionsComponent,
+    FavouritesComponent,
     DestinationCardComponent,
     ConnectionCardDetailComponent,
     DestinationExplorerComponent

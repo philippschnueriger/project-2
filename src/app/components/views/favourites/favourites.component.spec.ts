@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FavouriteConnectionsComponent } from './favourite-connections.component';
+import { FavouritesComponent } from './favourites.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from '../../../services/firestore.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { User } from 'firebase/auth';
 
-describe('FavouriteConnectionsComponent', () => {
-  let component: FavouriteConnectionsComponent;
-  let fixture: ComponentFixture<FavouriteConnectionsComponent>;
+describe('FavouritesComponent', () => {
+  let component: FavouritesComponent;
+  let fixture: ComponentFixture<FavouritesComponent>;
   let authServiceMock: Partial<AuthService>;
   let firestoreServiceMock: Partial<FirestoreService>;
 
@@ -26,7 +26,7 @@ describe('FavouriteConnectionsComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [FavouriteConnectionsComponent],
+      declarations: [FavouritesComponent],
       providers: [
         { provide: AuthService, useValue: { user$: of(testUser)} },
         { provide: FirestoreService, useValue: firestoreServiceMock },
@@ -35,7 +35,7 @@ describe('FavouriteConnectionsComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FavouriteConnectionsComponent);
+    fixture = TestBed.createComponent(FavouritesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

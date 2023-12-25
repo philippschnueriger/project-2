@@ -6,11 +6,11 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-favourite-connections',
-  templateUrl: './favourite-connections.component.html',
-  styleUrls: ['./favourite-connections.component.scss'],
+  selector: 'app-favourites',
+  templateUrl: './favourites.component.html',
+  styleUrls: ['./favourites.component.scss'],
 })
-export class FavouriteConnectionsComponent implements OnInit {
+export class FavouritesComponent implements OnInit {
   user: User | null = null;
   favourites: any;
   sort = ['Date', 'Price'];
