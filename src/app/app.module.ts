@@ -20,7 +20,7 @@ import { DestinationCardComponent } from './components/shared/destination-card/d
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './services/http-interceptor';
 import { ConnectionCardDetailComponent } from './components/shared/connection-card-detail/connection-card-detail.component';
-import { DestinationsComponent } from './components/views/destinations/destinations.component';
+import { DestinationExplorerComponent } from './components/views/destination-explorer/destination-explorer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -35,7 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FavouriteConnectionsComponent,
     DestinationCardComponent,
     ConnectionCardDetailComponent,
-    DestinationsComponent
+    DestinationExplorerComponent
   ],
   imports: [
     BrowserModule,

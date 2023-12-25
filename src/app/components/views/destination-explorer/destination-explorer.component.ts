@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-destinations',
-  templateUrl: './destinations.component.html',
-  styleUrls: ['./destinations.component.scss'],
+  selector: 'app-destination-explorer',
+  templateUrl: './destination-explorer.component.html',
+  styleUrls: ['./destination-explorer.component.scss'],
 })
-export class DestinationsComponent {
+export class DestinationExplorerComponent {
   regions = ['All', 'Europe', 'Asia', 'North America'];
   order = ['Popularity', 'Alphabetical', 'Random'];
   filters: any;
