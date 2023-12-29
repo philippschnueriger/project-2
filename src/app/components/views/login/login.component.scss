@@ -1,3 +1,5 @@
+@import '../../../../styles.scss';
+
 :host {
   min-height: 100vh;
   width: 100%;
@@ -5,7 +7,6 @@
 
 :host ::ng-deep [tuiWrapper][data-appearance="textfield"] {
   box-shadow: none;
-  //background-color: #F1F3F5;
   border-radius: 10px;
 }
 
@@ -22,33 +23,14 @@ tui-input-password {
 
 button {
   margin: 10px 0px 20px 0;
-  height: 40px;
   width: 127px;
-  color: #ffffff;
-  border-radius: 10px;
-  background: #3373e2;
-  border: none;
-  font-family: "Montserrat";
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 20px; /* 125% */
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #265cb8;
-}
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .signUp {
-  color: black;
-  background-color: #ffffff;
+  color: $text-color;
+  background-color: $background-color;
   border-radius: 10px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid $border-color;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 

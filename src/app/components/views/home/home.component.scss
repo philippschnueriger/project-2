@@ -31,26 +31,6 @@
   bottom: 20px;
   left: 20px;
 }
- button {
-  color: #000;
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 20px;
-  width: 120px;
-  height: 40px;
-  justify-content: center;
-  margin-top: 20px;
-  border-radius: 10px;
-  border: 1px solid #e5ebf0;
-  background: #fff;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-button:hover {
-  background: #000;
-  color: #fff;
-}
 
 .align-right {
   display: flex;
