@@ -60,7 +60,7 @@
     <div class="booking">
       <h2>CHF {{ item.price }}</h2>
       <a href="{{ item.deep_link }}" target="_blank">
-        <button [disabled]="!isConnectionAvailable">Book</button>
+        <button class="primary-button" [disabled]="!isConnectionAvailable">Book</button>
       </a>
     </div>
     <p *ngIf="!isConnectionAvailable">
@@ -91,7 +91,7 @@
     <div class="booking">
       <h2>CHF {{ item.price }}</h2>
       <a href="{{ item.deep_link }}" target="_blank">
-        <button [disabled]="!isConnectionAvailable">Book</button>
+        <button class="primary-button" [disabled]="!isConnectionAvailable">Book</button>
       </a>
     </div>
   </div>

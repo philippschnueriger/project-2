@@ -28,13 +28,13 @@
       </div>
       <div class="buttons">
         <div class="formGroup">
-          <button type="submit" [disabled]="!loginForm.valid">
+          <button class="primary-button" type="submit" [disabled]="!loginForm.valid">
             Log in
           </button>
         </div>
         <div class="formGroup">
           <button
-            class="signUp"
+            class="secondary-button"
             type="button"
             [disabled]="!loginForm.valid"
             (click)="onSignUp()"

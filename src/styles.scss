@@ -23,8 +23,6 @@ h1 {
 button {
   height: 40px;
   width: 70px;
-  color: $background-color;
-  background: $primary-color;
   border-radius: 10px;
   border: none;
   font-family: 'Montserrat';
@@ -44,6 +42,14 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.primary-button {
+  color: $background-color;
+  background: $primary-color;
+  width: 100%;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .secondary-button {
   color: $text-color;
   text-align: center;
@@ -54,8 +60,7 @@ button:disabled {
   border: 1px solid $border-color;
 }
 .secondary-button:hover {
-  background: $text-color;
-  color: $background-color;
+  background: $border-color;
 }
 
 /* tablets */

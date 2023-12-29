@@ -21,22 +21,13 @@ tui-input-password {
   margin: 20px 10px 20px 0;
 }
 
-button {
+.primary-button {
   margin: 10px 0px 20px 0;
   width: 127px;
 }
 
-.signUp {
-  color: $text-color;
-  background-color: $background-color;
-  border-radius: 10px;
-  border: 1px solid $border-color;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.signUp:hover {
-  background-color: #f0f0f0;
-  color: #333;
+.secondary-button {
+  margin-top: 10px;
 }
 
 .buttons {
