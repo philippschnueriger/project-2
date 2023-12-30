@@ -1,3 +1,5 @@
+@import '../../../../styles.scss';
+
 :host {
   display: block;
   width: 100%;
@@ -7,36 +9,25 @@ tui-island {
   margin: 20px 0;
 }
 
-.favourite {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background-color: red;
-}
-
 .border {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $black;
 }
 
 .grid-container {
   cursor: pointer;
   margin: 50px 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns of equal width */
-  //grid-auto-rows: minmax(20px, auto); /* Row height with minimum 100px */
-  grid-gap: 0px; /* Gap between grid items */
-  /* Optionally, add additional styles like width, margin, etc. */
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0px;
 }
 
 .grid-item {
-  /* Style each grid item */
   padding: 10px;
   text-align: center;
 }
 
 .full-width {
-  grid-column: 1 / span 3; /* Span across all 3 columns */
+  grid-column: 1 / span 3;
   height: 2px;
 }
 
@@ -59,8 +50,7 @@ hr {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
-  //background-color: rgba(0, 0, 0, 0.7);
+  background-color: $white;
   z-index: 9999;
 }
 
@@ -70,7 +60,7 @@ hr {
   max-width: 1200px;
   margin: auto;
   height: 100%;
-  background-color: white;
+  background-color: $white;
   padding: 20px;
   overflow-y: auto;
 
@@ -80,7 +70,7 @@ hr {
 }
 
 button {
-  background-color: white;
+  background-color: $white;
 }
 
 hr {
@@ -107,27 +97,27 @@ hr {
 
 .grid-container-detail {
   display: grid;
-  grid-template-columns: 20px 1fr; /* Two columns */
-  grid-template-rows: auto auto auto; /* Three rows */
-  gap: 10px; /* Gap between grid items */
+  grid-template-columns: 20px 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 10px;
 }
 
 .item-1 {
-  grid-row: span 3; /* Spans 3 rows */
+  grid-row: span 3;
   padding: 0 10px;
 }
 
 .vertical-line {
-  height: 100%; /* Adjust height as needed */
-  border-left: 1px solid #000; /* Color and width of the line */
+  height: 100%;
+  border-left: 1px solid $black;
   margin: 0;
-  background-color: white;
+  background-color: $white;
 }
 
 .layover {
   height: 30px;
   line-height: 30px;
-  background-color: #f1f3f5;
+  background-color: $secondary-color;
   margin-top: 20px;
   padding-left: 20px;
   overflow: hidden;

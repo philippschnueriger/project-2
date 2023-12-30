@@ -2,7 +2,6 @@
 
 :host ::ng-deep [tuiWrapper][data-appearance="textfield"] {
   box-shadow: none;
-  //background-color: #F1F3F5;
   border-radius: 10px;
 }
 
@@ -14,9 +13,6 @@ form > div {
 .form-container {
   display: flex;
   flex-wrap: wrap;
-}
-.t-input {
-  color: red;
 }
 
 tui-input {
@@ -59,11 +55,6 @@ button {
   margin: 20px 20px 20px 0;
 }
 
-.submit-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 tui-radio-labeled {
   width: 100px;
 }
@@ -104,11 +95,11 @@ tui-radio-labeled {
     height: 50px;
     color: $primary-color;
     border-radius: 0px;
-    background-color: $background-color;
+    background-color: $white;
     border: 1px solid $primary-color;
   }
   .active {
-    color: $background-color;
+    color: $white;
     background-color: $primary-color;
   }
 }
