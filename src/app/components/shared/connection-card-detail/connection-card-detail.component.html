@@ -24,7 +24,7 @@
       *ngFor="let leg of tripSummary.route; let last = last"
       class="connection-details"
     >
-      <div>{{ leg.airline }}</div>
+      <div>{{ getFlightInformation(leg) }}</div>
       <div class="grid-container-detail">
         <div class="item-detail item-1"><hr class="vertical-line" /></div>
         <div class="item-detail">

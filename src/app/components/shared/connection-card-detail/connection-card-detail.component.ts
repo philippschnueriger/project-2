@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TripSummary } from '../connection-card/tripSummary';
+import { getAirlineName } from '../connection-card/trip-summary-utils';
 
 @Component({
   selector: 'app-connection-card-detail',
@@ -14,5 +14,11 @@ export class ConnectionCardDetailComponent {
 
   toggleExpand() {
     this.expand = !this.expand;
+  }
+  getFlightInformation(leg: any){
+    console.log(leg)
+    const airlineName = getAirlineName(leg.airline)
+    const flightNumber = leg.airline + leg.flight_no
+    return airlineName + " (" + flightNumber + ")"
   }
 }

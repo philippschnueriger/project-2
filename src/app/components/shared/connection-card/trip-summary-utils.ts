@@ -33,6 +33,12 @@ function getOperators(data: any) {
   return uniqueOperators.join(', ');
 }
 
+export function getAirlineName(airlineCode: string) {
+  const airline = airlines.find(airline => airline.iata === airlineCode && airline.active === "Y");
+  return airline?.name || airlineCode;
+}
+
+
 function calculateLegDuration (route: any) {
   for (let i = 0; i < route.length; i++) {
     let arrivalTime = new Date(route[i].utc_arrival).getTime();
