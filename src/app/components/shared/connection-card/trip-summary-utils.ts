@@ -11,12 +11,25 @@ function findIndexByFlyTo(data: any) {
 }
 
 function getOperators(data: any) {
-  const allOperators = data.map((data: any) => data.operating_carrier);
+  // array of all operators of current route
+  const allOperators = data.map((data: any) => {
+    let operator = data.operating_carrier !== '' ? data.operating_carrier : data.airline;
+    if (data.vehicle_type === 'train') {
+      operator += ' (train)';
+    }
+    if (data.vehicle_type === 'bus') {
+      operator += ' (bus)';
+    }
+    return operator;
+  });
+  // map all operators to their airline name from airlines.ts
   const operatorsWithAirlines = allOperators.map((operator: any) => {
     const airline = airlines.find(airline => airline.iata === operator);
     return airline?.name || operator;
   });
+  // remove duplicates
   const uniqueOperators = [...new Set(operatorsWithAirlines)];
+  // return as string
   return uniqueOperators.join(', ');
 }
 
