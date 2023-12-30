@@ -22,6 +22,7 @@ import { ApiInterceptor } from './services/http-interceptor';
 import { ConnectionCardDetailComponent } from './components/shared/connection-card-detail/connection-card-detail.component';
 import { DestinationExplorerComponent } from './components/views/destination-explorer/destination-explorer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LocalTimePipe } from './components/shared/connection-card/local-time.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FavouritesComponent,
     DestinationCardComponent,
     ConnectionCardDetailComponent,
-    DestinationExplorerComponent
+    DestinationExplorerComponent,
+    LocalTimePipe
   ],
   imports: [
     BrowserModule,

@@ -3,13 +3,13 @@
   <p>{{ tripSummary?.operators }}</p>
   <div class="grid-container">
     <div class="grid-item">
-      {{ tripSummary?.departureTime | date : "hh:mm" }}
+      {{ tripSummary?.departureTime | localTime }}
     </div>
     <div class="grid-item border">
       {{ tripSummary?.duration }}
     </div>
     <div class="grid-item">
-      {{ tripSummary?.arrivalTime | date : "hh:mm" }}
+      {{ tripSummary?.arrivalTime | localTime }}
     </div>
     <div class="grid-item">{{ tripSummary?.from }}</div>
     <div class="grid-item">Stops: {{ tripSummary?.stops }}</div>
@@ -29,14 +29,14 @@
         <div class="item-detail item-1"><hr class="vertical-line" /></div>
         <div class="item-detail">
           <b
-            >{{ leg.local_departure | date : "hh:mm" }} {{ leg.flyFrom }}
+            >{{ leg.local_departure | localTime }} {{ leg.flyFrom }}
             {{ leg.cityFrom }}</b
           >
         </div>
         <div class="item-detail"> {{ leg.duration }}</div>
         <div class="item-detail">
           <b
-            >{{ leg.local_arrival | date : "hh:mm" }} {{ leg.flyTo }}
+            >{{ leg.local_arrival | localTime }} {{ leg.flyTo }}
             {{ leg.cityTo }}</b
           >
         </div>

@@ -31,11 +31,11 @@
 
     <div class="grid-container" (click)="toggleOverlay()">
       <div class="grid-item">
-        {{ tripSummary?.departure?.departureTime | date : "hh:mm" }}
+        {{ tripSummary?.departure?.departureTime | localTime }}
       </div>
       <div class="grid-item border">{{ tripSummary?.departure?.duration }}</div>
       <div class="grid-item">
-        {{ tripSummary?.departure?.arrivalTime | date : "hh:mm" }}
+        {{ tripSummary?.departure?.arrivalTime | localTime }}
       </div>
       <div class="grid-item">{{ tripSummary?.departure?.from }}</div>
       <div class="grid-item">Stops: {{ tripSummary?.departure?.stops }}</div>
@@ -44,11 +44,11 @@
 
     <div class="grid-container" *ngIf="tripSummary?.return">
       <div class="grid-item">
-        {{ tripSummary?.return?.departureTime | date : "hh:mm" }}
+        {{ tripSummary?.return?.departureTime | localTime }}
       </div>
       <div class="grid-item border">{{ tripSummary?.return?.duration }}</div>
       <div class="grid-item">
-        {{ tripSummary?.return?.arrivalTime | date : "hh:mm" }}
+        {{ tripSummary?.return?.arrivalTime | localTime }}
       </div>
       <div class="grid-item">{{ tripSummary?.return?.from }}</div>
       <div class="grid-item">Stops: {{ tripSummary?.return?.stops }}</div>
