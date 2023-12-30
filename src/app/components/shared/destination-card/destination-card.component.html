@@ -2,7 +2,7 @@
   <div *ngFor="let item of destinationsArray">
     <div class="image-container" (click)="exploreDestination(item.name)">
       <img src="../../../assets/images/{{ item.name }}.png" alt="Image" />
-      <div class="overlay">
+      <div class="tag">
         <div>{{ item.name }}</div>
       </div>
     </div>
