@@ -24,7 +24,7 @@ function getOperators(data: any) {
   });
   // map all operators to their airline name from airlines.ts
   const operatorsWithAirlines = allOperators.map((operator: any) => {
-    const airline = airlines.find(airline => airline.iata === operator);
+    const airline = airlines.find(airline => airline.iata === operator && airline.active === "Y");
     return airline?.name || operator;
   });
   // remove duplicates
