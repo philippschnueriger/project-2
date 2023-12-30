@@ -1,6 +1,7 @@
 @import "../../node_modules/@taiga-ui/core/styles/taiga-ui-local.scss";
 @import "../styles.scss";
 
+
 [tuiWrapper][data-appearance="textfield"] {
   box-shadow: none;
 }
@@ -46,8 +47,6 @@ a {
 nav ul {
   list-style: none;
   padding: 0;
-  // display: flex;
-  // justify-content: flex-end;
 }
 
 nav li {

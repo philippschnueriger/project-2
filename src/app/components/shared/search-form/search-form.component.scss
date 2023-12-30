@@ -5,6 +5,10 @@
   border-radius: 10px;
 }
 
+tui-input, tui-input-date-range, tui-input-date {
+  --tui-base-01: #f1f3f5;
+}
+
 form > div {
   display: flex;
   flex-wrap: wrap;
@@ -16,20 +20,16 @@ form > div {
 }
 
 tui-input {
-  --tui-base-01: #f1f3f5;
   width: 100%;
   margin: 20px 10px 20px 0;
-  //border-radius: 10px;
 }
 
 tui-input-date-range {
-  --tui-base-01: #f1f3f5;
   width: 100%;
   margin: 20px 10px 20px 0;
 }
 
 tui-input-date {
-  --tui-base-01: #f1f3f5;
   width: 240px;
   margin: 20px 10px 20px 0;
 }
@@ -125,20 +125,16 @@ tui-radio-labeled {
   }
 
   tui-input {
-    --tui-base-01: #f1f3f5;
     width: 240px;
     margin: 20px 10px 20px 0;
-    //border-radius: 10px;
   }
 
   tui-input-date-range {
-    --tui-base-01: #f1f3f5;
     width: 240px;
     margin: 20px 10px 20px 0;
   }
 
   tui-input-date {
-    --tui-base-01: #f1f3f5;
     width: 240px;
     margin: 20px 10px 20px 0;
   }
