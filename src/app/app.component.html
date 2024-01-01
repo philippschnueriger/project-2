@@ -16,6 +16,14 @@
           </li>
         </ul>
       </nav>
+      <div class="icons">
+        <button class="dark-mode-btn" (click)="toggleDarkMode()">
+          <img src="../../../assets/icons/dark-mode.svg" />
+        </button>
+        <button class="account-btn"routerLink="/profile" >
+          <img src="../../../assets/icons/account.svg" />
+        </button>
+      </div>
       <div class="mobile-navbar">
         <div class="navbar-toggle" (click)="toggleNav()">
           <div class="bar"></div>
@@ -38,7 +46,7 @@
   </footer>
   <!-- Mobile Navigation -->
   <div class="mobile-nav" [ngClass]="{ show: mobileNavOpen }">
-    <button class="account-btn">
+    <button routerLink="/profile" (click)="toggleNav()" class="account-btn">
       <img src="../../../assets/icons/account.svg" />
     </button>
     <button class="dark-mode-btn" (click)="toggleDarkMode()">

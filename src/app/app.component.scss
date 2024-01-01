@@ -1,7 +1,6 @@
 @import "../../node_modules/@taiga-ui/core/styles/taiga-ui-local.scss";
 @import "../styles.scss";
 
-
 [tuiWrapper][data-appearance="textfield"] {
   box-shadow: none;
 }
@@ -44,6 +43,13 @@ a {
   color: inherit;
 }
 
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 nav ul {
   list-style: none;
   padding: 0;
@@ -55,7 +61,7 @@ nav li {
 
 .logo {
   display: flex;
-  
+
   img {
     margin: 0 10px 0 0;
   }
@@ -65,9 +71,15 @@ nav li {
   }
 }
 
-
 .nav-links {
   display: none;
+}
+
+.icons {
+  display: none;
+  button {
+    background-color: $white;
+  }
 }
 
 .bar {
@@ -79,7 +91,7 @@ nav li {
 }
 
 hr {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 
 .mobile-navbar {
@@ -102,7 +114,9 @@ hr {
     display: block;
     left: 0;
   }
-  .account-btn, .dark-mode-btn, .close-btn {
+  .account-btn,
+  .dark-mode-btn,
+  .close-btn {
     position: absolute;
     background: none;
     border: none;
@@ -111,10 +125,10 @@ hr {
     width: 40px;
     height: 40px;
   }
-  
+
   .account-btn {
     top: 23px;
-    left: 20px; 
+    left: 20px;
   }
 
   .dark-mode-btn {
@@ -132,7 +146,7 @@ hr {
       height: 100%;
       &:before,
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         top: 50%;
         left: 50%;
@@ -190,6 +204,9 @@ hr {
     display: none;
   }
   .nav-links {
+    display: flex;
+  }
+  .icons {
     display: flex;
   }
   hr {
