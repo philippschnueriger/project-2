@@ -31,6 +31,16 @@ const routes: Routes = [
     title: 'Login'
   },
   {
+    path: 'signup',
+    component: LoginComponent,
+    title: 'Signup'
+  },
+  {
+    path: 'reset-password',
+    component: LoginComponent,
+    title: 'Reset password'
+  },
+  {
     path: 'profile',
     component: UserSettingsComponent,
     title: 'Profile',

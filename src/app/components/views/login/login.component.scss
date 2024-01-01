@@ -21,6 +21,11 @@ tui-input-password {
   margin: 20px 10px 20px 0;
 }
 
+#login-btn, #signup-btn, #reset-btn {
+  margin-top: 40px;
+  width: 100%;
+}
+
 .primary-button {
   margin: 10px 0px 20px 0;
   width: 127px;
@@ -38,7 +43,7 @@ tui-input-password {
 /* tablets */
 @media (min-width: 768px) {
   form {
-    margin: 100px auto auto auto;
+    margin: 300px auto auto auto;
     width: 328px;
   }
 }

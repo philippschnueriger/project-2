@@ -3,6 +3,7 @@ import { FirestoreService } from '../../../services/firestore.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-settings',
@@ -16,8 +17,9 @@ export class UserSettingsComponent implements OnInit {
   name: string | null = null;
   state: string | null = null;
   country: string | null = null;
+  error: string | null = null;
 
-  constructor(private authService: AuthService, private firestoreService: FirestoreService, private formBuilder: FormBuilder,) {
+  constructor(private authService: AuthService, private firestoreService: FirestoreService, private formBuilder: FormBuilder, private router: Router) {
     this.profileForm = this.formBuilder.group({
       name: "",
       state: "",
@@ -56,6 +58,16 @@ export class UserSettingsComponent implements OnInit {
       this.country = this.data.country;
     } else {
       console.log("no uid")
+    }
+  }
+  async logout() {
+    try {
+      await this.authService.logout()
+      this.error = null;
+      this.router.navigate(['/login']);
+    } catch (error: any) {
+      this.error = "unknown error"
+      console.log(error)
     }
   }
 }

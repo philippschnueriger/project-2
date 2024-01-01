@@ -1,5 +1,7 @@
 <div class="login">
-  <h1>Welcome to TripSearch</h1>
+  <h1 *ngIf="currentRoute === 'login'">Welcome to TripSearch</h1>
+  <h1 *ngIf="currentRoute === 'signup'">Sign up to TripSearch</h1>
+  <h1 *ngIf="currentRoute === 'reset-password'">Reset your password</h1>
 
   <div>
     {{ error }}
@@ -7,17 +9,20 @@
 
   <div *ngIf="!user">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="currentRoute === 'reset-password'">
+        <p>Enter your user account's email address and we will send you a password reset link. </p>
+      </div>
       <div class="formGroup">
         <tui-input
           type="email"
           id="userName"
           class="formControl"
           formControlName="email"
-          >Username</tui-input
+          >E-Mail</tui-input
         >
       </div>
 
-      <div class="formGroup">
+      <div  *ngIf="currentRoute !== 'reset-password'" class="formGroup">
         <tui-input-password
           type="password"
           id="userPassword"
@@ -26,22 +31,24 @@
           >Password</tui-input-password
         >
       </div>
-      <div class="buttons">
-        <div class="formGroup">
-          <button class="primary-button" type="submit" [disabled]="!loginForm.valid">
-            Log in
-          </button>
-        </div>
-        <div class="formGroup">
-          <button
-            class="secondary-button"
-            type="button"
-            [disabled]="!loginForm.valid"
-            (click)="onSignUp()"
-          >
-            Sign up
-          </button>
-        </div>
+
+      <div *ngIf="currentRoute === 'login'">
+        <a routerLink="/reset-password">Forgot your password?</a>
+      </div>
+      <div  class="formGroup">
+        <button *ngIf="currentRoute === 'login'" class="primary-button" id="login-btn" type="submit" [disabled]="!loginForm.valid">
+          Log in
+        </button>
+        <button  *ngIf="currentRoute === 'signup'" class="primary-button" id="signup-btn" type="submit" [disabled]="!loginForm.valid" (click)="onSignUp()">
+          Sign up
+        </button>
+        <button  *ngIf="currentRoute === 'reset-password'" class="primary-button" id="reset-btn" type="submit">
+          Reset Password
+        </button>
+      </div>
+        
+      <div *ngIf="currentRoute === 'login'">
+        <p>New to TripSearch? <a routerLink="/signup">Sign up</a> </p>
       </div>
     </form>
   </div>

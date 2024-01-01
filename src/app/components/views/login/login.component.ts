@@ -2,7 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +13,17 @@ export class LoginComponent implements OnInit {
   user: User | null = null; 
   error: string | null = null;
   loginForm: FormGroup;
+  currentRoute: string = '';
 
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
+    });
+    this.route.url.subscribe(segments => {
+      // Get the first segment of the URL (route path)
+      this.currentRoute = segments[0]?.path || '';
     });
   }
 
