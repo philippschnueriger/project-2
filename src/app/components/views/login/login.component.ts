@@ -41,6 +41,10 @@ export class LoginComponent implements OnInit {
     this.signUp(this.loginForm.value.email, this.loginForm.value.password)
   }
 
+  onResetPassword() {
+    this.resetPassword(this.loginForm.value.email)
+  }
+
   async signUp(email: string, password: string) {
     try {
       await this.authService.signUp(email, password)
@@ -76,6 +80,15 @@ export class LoginComponent implements OnInit {
       await this.authService.logout()
       this.error = null;
     } catch (error: any) {
+      this.error = "unknown error"
+      console.log(error)
+    }
+  }
+  async resetPassword(email: string) {
+    try {
+      await this.authService.resetPassword(email)
+      this.error = null;
+      } catch (error: any) {
       this.error = "unknown error"
       console.log(error)
     }

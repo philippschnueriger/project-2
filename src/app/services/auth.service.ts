@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, user, UserCredential } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, user, UserCredential, sendPasswordResetEmail } from '@angular/fire/auth';
 import { User } from 'firebase/auth';
 import { Observable } from 'rxjs';
 import { FirestoreService } from './firestore.service';
@@ -47,5 +47,14 @@ export class AuthService {
     } catch (error: any) {
       return Promise.reject(error.message);
     }
+  }
+  async resetPassword(email: string) {
+    return await sendPasswordResetEmail(this.afAuth, email)
+      .then(() => {
+        console.log('Password reset email sent to:', email);
+      })
+      .catch((error) => {
+        console.error('Error sending password reset email:', error);
+      });
   }
 }

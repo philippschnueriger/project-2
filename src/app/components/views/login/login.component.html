@@ -42,7 +42,7 @@
         <button  *ngIf="currentRoute === 'signup'" class="primary-button" id="signup-btn" type="submit" [disabled]="!loginForm.valid" (click)="onSignUp()">
           Sign up
         </button>
-        <button  *ngIf="currentRoute === 'reset-password'" class="primary-button" id="reset-btn" type="submit">
+        <button  *ngIf="currentRoute === 'reset-password'" class="primary-button" id="reset-btn" type="submit" (click)="onResetPassword()">
           Reset Password
         </button>
       </div>
