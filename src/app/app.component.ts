@@ -15,6 +15,7 @@ export class AppComponent {
   mobileNavOpen = false;
   user: User | null = null;
   error: string | null = null;
+  isDarkMode: boolean = false;
 
   constructor(private authService: AuthService) {
     const aCollection = collection(this.firestore, 'items');
@@ -30,6 +31,17 @@ export class AppComponent {
   toggleNav() {
     this.mobileNavOpen = !this.mobileNavOpen;
   }
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    if (this.isDarkMode) {
+      console.log('dark mode');
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  }
+
 
   async logout() {
     try {

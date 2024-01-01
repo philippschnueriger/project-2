@@ -1,4 +1,4 @@
-<tui-root>
+<tui-root [ngClass]="{'dark-mode': isDarkMode}">
   <header>
     <div class="container">
       <div class="logo" routerLink="/">
@@ -41,7 +41,7 @@
     <button class="account-btn">
       <img src="../../../assets/icons/account.svg" />
     </button>
-    <button class="dark-mode-btn">
+    <button class="dark-mode-btn" (click)="toggleDarkMode()">
       <img src="../../../assets/icons/dark-mode.svg" />
     </button>
     <button class="close-btn" (click)="toggleNav()">

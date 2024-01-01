@@ -17,6 +17,11 @@ body {
   width: 100vw;
 }
 
+.dark-mode {
+  color: $white;
+  background-color: $black;
+}
+
 h1 {
   font-size: 32px;
   font-weight: 700;
