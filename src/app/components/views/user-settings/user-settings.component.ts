@@ -70,4 +70,8 @@ export class UserSettingsComponent implements OnInit {
       console.log(error)
     }
   }
+  async updatePassword() {
+    console.log("update password")
+    //await this.authService.changePassword(password) // TODO
+  }
 }

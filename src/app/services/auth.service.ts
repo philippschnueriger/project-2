@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, user, UserCredential, sendPasswordResetEmail } from '@angular/fire/auth';
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  user,
+  UserCredential,
+  sendPasswordResetEmail,
+  updatePassword,
+} from '@angular/fire/auth';
 import { User } from 'firebase/auth';
 import { Observable } from 'rxjs';
 import { FirestoreService } from './firestore.service';
-
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +18,15 @@ import { FirestoreService } from './firestore.service';
 export class AuthService {
   user$: Observable<User | null>;
 
-  constructor(private afAuth: Auth, private FirestoreService: FirestoreService) {
+  constructor(
+    private afAuth: Auth,
+    private FirestoreService: FirestoreService
+  ) {
     this.user$ = user(afAuth);
   }
-  
+
   isAuthenticated(): boolean {
-    return !!this.afAuth.currentUser
+    return !!this.afAuth.currentUser;
   }
 
   async signUp(email: string, password: string): Promise<UserCredential> {
@@ -43,7 +53,7 @@ export class AuthService {
     try {
       await this.FirestoreService.clearData();
       await this.afAuth.signOut();
-      return Promise.resolve()
+      return Promise.resolve();
     } catch (error: any) {
       return Promise.reject(error.message);
     }
@@ -55,6 +65,19 @@ export class AuthService {
       })
       .catch((error) => {
         console.error('Error sending password reset email:', error);
+      });
+  }
+  async changePassword(password: string): Promise<any> {
+    console.log(password)
+    if (!this.afAuth.currentUser) {
+      return Promise.reject('No user logged in');
+    }
+    return await updatePassword(this.afAuth.currentUser, password)
+      .then(() => {
+        console.log('Password updated');
+      })
+      .catch((error) => {
+        console.error('Error updating password:', error);
       });
   }
 }
