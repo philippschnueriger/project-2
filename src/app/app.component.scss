@@ -93,7 +93,7 @@ hr {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: $dark-grey;
+  background-color: $secondary-color;
   padding: 50px 20px;
   z-index: 1001;
   transition: left 0.3s ease-in-out;
@@ -102,18 +102,29 @@ hr {
     display: block;
     left: 0;
   }
-
-  .close-btn {
+  .account-btn, .dark-mode-btn, .close-btn {
     position: absolute;
-    top: 20px;
-    right: 60px;
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
     width: 40px;
     height: 40px;
+  }
+  
+  .account-btn {
+    top: 23px;
+    left: 20px; 
+  }
 
+  .dark-mode-btn {
+    top: 23px;
+    left: 80px;
+  }
+
+  .close-btn {
+    top: 20px;
+    right: 60px;
     .close-icon {
       position: relative;
       display: block;
@@ -127,7 +138,7 @@ hr {
         left: 50%;
         width: 60%;
         height: 2px;
-        background-color: $white;
+        background-color: $black;
         transform-origin: center;
         transition: transform 0.3s ease-in-out;
       }
@@ -141,7 +152,7 @@ hr {
 
     &:hover .close-icon:before,
     &:hover .close-icon:after {
-      background-color: $white;
+      background-color: $black;
       opacity: 0.8;
     }
   }
@@ -151,13 +162,19 @@ hr {
     padding: 0;
     margin: 0;
 
+    li:first-child {
+      margin-top: 200px;
+    }
+
     li {
-      margin-bottom: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
 
       a {
         display: block;
+        text-align: center;
         text-decoration: none;
-        color: $white;
+        color: $black;
         font-size: 18px;
       }
     }
