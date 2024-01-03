@@ -4873,7 +4873,7 @@ export const airlines = [
     ,
     {"id":"2438","name":"Ford Motor Company","alias":"\\N","iata":"","icao":"FOB","callsign":"FORDAIR","country":"United Kingdom","active":"N"}
     ,
-    {"id":"2439","name":"Formosa Airlines","alias":"\\N","iata":"VY","icao":"FOS","callsign":"","country":"Taiwan","active":"Y"}
+    {"id":"2439","name":"Formosa Airlines","alias":"\\N","iata":"VY","icao":"FOS","callsign":"","country":"Taiwan","active":"N"}
     ,
     {"id":"2440","name":"Formula One Management","alias":"\\N","iata":"","icao":"FOR","callsign":"FORMULA","country":"United Kingdom","active":"N"}
     ,
