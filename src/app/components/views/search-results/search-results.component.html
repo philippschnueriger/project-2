@@ -15,4 +15,5 @@
 </button>
 <app-search-form [filters]="true"></app-search-form>
 <tui-loader [showLoader]="loading"/>
+<p *ngIf="!loading && data.length===0"> no data available</p>
 <app-connection-card *ngFor="let item of data" [item]="item"></app-connection-card>
