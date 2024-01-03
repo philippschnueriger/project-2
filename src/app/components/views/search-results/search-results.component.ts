@@ -45,10 +45,11 @@ export class ResultsComponent implements OnInit {
       this.vehicleType = params['vehicleType'];
       const newSort = params['sort'];
 
-      if (newSort !== this.sort) {
-        this.sort = newSort;
-        this.loadData();
-      }
+      // if (newSort !== this.sort) {
+      //   this.sort = newSort;
+      //   this.loadData();
+      // }
+      this.loadData();
     });
     this.loadData();
   }
