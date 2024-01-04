@@ -3,13 +3,12 @@ import {
   Auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  user,
   UserCredential,
   sendPasswordResetEmail,
   updatePassword,
 } from '@angular/fire/auth';
 import { User } from 'firebase/auth';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { FirestoreService } from './firestore.service';
 
 @Injectable({
@@ -22,11 +21,19 @@ export class AuthService {
     private afAuth: Auth,
     private FirestoreService: FirestoreService
   ) {
-    this.user$ = user(afAuth);
+    this.user$ = new Observable((observer) => {
+      this.afAuth.onAuthStateChanged((user) => {
+        if (user) {
+          observer.next(user);
+        } else {
+          observer.next(null);
+        }
+      });
+    });
   }
 
-  isAuthenticated(): boolean {
-    return !!this.afAuth.currentUser;
+  isAuthenticated(): Observable<boolean> {
+    return this.user$.pipe(map(user => !!user));
   }
 
   async signUp(email: string, password: string): Promise<UserCredential> {
@@ -68,7 +75,6 @@ export class AuthService {
       });
   }
   async changePassword(password: string): Promise<any> {
-    console.log(password)
     if (!this.afAuth.currentUser) {
       return Promise.reject('No user logged in');
     }
