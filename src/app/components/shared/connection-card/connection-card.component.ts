@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { TripSegment } from '../../../types/tripSegment';
-import { FirestoreService } from '../../../services/firestore.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ApiService } from '../../../services/api.service';
 import { User } from 'firebase/auth';
@@ -25,7 +24,6 @@ export class ConnectionCardComponent {
   expand: boolean = false;
   constructor(
     private authService: AuthService,
-    private firestoreService: FirestoreService,
     private apiService: ApiService
   ) {}
   ngOnInit() {
@@ -40,13 +38,13 @@ export class ConnectionCardComponent {
   }
   saveFavouriteConnection() {
     if (this.user?.uid) {
-      this.firestoreService.saveFavouriteConnection(this.user.uid, this.item);
+      this.authService.saveFavouriteConnection(this.user.uid, this.item);
     }
     this.deleteOption = true;
   }
   deleteFavouriteConnection() {
     if (this.user?.uid) {
-      this.firestoreService.deleteFavouriteConnection(
+      this.authService.deleteFavouriteConnection(
         this.user?.uid,
         this.item.id
       );

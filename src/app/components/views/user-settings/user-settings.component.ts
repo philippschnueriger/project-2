@@ -1,5 +1,4 @@
  import { Component, OnInit } from '@angular/core';
-import { FirestoreService } from '../../../services/firestore.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -19,7 +18,7 @@ export class UserSettingsComponent implements OnInit {
   country: string | null = null;
   error: string | null = null;
 
-  constructor(private authService: AuthService, private firestoreService: FirestoreService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
     this.profileForm = this.formBuilder.group({
       name: "",
       state: "",
@@ -32,7 +31,7 @@ export class UserSettingsComponent implements OnInit {
       this.user = user;
       this.getData();
     });
-    this.firestoreService.userData$.subscribe((userData) => {
+    this.authService.userData$.subscribe((userData) => {
       this.data = userData;
     });
   }
@@ -46,13 +45,13 @@ export class UserSettingsComponent implements OnInit {
 
   async saveData() {
     let uid = this.user?.uid ? this.user?.uid : "";
-    await this.firestoreService.saveUserData(uid, {name: this.name, state: this.state, country: this.country});
+    await this.authService.saveUserData(uid, {name: this.name, state: this.state, country: this.country});
     await this.getData();
   }
   async getData() {
     let uid = this.user?.uid
     if (uid){
-      await this.firestoreService.getUserData(uid);
+      await this.authService.getUserData(uid);
       this.name = this.data.name;
       this.state = this.data.state;
       this.country = this.data.country;

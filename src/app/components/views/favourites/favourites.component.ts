@@ -1,5 +1,4 @@
 import { Component, OnInit, SimpleChange, OnChanges } from '@angular/core';
-import { FirestoreService } from '../../../services/firestore.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -18,13 +17,12 @@ export class FavouritesComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private firestoreService: FirestoreService
   ) {
     this.authService.user$.subscribe((user) => {
       this.user = user;
       this.getFavouriteConnections();
     });
-    this.firestoreService.favourites$.subscribe((favourites) => {
+    this.authService.favourites$.subscribe((favourites) => {
       this.favourites = favourites;
     });
   }
@@ -55,7 +53,7 @@ export class FavouritesComponent implements OnInit {
   async getFavouriteConnections() {
     let uid = this.user?.uid;
     if (uid) {
-      await this.firestoreService.getFavouriteConnections(uid);
+      await this.authService.getFavouriteConnections();
     } else {
       console.log('no uid');
     }
