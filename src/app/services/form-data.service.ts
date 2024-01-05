@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { TuiDay, TuiDayRange } from '@taiga-ui/cdk';
 import { FormData } from '../types/formData';
 import { BookingClass, TripMode, VehicleType, Sort } from '../types/enums';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,30 @@ export class FormDataService {
     vehicleType: VehicleType.Aircraft,
     sort: Sort.Price
   };
+  data: any;
+
+  constructor(private authService: AuthService) {
+    this.authService.userData$.subscribe((userData) => {
+      this.data = userData;
+    });
+  }
+
+  async loadFormData(): Promise<FormData> {
+    try {
+      await this.authService.getUserData();
+      if (this.data) {
+        this.setFormData({
+          cityFrom: this.data.name, // TODO
+        });
+      } else {
+        console.log('No user data');
+      }
+      return this.formData;
+    } catch (error) {
+      console.error('Error loading form data:', error);
+      return this.formData;
+    }
+  }
 
   setFormData(data: Partial<FormData>): void {
     this.formData = { ...this.formData, ...data };

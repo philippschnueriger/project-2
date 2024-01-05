@@ -6,7 +6,6 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { forbiddenNameValidator } from './forbidden-name.directive';
 import { Router } from '@angular/router';
 import { TuiDay } from '@taiga-ui/cdk';
 import { ApiService } from '../../../services/api.service';
@@ -70,37 +69,41 @@ export class SearchFormComponent implements OnInit {
 
   searchForm!: FormGroup;
 
-  ngOnInit(): void {
-    const formData = this.formDataService.formData;
+  async ngOnInit(): Promise<void> {
     this.searchForm = new FormGroup({
-      tripMode: new FormControl(formData.tripMode),
-      cityFrom: new FormControl(formData.cityFrom, {
+      tripMode: new FormControl('Return'), // Set default value for tripMode
+      cityFrom: new FormControl('asf', {
         validators: [Validators.required, Validators.minLength(3)],
         asyncValidators: [locationExistsValidator(this.apiService)],
       }),
-      // cityFrom: new FormControl(formData.cityFrom, [
-      //   Validators.required,
-      //   Validators.minLength(3),
-      //   this.locationExistsValidator(this.searchForm.value.cityFrom),
-      // ]),
-      cityTo: new FormControl(formData.cityTo, {
+      cityTo: new FormControl('', {
         validators: [Validators.required, Validators.minLength(3)],
         asyncValidators: [locationExistsValidator(this.apiService)],
       }),
-      departureAndReturnDate: new FormControl(formData.departureAndReturnDate, [
+      departureAndReturnDate: new FormControl('', [
         Validators.required,
         //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
       ]),
-      departureDate: new FormControl(formData.departureDate, [
+      departureDate: new FormControl('', [
         Validators.required,
         //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
       ]),
-      bookingClass: new FormControl(formData.bookingClass, [
-        Validators.required,
-      ]),
-      adults: new FormControl(formData.adults, [Validators.required]),
-      children: new FormControl(formData.children),
-      vehicleType: new FormControl(formData.vehicleType, [Validators.required]),
+      bookingClass: new FormControl('Economy', [Validators.required]),
+      adults: new FormControl(1, [Validators.required]),
+      children: new FormControl(0),
+      vehicleType: new FormControl('Aircraft', [Validators.required]),
+    });
+    const formData = await this.formDataService.loadFormData();
+    this.searchForm.patchValue({
+      tripMode: formData.tripMode,
+      cityFrom: formData.cityFrom,
+      cityTo: formData.cityTo,
+      departureAndReturnDate: formData.departureAndReturnDate,
+      departureDate: formData.departureDate,
+      bookingClass: formData.bookingClass,
+      adults: formData.adults,
+      children: formData.children,
+      vehicleType: formData.vehicleType,
     });
   }
 

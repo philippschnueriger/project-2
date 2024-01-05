@@ -109,8 +109,6 @@ export class AuthService {
         const userRef = doc(this.firestore, 'users', user.uid);
         const favouritesRef = collection(userRef, 'favourites');
         await addDoc(favouritesRef, data);
-      } else {
-        throw new Error('User not authenticated.');
       }
     } catch (error: any) {
       console.error('Error saving favourite connection', error);
@@ -126,8 +124,6 @@ export class AuthService {
         const favouritesRef = collection(userRef, 'favourites');
         const querySnapshot = await getDocs(favouritesRef);
         this.favouritesSubject.next(querySnapshot.docs.map((doc) => doc.data()));
-      } else {
-        throw new Error('User not authenticated.');
       }
     } catch (error: any) {
       console.error('Error loading favourite connections', error);
@@ -152,8 +148,6 @@ export class AuthService {
         } else {
           console.log('No documents found with the specified ID.');
         }
-      } else {
-        throw new Error('User not authenticated.');
       }
     } catch (error: any) {
       console.error('Error deleting favourite connection', error);
@@ -167,8 +161,6 @@ export class AuthService {
       if (user) {
         const userRef = doc(this.firestore, 'users', user.uid); 
         await setDoc(userRef, data);
-      } else {
-        throw new Error('User not authenticated.');
       }
     } catch (error: any) {
       console.error('Error saving user data', error);
@@ -183,8 +175,6 @@ export class AuthService {
         const userRef = doc(this.firestore, 'users', user.uid);
         const docSnap = await getDoc(userRef);
         this.userDataSubject.next(docSnap.data());
-      } else {
-        throw new Error('User not authenticated.');
       }
     } catch (error: any) {
       console.error('Error loading user data', error);
