@@ -102,23 +102,27 @@ export class AuthService {
         console.error('Error updating password:', error);
       });
   }
-  async saveFavouriteConnection(uid: string, data: any): Promise<void> {
+  async saveFavouriteConnection(data: any): Promise<void> {
     try {
-      const userRef = doc(this.firestore, 'users', uid);
-      const favouritesRef = collection(userRef, 'favourites');
-      await addDoc(favouritesRef, data);
-      return;
+      const user = await firstValueFrom(this.user$);
+      if (user) {
+        const userRef = doc(this.firestore, 'users', user.uid);
+        const favouritesRef = collection(userRef, 'favourites');
+        await addDoc(favouritesRef, data);
+      } else {
+        throw new Error('User not authenticated.');
+      }
     } catch (error: any) {
-      console.log(error);
+      console.error('Error saving favourite connection', error);
       throw error;
     }
   }
 
   async getFavouriteConnections(): Promise<void> {
     try {
-      const user = await firstValueFrom(this.user$)// Obtain the user
+      const user = await firstValueFrom(this.user$)
       if (user) {
-        const userRef = doc(this.firestore, 'users', user.uid); // Access uid from the user
+        const userRef = doc(this.firestore, 'users', user.uid);
         const favouritesRef = collection(userRef, 'favourites');
         const querySnapshot = await getDocs(favouritesRef);
         this.favouritesSubject.next(querySnapshot.docs.map((doc) => doc.data()));
@@ -131,41 +135,57 @@ export class AuthService {
     }
   }
 
-  async deleteFavouriteConnection(uid: string, id: string): Promise<void> {
+  async deleteFavouriteConnection(id: string): Promise<void> {
     try {
-      const userRef = doc(this.firestore, 'users', uid);
-      const favouritesRef = collection(userRef, 'favourites');
-      const q = query(favouritesRef, where('id', '==', id));
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.size > 0) {
-        const docId = querySnapshot.docs[0].id;
-        const docToDeleteRef = doc(favouritesRef, docId);
-        await deleteDoc(docToDeleteRef);
-        this.getFavouriteConnections();
+      const user = await firstValueFrom(this.user$);
+      if (user) {
+        const userRef = doc(this.firestore, 'users', user.uid);
+        const favouritesRef = collection(userRef, 'favourites');
+        const q = query(favouritesRef, where('id', '==', id));
+        const querySnapshot = await getDocs(q);
+  
+        if (querySnapshot.size > 0) {
+          const docId = querySnapshot.docs[0].id;
+          const docToDeleteRef = doc(favouritesRef, docId);
+          await deleteDoc(docToDeleteRef);
+          await this.getFavouriteConnections();
+        } else {
+          console.log('No documents found with the specified ID.');
+        }
       } else {
-        console.log('No documents found with the specified ID.');
+        throw new Error('User not authenticated.');
       }
     } catch (error: any) {
-      console.error('Error loading user data', error);
+      console.error('Error deleting favourite connection', error);
       throw error;
     }
   }
 
-  async saveUserData(uid: string, data: any): Promise<void> {
+  async saveUserData(data: any): Promise<void> {
     try {
-      await setDoc(doc(this.firestore, 'users', uid), data);
-      return;
+      const user = await firstValueFrom(this.user$);
+      if (user) {
+        const userRef = doc(this.firestore, 'users', user.uid); 
+        await setDoc(userRef, data);
+      } else {
+        throw new Error('User not authenticated.');
+      }
     } catch (error: any) {
-      console.log(error);
+      console.error('Error saving user data', error);
       throw error;
     }
   }
-
-  async getUserData(uid: string): Promise<void> {
+  
+  async getUserData(): Promise<void> {
     try {
-      const docSnap = await getDoc(doc(this.firestore, 'users', uid));
-      this.userDataSubject.next(docSnap.data());
+      const user = await firstValueFrom(this.user$); 
+      if (user) {
+        const userRef = doc(this.firestore, 'users', user.uid);
+        const docSnap = await getDoc(userRef);
+        this.userDataSubject.next(docSnap.data());
+      } else {
+        throw new Error('User not authenticated.');
+      }
     } catch (error: any) {
       console.error('Error loading user data', error);
       throw error;

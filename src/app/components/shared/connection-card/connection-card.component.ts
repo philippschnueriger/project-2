@@ -38,14 +38,13 @@ export class ConnectionCardComponent {
   }
   saveFavouriteConnection() {
     if (this.user?.uid) {
-      this.authService.saveFavouriteConnection(this.user.uid, this.item);
+      this.authService.saveFavouriteConnection(this.item);
     }
     this.deleteOption = true;
   }
   deleteFavouriteConnection() {
     if (this.user?.uid) {
       this.authService.deleteFavouriteConnection(
-        this.user?.uid,
         this.item.id
       );
     }

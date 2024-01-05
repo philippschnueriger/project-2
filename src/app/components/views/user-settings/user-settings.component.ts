@@ -45,13 +45,13 @@ export class UserSettingsComponent implements OnInit {
 
   async saveData() {
     let uid = this.user?.uid ? this.user?.uid : "";
-    await this.authService.saveUserData(uid, {name: this.name, state: this.state, country: this.country});
+    await this.authService.saveUserData({name: this.name, state: this.state, country: this.country});
     await this.getData();
   }
   async getData() {
     let uid = this.user?.uid
     if (uid){
-      await this.authService.getUserData(uid);
+      await this.authService.getUserData();
       this.name = this.data.name;
       this.state = this.data.state;
       this.country = this.data.country;
