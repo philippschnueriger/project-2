@@ -98,6 +98,11 @@ hr {
   cursor: pointer;
 }
 
+#dark-mode-btn, #account-btn {
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .mobile-nav {
   display: none;
   position: fixed;
