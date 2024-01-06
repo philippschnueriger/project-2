@@ -118,12 +118,14 @@ export class AuthService {
 
   async getFavouriteConnections(): Promise<void> {
     try {
-      const user = await firstValueFrom(this.user$)
+      const user = await firstValueFrom(this.user$);
       if (user) {
         const userRef = doc(this.firestore, 'users', user.uid);
         const favouritesRef = collection(userRef, 'favourites');
         const querySnapshot = await getDocs(favouritesRef);
-        this.favouritesSubject.next(querySnapshot.docs.map((doc) => doc.data()));
+        this.favouritesSubject.next(
+          querySnapshot.docs.map((doc) => doc.data())
+        );
       }
     } catch (error: any) {
       console.error('Error loading favourite connections', error);
@@ -139,7 +141,7 @@ export class AuthService {
         const favouritesRef = collection(userRef, 'favourites');
         const q = query(favouritesRef, where('id', '==', id));
         const querySnapshot = await getDocs(q);
-  
+
         if (querySnapshot.size > 0) {
           const docId = querySnapshot.docs[0].id;
           const docToDeleteRef = doc(favouritesRef, docId);
@@ -159,7 +161,7 @@ export class AuthService {
     try {
       const user = await firstValueFrom(this.user$);
       if (user) {
-        const userRef = doc(this.firestore, 'users', user.uid); 
+        const userRef = doc(this.firestore, 'users', user.uid);
         await setDoc(userRef, data);
       }
     } catch (error: any) {
@@ -167,10 +169,39 @@ export class AuthService {
       throw error;
     }
   }
-  
+  async saveUserPreferences(data: any): Promise<void> {
+    try {
+      const user = await firstValueFrom(this.user$);
+      if (user) {
+        const userRef = doc(this.firestore, 'users', user.uid);
+        console.log(data);
+        await setDoc(userRef, data);
+      }
+    } catch (error: any) {
+      console.error('Error saving user data', error);
+      throw error;
+    }
+  }
+
+  async getUserPreferences(): Promise<any> {
+    try {
+      const user = await firstValueFrom(this.user$);
+      if (user) {
+        const userRef = doc(this.firestore, 'users', user.uid);
+        const docSnap = await getDoc(userRef);
+        console.log(docSnap.data());
+        return docSnap.data();
+        //this.userPreferencesSubject.next(docSnap.data());
+      }
+    } catch (error: any) {
+      console.error('Error loading user data', error);
+      throw error;
+    }
+  }
+
   async getUserData(): Promise<void> {
     try {
-      const user = await firstValueFrom(this.user$); 
+      const user = await firstValueFrom(this.user$);
       if (user) {
         const userRef = doc(this.firestore, 'users', user.uid);
         const docSnap = await getDoc(userRef);
