@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Account</h1>
     <tui-island>
-      <div class="edit-button" (click)="editPreferences()">
+      <div class="edit-button" (click)="toggleOverlay()">
         <img src="../../../assets/icons/edit.svg" alt="Favorite Icon" />
       </div>
       <h2>Preferences</h2>
@@ -21,9 +21,125 @@
         <div class="grid-item">Aircraft</div>
       </div>
     </tui-island>
-    <button class="secondary-button" (click)="updatePassword()">
+    <button class="secondary-button update-password" (click)="updatePassword()">
       Change Password
     </button>
     <button class="primary-button" (click)="logout()">Logout</button>
+  </div>
+</div>
+
+<div id="overlay" class="overlay" *ngIf="showOverlay">
+  <div class="overlay-content">
+    <button class="close-btn" (click)="toggleOverlay()">
+      <span class="close-icon"></span>
+    </button>
+    <h2>Edit Preferences</h2>
+    <form [formGroup]="preferencesForm" #formDir="ngForm">
+      <div [hidden]="formDir.submitted">
+        <div
+          class="cross-validation form-container"
+          [class.cross-validation-error]="preferencesForm.errors?.['identityRevealed'] && (preferencesForm.touched || preferencesForm.dirty)"
+        >
+          <div class="form-group">
+            <tui-input
+              type="text"
+              class="form-control"
+              formControlName="cityFrom"
+              required
+              (input)="searchFromLocations()"
+              [tuiTextfieldCleaner]="true"
+            >
+              Homebase
+              <ng-container>
+                <tui-data-list *tuiDataList>
+                  <button
+                    *ngFor="let item of fromLocations"
+                    tuiOption
+                    [value]="item.name"
+                    (click)="setFromLocation(item)"
+                  >
+                    <span *ngIf="item.type == 'city'" class="name"
+                      >{{ item.name }} (All)</span
+                    >
+                    <span *ngIf="item.type != 'city'" class="name"
+                      >{{ item.name }} {{ item.code }}</span
+                    >
+                  </button>
+                </tui-data-list>
+              </ng-container>
+            </tui-input>
+          </div>
+          <div class="form-group">
+            <tui-select
+              tuiTextfieldSize="m"
+              formControlName="tripMode"
+              id="tripMode"
+            >
+              Trip mode
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="tripModes"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+          <div class="form-group">
+            <tui-input-number
+              tuiTextfieldSize="m"
+              formControlName="adults"
+              [min]="1"
+              [max]="9"
+              value="1"
+            >
+              Adults
+            </tui-input-number>
+          </div>
+          <div class="form-group">
+            <tui-input-number
+              tuiTextfieldSize="m"
+              formControlName="children"
+              [min]="0"
+              [max]="9"
+              value="0"
+            >
+              Children
+            </tui-input-number>
+          </div>
+          <div class="form-group">
+            <tui-select tuiTextfieldSize="m" formControlName="bookingClass">
+              Booking Class
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="bookingClasses"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+          <div class="form-group">
+            <tui-select
+              tuiTextfieldSize="m"
+              formControlName="vehicleType"
+              id="vehicleType"
+            >
+              Vehicle type
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="vehicleTypes"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="primary-button submit-button"
+          (click)="loadData()"
+          [disabled]="preferencesForm.invalid"
+        >
+          Search
+        </button>
+      </div>
+    </form>
   </div>
 </div>

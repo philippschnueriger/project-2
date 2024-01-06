@@ -1,7 +1,9 @@
+@import "../../../../styles.scss";
+
 .account {
   display: flex;
   width: 100vw;
-    height: 100vh;
+  height: 100vh;
   justify-content: center;
 }
 
@@ -21,20 +23,80 @@
 }
 
 button {
-    width: 100%;
-    margin-top: 20px;
-    height: 50px;
+  width: 100%;
+  margin-top: 20px;
+  height: 50px;
+}
+.update-password {
+  width: 100%;
 }
 
-
 .edit-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    height: 10px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
 img {
   height: 25px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $white;
+  z-index: 9999;
+}
+
+.overlay-content {
+  position: relative;
+  width: calc(100% - 40px);
+  max-width: 1200px;
+  margin: auto;
+  height: 100%;
+  background-color: $white;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+
+  .close-icon {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 60%;
+      height: 2px;
+      background-color: $black;
+      transform-origin: center;
+      transition: transform 0.3s ease-in-out;
+    }
+    &:before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    &:after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
 }

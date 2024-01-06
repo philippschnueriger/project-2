@@ -1,17 +1,53 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TripMode, BookingClass, VehicleType } from '../../../types/enums';
+import { firstValueFrom } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
+import { locationExistsValidator } from '../../shared/search-form/location-validator';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit {
   error: null | undefined | string = null;
+  showOverlay: boolean = false;
+  preferencesForm!: FormGroup;
+  tripModes: string[] = Object.values(TripMode);
+  bookingClasses: string[] = Object.values(BookingClass);
+  vehicleTypes: string[] = Object.values(VehicleType);
+  fromLocations: any[] = [];
+  fromLocations$: any;
+items: any;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private apiService: ApiService) {
   }
+
+  ngOnInit(){
+
+  this.preferencesForm = new FormGroup({
+    tripMode: new FormControl('Return'), // Set default value for tripMode
+    cityFrom: new FormControl('asf', {
+      validators: [Validators.required, Validators.minLength(3)],
+      asyncValidators: [locationExistsValidator(this.apiService)],
+    }),
+    departureAndReturnDate: new FormControl('', [
+      Validators.required,
+      //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
+    ]),
+    departureDate: new FormControl('', [
+      Validators.required,
+      //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
+    ]),
+    bookingClass: new FormControl('Economy', [Validators.required]),
+    adults: new FormControl(1, [Validators.required]),
+    children: new FormControl(0),
+    vehicleType: new FormControl('Aircraft', [Validators.required]),
+  });
+}
 
   async logout() {
     try {
@@ -27,8 +63,32 @@ export class AccountComponent {
     console.log("update password")
     //await this.authService.changePassword(password) // TODO
   }
-  editPreferences() {
-    console.log("edit preferences")
+  toggleOverlay() {
+    this.showOverlay = !this.showOverlay;
+  }
+  loadData() {
+    console.log("load data")
+  }
+
+  async searchFromLocations() {
+    if (this.preferencesForm.value.cityFrom.length >= 3) {
+      this.fromLocations$ = this.apiService.getLocationId(
+        this.preferencesForm.value.cityFrom
+      );
+      const locations: any = await firstValueFrom(this.fromLocations$);
+      this.fromLocations = locations.locations;
+      this.fromLocations = this.fromLocations.filter(
+        (location) =>
+          location.type === 'airport' ||
+          (location.type === 'city' && location.airports > 1)
+      );
+      console.log(this.fromLocations);
+    } else {
+      this.fromLocations = [];
+    }
+  }
+  setFromLocation(location: any): void {
+    this.preferencesForm.value.cityFrom = location.name;
   }
 
 }
