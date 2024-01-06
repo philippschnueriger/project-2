@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Account</h1>
     <tui-island>
-      <div class="edit-button" (click)="toggleOverlay()">
+      <div class="edit-button" (click)="toggleOverlay('preferences')">
         <img src="../../../assets/icons/edit.svg" alt="Favorite Icon" />
       </div>
       <h2>Preferences</h2>
@@ -21,7 +21,7 @@
         <div class="grid-item">{{ userPreferences.vehicleType }}</div>
       </div>
     </tui-island>
-    <button class="secondary-button update-password" (click)="updatePassword()">
+    <button class="secondary-button update-password" (click)="toggleOverlay('password')">
       Change Password
     </button>
     <button class="primary-button" (click)="logout()">Logout</button>
@@ -30,9 +30,10 @@
 
 <div id="overlay" class="overlay" *ngIf="showOverlay">
   <div class="overlay-content">
-    <button class="close-btn" (click)="toggleOverlay()">
+    <button class="close-btn" (click)="toggleOverlay('close')">
       <span class="close-icon"></span>
     </button>
+    <div *ngIf="showPreferences" class="preferences">
     <h2>Edit Preferences</h2>
     <form [formGroup]="preferencesForm" #formDir="ngForm">
       <div [hidden]="formDir.submitted">
@@ -142,4 +143,56 @@
       </div>
     </form>
   </div>
+  <div *ngIf="showPassword" class="change-password">
+    <h2>Change Password</h2>
+    <form [formGroup]="passwordForm" #formDir="ngForm">
+      <div [hidden]="formDir.submitted">
+        <div
+          class="cross-validation form-container"
+          [class.cross-validation-error]="passwordForm.errors?.['identityRevealed'] && (passwordForm.touched || passwordForm.dirty)"
+        >
+          <div class="form-group">
+            <tui-input-password
+              type="password"
+              class="form-control"
+              formControlName="oldPassword"
+              required
+            >
+              Old Password
+            </tui-input-password>
+          </div>
+          <div class="form-group">
+            <tui-input-password
+              type="password"
+              class="form-control"
+              formControlName="newPassword"
+              required
+            >
+              New Password
+            </tui-input-password>
+          </div>
+          <div class="form-group">
+            <tui-input-password
+              type="password"
+              class="form-control"
+              formControlName="confirmPassword"
+              required
+            >
+              Confirm Password
+            </tui-input-password>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="primary-button submit-button"
+          (click)="submitPassword()"
+          [disabled]="passwordForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 </div>

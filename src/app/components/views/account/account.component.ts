@@ -30,6 +30,9 @@ export class AccountComponent implements OnInit {
     cityFrom: 'London',
     tripMode: 'Return',
   };
+  showPreferences: boolean = false;
+  showPassword: boolean = false;
+  passwordForm!: FormGroup;
 
   constructor(
     private authService: AuthService,
@@ -50,6 +53,11 @@ export class AccountComponent implements OnInit {
       children: new FormControl(0),
       vehicleType: new FormControl('Aircraft', [Validators.required]),
     });
+    this.passwordForm = new FormGroup({
+      oldPassword: new FormControl('',[ Validators.required]), // Create form controls with validators
+      newPassword: new FormControl('',[ Validators.required]),
+      confirmPassword: new FormControl('',[ Validators.required]),
+    });
   }
 
   async logout() {
@@ -66,13 +74,22 @@ export class AccountComponent implements OnInit {
     console.log('update password');
     //await this.authService.changePassword(password) // TODO
   }
-  toggleOverlay() {
+  toggleOverlay(content: string) {
+    if (content === 'preferences') {
+      this.showPreferences = true;
+    }
+    else if (content === 'password') {
+      this.showPassword = true;
+    } else {
+      this.showPreferences = false;
+      this.showPassword = false;
+    }
     this.showOverlay = !this.showOverlay;
   }
   async submitPreferences() {
     await this.authService.saveUserPreferences(this.preferencesForm.value);
     this.userPreferences = await this.authService.getUserPreferences();
-    this.toggleOverlay();
+    this.toggleOverlay('close');
   }
 
   async searchFromLocations() {
@@ -93,5 +110,11 @@ export class AccountComponent implements OnInit {
   }
   setFromLocation(location: any): void {
     this.preferencesForm.value.cityFrom = location.name;
+  }
+  submitPassword(): void {
+    this.toggleOverlay('close');
+    if (this.passwordForm.valid) {
+      console.log('submit password');
+    }
   }
 }
