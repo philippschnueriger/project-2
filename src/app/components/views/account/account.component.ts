@@ -30,18 +30,10 @@ items: any;
 
   this.preferencesForm = new FormGroup({
     tripMode: new FormControl('Return'), // Set default value for tripMode
-    cityFrom: new FormControl('asf', {
+    cityFrom: new FormControl('Zürich', {
       validators: [Validators.required, Validators.minLength(3)],
       asyncValidators: [locationExistsValidator(this.apiService)],
     }),
-    departureAndReturnDate: new FormControl('', [
-      Validators.required,
-      //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
-    ]),
-    departureDate: new FormControl('', [
-      Validators.required,
-      //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
-    ]),
     bookingClass: new FormControl('Economy', [Validators.required]),
     adults: new FormControl(1, [Validators.required]),
     children: new FormControl(0),
@@ -66,8 +58,9 @@ items: any;
   toggleOverlay() {
     this.showOverlay = !this.showOverlay;
   }
-  loadData() {
-    console.log("load data")
+  submitPreferences() {
+    console.log(this.preferencesForm.value);
+    this.toggleOverlay();
   }
 
   async searchFromLocations() {
@@ -82,7 +75,6 @@ items: any;
           location.type === 'airport' ||
           (location.type === 'city' && location.airports > 1)
       );
-      console.log(this.fromLocations);
     } else {
       this.fromLocations = [];
     }
