@@ -72,7 +72,7 @@ export class SearchFormComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.searchForm = new FormGroup({
       tripMode: new FormControl('Return'), // Set default value for tripMode
-      cityFrom: new FormControl('asf', {
+      cityFrom: new FormControl('Zürich', {
         validators: [Validators.required, Validators.minLength(3)],
         asyncValidators: [locationExistsValidator(this.apiService)],
       }),

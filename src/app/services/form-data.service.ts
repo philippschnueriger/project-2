@@ -10,8 +10,8 @@ import { AuthService } from './auth.service';
 export class FormDataService {
   formData: FormData = {
     tripMode: TripMode.Return,
-    cityFrom: 'New York',
-    cityTo: 'Los Angeles',
+    cityFrom: 'Zürich',
+    cityTo: '',
     departureDate: TuiDay.currentLocal().append({ day: 1 }),
     departureAndReturnDate: new TuiDayRange(
       TuiDay.currentLocal().append({ day: 7 }),
@@ -33,11 +33,9 @@ export class FormDataService {
 
   async loadFormData(): Promise<FormData> {
     try {
-      await this.authService.getUserData();
-      if (this.data) {
-        this.setFormData({
-          cityFrom: this.data.name, // TODO
-        });
+      const data = await this.authService.getUserPreferences();
+      if (data) {
+        this.setFormData(data);
       } else {
         console.log('No user data');
       }

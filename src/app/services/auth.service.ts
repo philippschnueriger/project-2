@@ -174,7 +174,6 @@ export class AuthService {
       const user = await firstValueFrom(this.user$);
       if (user) {
         const userRef = doc(this.firestore, 'users', user.uid);
-        console.log(data);
         await setDoc(userRef, data);
       }
     } catch (error: any) {
@@ -189,7 +188,6 @@ export class AuthService {
       if (user) {
         const userRef = doc(this.firestore, 'users', user.uid);
         const docSnap = await getDoc(userRef);
-        console.log(docSnap.data());
         return docSnap.data();
         //this.userPreferencesSubject.next(docSnap.data());
       }
