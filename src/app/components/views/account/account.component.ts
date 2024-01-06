@@ -114,7 +114,7 @@ export class AccountComponent implements OnInit {
   submitPassword(): void {
     this.toggleOverlay('close');
     if (this.passwordForm.valid) {
-      console.log('submit password');
+      this.authService.changePassword(this.passwordForm.value.newPassword);
     }
   }
 }
