@@ -40,7 +40,7 @@ describe('Login Functionality', () => {
       cy.get('button[type=submit]').click();
   
       // Assuming there's an error message displayed
-      cy.url().should('not.have.string', '/profile');
+      cy.url().should('not.have.string', '/account');
     });
   });
   

@@ -23,6 +23,7 @@ import { ConnectionCardDetailComponent } from './components/shared/connection-ca
 import { DestinationExplorerComponent } from './components/views/destination-explorer/destination-explorer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocalTimePipe } from './components/shared/connection-card/local-time.pipe';
+import { AccountComponent } from './components/views/account/account.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { LocalTimePipe } from './components/shared/connection-card/local-time.pi
     DestinationCardComponent,
     ConnectionCardDetailComponent,
     DestinationExplorerComponent,
+    AccountComponent,
     LocalTimePipe
   ],
   imports: [

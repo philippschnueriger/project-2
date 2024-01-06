@@ -1,0 +1,29 @@
+<div class="account">
+  <div class="container">
+    <h1>Account</h1>
+    <tui-island>
+      <div class="edit-button" (click)="editPreferences()">
+        <img src="../../../assets/icons/edit.svg" alt="Favorite Icon" />
+      </div>
+      <h2>Preferences</h2>
+      <div class="grid-container">
+        <div class="grid-item">Homebase</div>
+        <div class="grid-item">Zürich</div>
+        <div class="grid-item">Tripmode</div>
+        <div class="grid-item">Return</div>
+        <div class="grid-item">Adults</div>
+        <div class="grid-item">1</div>
+        <div class="grid-item">Children</div>
+        <div class="grid-item">0</div>
+        <div class="grid-item">Booking Class</div>
+        <div class="grid-item">Econonomy</div>
+        <div class="grid-item">Vehicle Type</div>
+        <div class="grid-item">Aircraft</div>
+      </div>
+    </tui-island>
+    <button class="secondary-button" (click)="updatePassword()">
+      Change Password
+    </button>
+    <button class="primary-button" (click)="logout()">Logout</button>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { AuthGuard } from './services/auth.guard';
 import { ResultsComponent } from './components/views/search-results/search-results.component';
 import { FavouritesComponent } from './components/views/favourites/favourites.component';
 import { DestinationExplorerComponent } from './components/views/destination-explorer/destination-explorer.component';
+import { AccountComponent } from './components/views/account/account.component';
 
 
 const routes: Routes = [
@@ -44,6 +45,12 @@ const routes: Routes = [
     path: 'profile',
     component: UserSettingsComponent,
     title: 'Profile',
+    canActivate: [AuthGuard] 
+  },
+  {
+    path: 'account',
+    component: AccountComponent,
+    title: 'Account',
     canActivate: [AuthGuard] 
   },
   {
