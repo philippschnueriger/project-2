@@ -20,6 +20,9 @@ body {
 .dark-mode {
   color: $white;
   background-color: $black;
+  .bar {
+    background-color: $white;
+  }
 }
 
 h1 {
