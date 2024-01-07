@@ -235,6 +235,7 @@ export class AuthService {
   
           // Assuming 'sharedWith' is an array field in the user document
           const sharedWith = userData['sharedWith'] || [];
+          const sharedFrom = userData['sharedFrom'] || '';
           
           // Check if the emailToShare isn't already in the 'sharedWith' array
           if (!sharedWith.includes(emailToShare)) {
@@ -244,6 +245,7 @@ export class AuthService {
             await updateDoc(usersRef, {
               sharedWith: sharedWith
             });
+            await updateDoc(usersRef, { sharedFrom: currentUser.email });
   
             console.log(`Data shared successfully with ${emailToShare}.`);
           } else {
@@ -291,6 +293,37 @@ export class AuthService {
   
         console.log('Shared Data:', sharedData);
       }
+    } catch (error: any) {
+      console.error('Error loading shared data', error);
+      throw error;
+    }
+  }
+  async getEmailsOfSharingUsers(): Promise<string[]> {
+    try {
+      const currentUser = await firstValueFrom(this.user$);
+    
+      if (currentUser) {
+        const allUsersRef = collection(this.firestore, 'users');
+        const querySnapshot = await getDocs(allUsersRef);
+        
+        const sharingUsers: string[] = [];
+  
+        for (const userDoc of querySnapshot.docs) {
+          const userData = userDoc.data();
+    
+          if (
+            userData['sharedWith'] &&
+            userData['sharedWith'].includes(currentUser?.email)
+          ) {
+            sharingUsers.push(userData?.['sharedFrom']); // Collect the email of the user sharing data
+          }
+        }
+    
+        // Return unique email addresses using Set to remove duplicates
+        return Array.from(new Set(sharingUsers));
+      }
+  
+      return []; // Return an empty array if no current user is found
     } catch (error: any) {
       console.error('Error loading shared data', error);
       throw error;

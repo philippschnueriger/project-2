@@ -1,7 +1,7 @@
 import { Component, OnInit, SimpleChange, OnChanges } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -14,6 +14,8 @@ export class FavouritesComponent implements OnInit {
   favourites: any;
   sort = ['Date', 'Price'];
   filters: any;
+  share: any;
+  sharingUsers: any;
 
   constructor(
     private authService: AuthService,
@@ -27,13 +29,17 @@ export class FavouritesComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.share = new FormGroup({
+      email: new FormControl('', { validators: [Validators.required, Validators.email]}),
+    });
     this.filters = new FormGroup({
       sort: new FormControl(),
     });
     this.filters.get('sort')?.valueChanges.subscribe((newValue: any) => {
       this.sortConnections(this.filters.get('sort')?.value);
     });
+    this.sharingUsers = await this.authService.getEmailsOfSharingUsers();
   }
 
   sortConnections(sort: string) {
@@ -60,7 +66,8 @@ export class FavouritesComponent implements OnInit {
   }
   async shareFavourites() {
     console.log('share favourites' )
-    await this.authService.shareFavourites('asdf@asdf.com')
+    console.log(this.share.get('email')?.value)
+    await this.authService.shareFavourites(this.share.get('email')?.value)
   }
 
   async getSharedData(){
