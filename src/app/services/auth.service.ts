@@ -22,6 +22,7 @@ import {
   deleteDoc,
   updateDoc,
 } from '@angular/fire/firestore';
+import { Storage, getDownloadURL, ref } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +38,7 @@ export class AuthService {
   );
   favourites$: Observable<any> = this.favouritesSubject.asObservable();
 
-  constructor(private afAuth: Auth, private firestore: Firestore) {
+  constructor(private afAuth: Auth, private firestore: Firestore, private storage: Storage) {
     this.user$ = new Observable((observer) => {
       this.afAuth.onAuthStateChanged((user) => {
         if (user) {
@@ -481,6 +482,35 @@ export class AuthService {
       }
     } catch (error: any) {
       console.error('Error loading shared data for user', error);
+      throw error;
+    }
+  }
+
+  async downloadFile(fileRef: string): Promise<any> {
+    try {
+      //const ref = this.storage.ref(fileRef);
+      //const fileUrl = await this.storage.refFromURL(fileRef);
+      const fileUrl =await getDownloadURL(ref(this.storage, fileRef));
+      // Now you have the file URL, you can use it to download the file or display it
+
+      // For example, if you want to download the file, you can use the file URL
+      const response = await fetch(fileUrl);
+      const blob = await response.blob();
+      // Use the blob as needed (e.g., create a download link or display the file)
+      
+      return blob; // Return the blob or the downloaded file content
+    } catch (error: any) {
+      console.error('Error downloading file:', error);
+      throw error;
+    }
+  }
+  async getAllDestinations(): Promise<any> {
+    try {
+      const destinationsRef = collection(this.firestore, 'destinations');
+      const querySnapshot = await getDocs(destinationsRef);
+      return querySnapshot.docs.map((doc) => doc.data());
+    } catch (error: any) {
+      console.error('Error loading destinations', error);
       throw error;
     }
   }

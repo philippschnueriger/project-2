@@ -23,6 +23,7 @@ interface Car_rentals {
 }
 
 export interface Destination {
+  img_url: string;
   id: string;
   active: boolean;
   name: string;

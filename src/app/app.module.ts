@@ -24,6 +24,7 @@ import { DestinationExplorerComponent } from './components/views/destination-exp
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocalTimePipe } from './components/shared/connection-card/local-time.pipe';
 import { AccountComponent } from './components/views/account/account.component';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { AccountComponent } from './components/views/account/account.component';
   imports: [
     BrowserModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideStorage(() => getStorage()),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     CommonModule,

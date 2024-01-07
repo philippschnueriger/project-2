@@ -1,7 +1,7 @@
 <div class="container">
   <div *ngFor="let item of destinationsArray">
     <div class="image-container" (click)="exploreDestination(item.name)">
-      <img src="../../../assets/images/{{ item.name }}.png" alt="Image" />
+      <img src="{{ item.img_url }}" alt="Image" />
       <div class="tag">
         <div>{{ item.name }}</div>
       </div>

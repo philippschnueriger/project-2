@@ -5,6 +5,7 @@ import { ApiService } from '../../../services/api.service';
 import { firstValueFrom } from 'rxjs';
 import { Destination } from 'src/app/types/destination';
 import * as data from 'src/app/data/destinations.json';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-destination-card',
@@ -15,18 +16,21 @@ export class DestinationCardComponent {
   @Input() region: string = 'All';
   @Input() order: string = 'Popularity';
 
-  readonly destinations: Destination[];
+  //readonly destinations: Destination[];
   originalDestinationsArray: Destination[] = [];
   destinationsArray: Destination[] = [];
-  constructor(private router: Router, private apiService: ApiService) {
-    this.destinations = { ...data };
-    for (let i = 0; i < this.destinations.length; i++) {
-      this.destinationsArray.push(this.destinations[i]);
-    }
-    this.originalDestinationsArray = [...this.destinationsArray];
-  }
 
-  ngOnInit() {
+  constructor(private router: Router, private apiService: ApiService, private authService: AuthService) {
+  //   this.destinations = { ...data };
+  //   for (let i = 0; i < this.destinations.length; i++) {
+  //     this.destinationsArray.push(this.destinations[i]);
+  //   }
+  //   this.originalDestinationsArray = [...this.destinationsArray];
+   }
+
+  async ngOnInit() {
+    console.log(this.destinationsArray);
+    this.destinationsArray = await this.authService.getAllDestinations();
     this.filterByRegion(this.region);
     this.sort(this.order);
   }
@@ -89,5 +93,9 @@ export class DestinationCardComponent {
         departureDate: nextWeek.toString().replace(/\./g, '/'),
       },
     });
+  }
+  async getAllDestinations() {
+    let destinations = await this.authService.getAllDestinations();
+    console.log(destinations);
   }
 }
