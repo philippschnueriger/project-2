@@ -16,6 +16,8 @@ export class FavouritesComponent implements OnInit {
   filters: any;
   share: any;
   sharingUsers: any;
+  myEmail: string = '';
+  sharedWith: any;
 
   constructor(
     private authService: AuthService,
@@ -39,7 +41,9 @@ export class FavouritesComponent implements OnInit {
     this.filters.get('sort')?.valueChanges.subscribe((newValue: any) => {
       this.sortConnections(this.filters.get('sort')?.value);
     });
-    this.sharingUsers = await this.authService.getEmailsOfSharingUsers();
+    this.sharingUsers = await this.authService.getSharedWithAccounts();
+    this.myEmail = await this.authService.getCurrentUserEmail();
+    this.sharedWith = await this.authService.getSharedWithForCurrentUser();
   }
 
   sortConnections(sort: string) {
@@ -68,9 +72,20 @@ export class FavouritesComponent implements OnInit {
     console.log('share favourites' )
     console.log(this.share.get('email')?.value)
     await this.authService.shareFavourites(this.share.get('email')?.value)
+    this.sharingUsers = await this.authService.getSharedWithAccounts();
+    this.sharedWith = await this.authService.getSharedWithForCurrentUser();
   }
 
   async getSharedData(){
     await this.authService.getSharedData();
+  }
+  async deleteSharedUser(user: any){
+    await this.authService.removeCurrentUserFromSharedWith(user.uid);
+    this.sharingUsers = await this.authService.getSharedWithAccounts();
+  }
+  async deleteSharedWithUser(email: string){
+    console.log(email)
+    await this.authService.removeEmailFromSharedWith(email);
+    this.sharedWith = await this.authService.getSharedWithForCurrentUser();
   }
 }

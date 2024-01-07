@@ -329,4 +329,136 @@ export class AuthService {
       throw error;
     }
   }
+  async getSharedWithAccounts(): Promise<{ uid: string, email: string }[]> {
+    try {
+      const currentUser = await firstValueFrom(this.user$);
+  
+      if (currentUser) {
+        const allUsersRef = collection(this.firestore, 'users');
+        const querySnapshot = await getDocs(allUsersRef);
+        
+        const sharedWithAccounts: { uid: string, email: string }[] = [];
+  
+        querySnapshot.forEach(userDoc => {
+          const userData = userDoc.data();
+  
+          if (userData['sharedWith'] && userData['sharedWith'].includes(currentUser.email)) {
+            const email = userData?.['sharedFrom']
+            const uid = userDoc.id; // Assuming the document ID is also the UID
+  
+            sharedWithAccounts.push({ uid, email });
+          }
+        });
+        console.log(sharedWithAccounts);
+  
+        return sharedWithAccounts;
+      }
+  
+      return []; // Return an empty array if no current user is found
+    } catch (error: any) {
+      console.error('Error loading shared data', error);
+      throw error;
+    }
+  } 
+  
+  async removeCurrentUserFromSharedWith(otherUserUid: string): Promise<void> {
+    try {
+      const currentUser = await firstValueFrom(this.user$); // Assuming you have a valid user reference
+      
+      if (currentUser) {
+        const otherUsersRef = doc(this.firestore, 'users', otherUserUid);
+        const otherUserDoc = await getDoc(otherUsersRef);
+      
+        if (otherUserDoc.exists()) {
+          const userData = otherUserDoc.data();
+          const sharedWithEmails = userData['sharedWith'] || [];
+  
+          const updatedSharedWithEmails = sharedWithEmails.filter((email: string) => email !== currentUser.email);
+  
+          await updateDoc(otherUsersRef, {
+            sharedWith: updatedSharedWithEmails
+          });
+  
+          console.log(`Removed ${currentUser.email} from sharedWith array of user with UID: ${otherUserUid}`);
+        } else {
+          console.error('User document not found for UID:', otherUserUid);
+        }
+      } else {
+        console.error('Current user not found.');
+      }
+    } catch (error: any) {
+      console.error('Error removing user from sharedWith array', error);
+      throw error;
+    }
+  }
+  async getCurrentUserEmail(): Promise<string> {
+    try {
+      const currentUser = await firstValueFrom(this.user$);
+  
+      if (currentUser) {
+        return currentUser.email || '';
+      }
+  
+      return ''; // Return an empty string if no current user is found
+    } catch (error: any) {
+      console.error('Error loading shared data', error);
+      throw error;
+    }
+  }
+  async getSharedWithForCurrentUser(): Promise<string[]> {
+    try {
+      const currentUser = await firstValueFrom(this.user$); // Assuming you have a valid user reference
+      
+      if (currentUser) {
+        const userDocRef = doc(this.firestore, 'users', currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          console.log(userData['sharedWith'])
+          return userData['sharedWith'] || [];
+        } else {
+          console.error('User document not found for current user.');
+          return [];
+        }
+      } else {
+        console.error('Current user not found.');
+        return [];
+      }
+    } catch (error: any) {
+      console.error('Error retrieving sharedWith data for current user', error);
+      throw error;
+    }
+  }
+  async removeEmailFromSharedWith(emailToRemove: string): Promise<void> {
+    try {
+      const currentUser = await firstValueFrom(this.user$); // Assuming you have a valid user reference
+      
+      if (currentUser) {
+        const userDocRef = doc(this.firestore, 'users', currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          const sharedWithEmails = userData['sharedWith'] || [];
+          console.log(sharedWithEmails)
+  
+          const updatedSharedWithEmails = sharedWithEmails.filter((email: string) => email !== emailToRemove);
+          console.log(updatedSharedWithEmails)
+  
+          await updateDoc(userDocRef, {
+            sharedWith: updatedSharedWithEmails
+          });
+        } else {
+          console.error('User document not found for current user.');
+        }
+      } else {
+        console.error('Current user not found.');
+      }
+    } catch (error: any) {
+      console.error('Error removing email from sharedWith array', error);
+      throw error;
+    }
+  }
 }
+

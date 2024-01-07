@@ -11,10 +11,18 @@
   >E-Mail</tui-input>
   <button class="primary-button share-button" type="submit" (click)="shareFavourites()" [disabled]="share.invalid">Share</button>
 </form>
-<h2>Shared by</h2>
+<h2>My account</h2>
+<p>{{myEmail}}</p>
+<h2>Shared with me</h2>
 <div *ngFor="let user of sharingUsers">
-  <p>{{user}}</p>
-  <!-- <button (click)="deleteSharedUser(user.id)">Delete</button> -->
+  <p>{{user.email}}</p>
+  <p>{{user.uid}}</p>
+  <button (click)="deleteSharedUser(user)">Delete</button>
+</div>
+<h2>I share with</h2>
+<div *ngFor="let email of sharedWith">
+  <p>{{email}}</p>
+  <button (click)="deleteSharedWithUser(email)">Delete</button>
 </div>
 
 <form [formGroup]="filters" #formDir="ngForm" class="container">
