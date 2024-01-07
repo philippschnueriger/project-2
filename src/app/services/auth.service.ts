@@ -460,5 +460,29 @@ export class AuthService {
       throw error;
     }
   }
+  async getSharedDataFromUser(userUid: string): Promise<any[]> {
+    try {
+      const currentUser = await firstValueFrom(this.user$);
+
+      if (currentUser) {
+        const sharedData: any[] = [];
+        const sharedDataRef = collection(this.firestore, `users/${userUid}/favourites`);
+        const sharedDataSnapshot = await getDocs(sharedDataRef);
+
+        sharedDataSnapshot.forEach((doc) => {
+          sharedData.push(doc.data());
+        });
+
+        console.log('Shared Data:', sharedData);
+        return sharedData;
+      } else {
+        console.error('Current user not found.');
+        return [];
+      }
+    } catch (error: any) {
+      console.error('Error loading shared data for user', error);
+      throw error;
+    }
+  }
 }
 

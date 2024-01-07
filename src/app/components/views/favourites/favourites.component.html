@@ -18,6 +18,7 @@
   <p>{{user.email}}</p>
   <p>{{user.uid}}</p>
   <button (click)="deleteSharedUser(user)">Delete</button>
+  <button (click)="getSharedDataFromUser(user.uid)">Get shared data</button>
 </div>
 <h2>I share with</h2>
 <div *ngFor="let email of sharedWith">

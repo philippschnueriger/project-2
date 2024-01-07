@@ -88,4 +88,8 @@ export class FavouritesComponent implements OnInit {
     await this.authService.removeEmailFromSharedWith(email);
     this.sharedWith = await this.authService.getSharedWithForCurrentUser();
   }
+  async getSharedDataFromUser(uid: string){
+    let data = await this.authService.getSharedDataFromUser(uid);
+    console.log(data)
+  }
 }
