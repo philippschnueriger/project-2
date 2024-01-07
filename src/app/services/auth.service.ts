@@ -20,6 +20,7 @@ import {
   query,
   where,
   deleteDoc,
+  updateDoc,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -216,6 +217,82 @@ export class AuthService {
       this.userDataSubject.next(null);
     } catch (error: any) {
       console.error('Error logging out', error);
+      throw error;
+    }
+  }
+
+  async shareFavourites(emailToShare: string): Promise<void> {
+    try {
+      const currentUser = await firstValueFrom(this.user$);
+      
+      if (currentUser) {
+        const usersRef = doc(this.firestore, 'users', currentUser.uid);
+        const userDoc = await getDoc(usersRef);
+  
+        // Check if the current user document exists
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+  
+          // Assuming 'sharedWith' is an array field in the user document
+          const sharedWith = userData['sharedWith'] || [];
+          
+          // Check if the emailToShare isn't already in the 'sharedWith' array
+          if (!sharedWith.includes(emailToShare)) {
+            sharedWith.push(emailToShare);
+  
+            // Update the 'sharedWith' array in Firestore
+            await updateDoc(usersRef, {
+              sharedWith: sharedWith
+            });
+  
+            console.log(`Data shared successfully with ${emailToShare}.`);
+          } else {
+            console.log(`Data is already shared with ${emailToShare}.`);
+          }
+        } else {
+          console.error('User document not found.');
+        }
+      } else {
+        console.error('Current user not found.');
+      }
+    } catch (error: any) {
+      console.error('Error sharing user data', error);
+      throw error;
+    }
+  }
+  async getSharedData(): Promise<void> {
+    try {
+      const currentUser = await firstValueFrom(this.user$);
+  
+      if (currentUser) {
+        const allUsersRef = collection(this.firestore, 'users');
+        const querySnapshot = await getDocs(allUsersRef);
+        
+        const sharedData: any[] = [];
+  
+        for (const userDoc of querySnapshot.docs) {
+          const userData = userDoc.data();
+  
+          if (
+            userData['sharedWith'] &&
+            userData['sharedWith'].includes(currentUser?.email)
+          ) {
+            const sharedDataRef = collection(
+              this.firestore,
+              `users/${userDoc.id}/favourites`
+            );
+            const sharedDataSnapshot = await getDocs(sharedDataRef);
+  
+            sharedDataSnapshot.forEach((doc) => {
+              sharedData.push(doc.data());
+            });
+          }
+        }
+  
+        console.log('Shared Data:', sharedData);
+      }
+    } catch (error: any) {
+      console.error('Error loading shared data', error);
       throw error;
     }
   }

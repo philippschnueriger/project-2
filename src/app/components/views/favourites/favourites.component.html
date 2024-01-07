@@ -1,5 +1,7 @@
 <h1>Favourite Connections</h1>
 <form [formGroup]="filters" #formDir="ngForm" class="container">
+  <button (click)="shareFavourites()">Share</button>
+  <button (click)="getSharedData()">Get shared data</button>
     <tui-select tuiTextfieldSize="m" formControlName="sort" id="sort">
       Sort
       <tui-data-list-wrapper

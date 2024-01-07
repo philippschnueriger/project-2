@@ -58,4 +58,12 @@ export class FavouritesComponent implements OnInit {
       console.log('no uid');
     }
   }
+  async shareFavourites() {
+    console.log('share favourites' )
+    await this.authService.shareFavourites('asdf@asdf.com')
+  }
+
+  async getSharedData(){
+    await this.authService.getSharedData();
+  }
 }
