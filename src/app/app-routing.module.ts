@@ -8,6 +8,7 @@ import { ResultsComponent } from './components/views/search-results/search-resul
 import { FavouritesComponent } from './components/views/favourites/favourites.component';
 import { DestinationExplorerComponent } from './components/views/destination-explorer/destination-explorer.component';
 import { AccountComponent } from './components/views/account/account.component';
+import { SharedFavouritesComponent } from './components/views/shared-favourites/shared-favourites.component';
 
 
 const routes: Routes = [
@@ -56,9 +57,16 @@ const routes: Routes = [
   {
     path: 'favourites',
     component: FavouritesComponent,
-    title: 'Favorites',
+    title: 'Favourites',
     canActivate: [AuthGuard] 
-  }];
+  },
+  {
+    path: 'shared-favourites',
+    component: SharedFavouritesComponent,
+    title: 'Shared Favourites',
+    canActivate: [AuthGuard] 
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

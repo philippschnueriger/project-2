@@ -25,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocalTimePipe } from './components/shared/connection-card/local-time.pipe';
 import { AccountComponent } from './components/views/account/account.component';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import { SharedFavouritesComponent } from './components/views/shared-favourites/shared-favourites.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
     ConnectionCardDetailComponent,
     DestinationExplorerComponent,
     AccountComponent,
-    LocalTimePipe
+    LocalTimePipe,
+    SharedFavouritesComponent
   ],
   imports: [
     BrowserModule,

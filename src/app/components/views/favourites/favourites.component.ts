@@ -68,28 +68,4 @@ export class FavouritesComponent implements OnInit {
       console.log('no uid');
     }
   }
-  async shareFavourites() {
-    console.log('share favourites' )
-    console.log(this.share.get('email')?.value)
-    await this.authService.shareFavourites(this.share.get('email')?.value)
-    this.sharingUsers = await this.authService.getSharedWithAccounts();
-    this.sharedWith = await this.authService.getSharedWithForCurrentUser();
-  }
-
-  async getSharedData(){
-    await this.authService.getSharedData();
-  }
-  async deleteSharedUser(user: any){
-    await this.authService.removeCurrentUserFromSharedWith(user.uid);
-    this.sharingUsers = await this.authService.getSharedWithAccounts();
-  }
-  async deleteSharedWithUser(email: string){
-    console.log(email)
-    await this.authService.removeEmailFromSharedWith(email);
-    this.sharedWith = await this.authService.getSharedWithForCurrentUser();
-  }
-  async getSharedDataFromUser(uid: string){
-    let data = await this.authService.getSharedDataFromUser(uid);
-    console.log(data)
-  }
 }

@@ -11,6 +11,7 @@
           <li><a routerLink="/">Home</a></li>
           <li><a routerLink="/destinations">Destinations</a></li>
           <li><a routerLink="/favourites">Favourites</a></li>
+          <li><a routerLink="/shared-favourites">Shared</a></li>
           <!-- <li *ngIf="!user"><a routerLink="/login">Login</a></li>
           <li *ngIf="user" (click)="logout()" class="logout">
             <a routerLink="/login">Logout</a>
@@ -59,11 +60,10 @@
     <ul class="mobile-nav-links">
       <li><a routerLink="/" (click)="toggleNav()">Home</a></li>
       <li><a routerLink="/favourites" (click)="toggleNav()">Favourites</a></li>
+      <li><a routerLink="/shared-favourites" (click)="toggleNav()">Shared</a></li>
       <li>
         <a routerLink="/destinations" (click)="toggleNav()">Destinations</a>
       </li>
-      <li *ngIf="!user"><a routerLink="/login" (click)="toggleNav()">Login</a></li>
-      <li *ngIf="user" (click)="logout() " (click)="toggleNav()"><a routerLink="/login">Logout</a></li>
     </ul>
   </div>
 </tui-root>
