@@ -39,3 +39,18 @@
     </button>
   </div>
 </div>
+
+<div id="overlay" class="overlay" *ngIf="showOverlay">
+  <div class="overlay-content">
+    <h1>Shared favourites</h1>
+    <button class="close-btn" (click)="toggleOverlay()">
+      <span class="close-icon"></span>
+    </button>
+    <app-connection-card
+      *ngFor="let item of data"
+      [item]="item"
+      [deleteOption]="false"
+      [favourites]="true"
+    ></app-connection-card>
+  </div>
+</div>

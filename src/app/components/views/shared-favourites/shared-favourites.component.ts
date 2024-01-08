@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as data from 'src/app/data/destinations.json';
 
 @Component({
   selector: 'app-shared-favourites',
@@ -17,6 +18,8 @@ export class SharedFavouritesComponent {
   sharingUsers: any;
   myEmail: string = '';
   sharedWith: any;
+  showOverlay: boolean = false;
+  data: any;
 
   constructor(
     private authService: AuthService,
@@ -51,8 +54,9 @@ export class SharedFavouritesComponent {
     this.sharedWith = await this.authService.getSharedWithForCurrentUser();
   }
   async getSharedDataFromUser(uid: string){
-    let data = await this.authService.getSharedDataFromUser(uid);
-    console.log(data)
+    this.toggleOverlay();
+    this.data = await this.authService.getSharedDataFromUser(uid);
+    console.log(this.data)
   }
   async getFavouriteConnections() {
     let uid = this.user?.uid;
@@ -61,6 +65,10 @@ export class SharedFavouritesComponent {
     } else {
       console.log('no uid');
     }
+  }
+  toggleOverlay() {
+    this.showOverlay = !this.showOverlay;
+    console.log(this.showOverlay)
   }
 
 }
