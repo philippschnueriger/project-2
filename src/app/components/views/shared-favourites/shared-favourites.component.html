@@ -1,27 +1,41 @@
-<h1>Shared Favourites</h1>
-<button (click)="getSharedData()">Get shared data</button>
-<form [formGroup]="share" #formDir="ngForm" >
-  <h2>Share favourites</h2>
+<h1>Connections that are shared with me</h1>
+<div *ngFor="let user of sharingUsers">
+  <div class="sharing-users">
+    <button class="secondary-button" (click)="getSharedDataFromUser(user.uid)">
+      {{ user.email }}
+    </button>
+    <button class="delete-button" (click)="deleteSharedUser(user)">
+      <img src="../../../assets/icons/delete.svg" />
+    </button>
+  </div>
+</div>
+<h1>Share your connections</h1>
+<form [formGroup]="share" #formDir="ngForm">
   <tui-input
     formControlName="email"
     id="shareFavourites"
     type="email"
     required
     [tuiTextfieldCleaner]="true"
-  >E-Mail</tui-input>
-  <button class="primary-button share-button" type="submit" (click)="shareFavourites()" [disabled]="share.invalid">Share</button>
+    >E-Mail</tui-input
+  >
+  <button
+    class="primary-button share-button"
+    type="submit"
+    (click)="shareFavourites()"
+    [disabled]="share.invalid"
+  >
+    Share
+  </button>
 </form>
-<h2>My account</h2>
-<p>{{myEmail}}</p>
-<h2>Shared with me</h2>
-<div *ngFor="let user of sharingUsers">
-  <p>{{user.email}}</p>
-  <p>{{user.uid}}</p>
-  <button (click)="deleteSharedUser(user)">Delete</button>
-  <button (click)="getSharedDataFromUser(user.uid)">Get shared data</button>
-</div>
+<p>Your account: {{ myEmail }}</p>
+
 <h2>I share with</h2>
 <div *ngFor="let email of sharedWith">
-  <p>{{email}}</p>
-  <button (click)="deleteSharedWithUser(email)">Delete</button>
+  <div class="sharing-users">
+    <button class="secondary-button" disabled>{{ email }}</button>
+    <button class="delete-button" (click)="deleteSharedWithUser(email)">
+      <img src="../../../assets/icons/delete.svg" />
+    </button>
+  </div>
 </div>
