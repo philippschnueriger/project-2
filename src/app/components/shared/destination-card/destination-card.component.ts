@@ -1,11 +1,14 @@
 import { Component, Input, SimpleChange } from '@angular/core';
 import { Router } from '@angular/router';
-import { TuiDay } from '@taiga-ui/cdk';
 import { ApiService } from '../../../services/api.service';
-import { firstValueFrom } from 'rxjs';
 import { Destination } from 'src/app/types/destination';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormDataService } from 'src/app/services/form-data.service';
+import {
+  getDateValues,
+  getLocationId,
+  mapBookingClass,
+} from '../search-form/search-form-utils';
 
 @Component({
   selector: 'app-destination-card',
@@ -19,10 +22,14 @@ export class DestinationCardComponent {
   originalDestinationsArray: Destination[] = [];
   destinationsArray: Destination[] = [];
 
-  constructor(private router: Router, private apiService: ApiService, private authService: AuthService, private formDataService: FormDataService) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+    private authService: AuthService,
+    private formDataService: FormDataService
+  ) {}
 
   async ngOnInit() {
-    console.log(this.destinationsArray);
     this.destinationsArray = await this.authService.getAllDestinations();
     this.filterByRegion(this.region);
     this.sort(this.order);
@@ -43,25 +50,26 @@ export class DestinationCardComponent {
       this.destinationsArray = this.destinationsArray.filter(
         (obj) => obj.continent.name === region
       );
-      this.sort(this.order)
+      this.sort(this.order);
     }
   }
-  sort(order: string){
-    if (order === "Popularity"){
-      this.destinationsArray.sort((a, b) =>  b.dst_popularity_score - a.dst_popularity_score)
-    } else if (order == "Alphabetical"){
+  sort(order: string) {
+    if (order === 'Popularity') {
+      this.destinationsArray.sort(
+        (a, b) => b.dst_popularity_score - a.dst_popularity_score
+      );
+    } else if (order == 'Alphabetical') {
       this.destinationsArray.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (order == "Random"){
+    } else if (order == 'Random') {
       this.destinationsArray.sort(() => Math.random() - 0.5);
-    } else if (order == "Favourites"){
-      this.destinationsArray.sort((a, b) =>  b.dst_popularity_score - a.dst_popularity_score);
-      this.destinationsArray = this.destinationsArray.slice(0, 5)
-  }
-    
-    else {
-      console.log("filter not found")
+    } else if (order == 'Favourites') {
+      this.destinationsArray.sort(
+        (a, b) => b.dst_popularity_score - a.dst_popularity_score
+      );
+      this.destinationsArray = this.destinationsArray.slice(0, 5);
+    } else {
+      console.log('filter not found');
     }
-    
   }
 
   revertFilter() {
@@ -70,37 +78,25 @@ export class DestinationCardComponent {
 
   async exploreDestination(destination: string) {
     let searchForm = this.formDataService.getFormData();
-    const nextWeek = TuiDay.currentLocal().append({ day: 7 });
-    let cityToId = '';
-    let cityFromId = '';
-    try {
-      const data$ = this.apiService.getLocationId(searchForm.cityFrom);
-      const data: any = await firstValueFrom(data$);
-      cityFromId = data.locations[0].id;
-    } catch (error) {
-      console.error('Error getting location ID:', error);
-    }
-    try {
-      const data$ = this.apiService.getLocationId(destination);
-      const data: any = await firstValueFrom(data$);
-      cityToId = data.locations[0].id;
-    } catch (error) {
-      console.error('Error getting location ID:', error);
-    }
-    searchForm.cityTo = destination ;
-    console.log("test", searchForm);
-    //this.formDataService.setFormData(this.searchForm.value);
+    searchForm.cityTo = destination;
+    this.formDataService.setFormData(searchForm);
 
-    this.router.navigate(['/results'], {
-      queryParams: {
-        cityFrom: cityFromId,
-        cityTo: cityToId,
-        departureDate: nextWeek.toString().replace(/\./g, '/'),
-      },
-    });
-  }
-  async getAllDestinations() {
-    let destinations = await this.authService.getAllDestinations();
-    console.log(destinations);
+    const dates = getDateValues(
+      searchForm.tripMode,
+      searchForm.departureAndReturnDate,
+      searchForm.departureDate
+    );
+    const queryParams = {
+      cityFrom: await getLocationId(this.apiService, searchForm.cityFrom),
+      cityTo: await getLocationId(this.apiService, searchForm.cityTo),
+      departureDate: dates.departure,
+      returnDate: dates.return,
+      bookingClass: mapBookingClass(searchForm.bookingClass),
+      adults: searchForm.adults,
+      children: searchForm.children,
+      vehicleType: searchForm.vehicleType,
+      sort: searchForm.sort,
+    };
+    this.router.navigate(['/results'], { queryParams });
   }
 }

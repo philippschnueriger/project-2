@@ -14,7 +14,7 @@ import { tuiInputNumberOptionsProvider } from '@taiga-ui/kit';
 import { FormDataService } from 'src/app/services/form-data.service';
 import { TripMode, BookingClass, VehicleType } from '../../../types/enums';
 import { locationExistsValidator } from './location-validator';
-import { getLocationId, mapBookingClass } from './search-form-utils';
+import { getDateValues, getLocationId, mapBookingClass } from './search-form-utils';
 
 @Component({
   selector: 'app-search-form',
@@ -137,32 +137,14 @@ export class SearchFormComponent implements OnInit {
     }
   }
 
-  getDateValues(
-    tripMode: string,
-    departureAndReturnDate: any,
-    departureDate: any
-  ): { departure: string; return?: string } {
-    let departureDateValue = '';
-    let returnDateValue = '';
-    if (tripMode == 'Return') {
-      departureDateValue = departureAndReturnDate.value.from
-        .toString()
-        .replace(/\./g, '/');
-      returnDateValue = departureAndReturnDate.value.to
-        .toString()
-        .replace(/\./g, '/');
-    } else {
-      departureDateValue = departureDate.value.toString().replace(/\./g, '/');
-    }
-    return { departure: departureDateValue, return: returnDateValue };
-  }
+
 
   async loadData() {
     this.formDataService.setFormData(this.searchForm.value);
-    const dates = this.getDateValues(
+    const dates = getDateValues(
       this.tripMode.value,
-      this.departureAndReturnDate,
-      this.departureDate
+      this.departureAndReturnDate.value,
+      this.departureDate.value
     );
     const queryParams = {
       cityFrom: await getLocationId(this.apiService, this.cityFrom.value),

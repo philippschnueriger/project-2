@@ -32,3 +32,23 @@ export async function getLocationId(apiService: ApiService, location: string): P
       throw error;
     }
   }
+
+  export function  getDateValues(
+    tripMode: string,
+    departureAndReturnDate: any,
+    departureDate: any
+  ): { departure: string; return?: string } {
+    let departureDateValue = '';
+    let returnDateValue = '';
+    if (tripMode == 'Return') {
+      departureDateValue = departureAndReturnDate.from
+        .toString()
+        .replace(/\./g, '/');
+      returnDateValue = departureAndReturnDate.to
+        .toString()
+        .replace(/\./g, '/');
+    } else {
+      departureDateValue = departureDate.toString().replace(/\./g, '/');
+    }
+    return { departure: departureDateValue, return: returnDateValue };
+  }
