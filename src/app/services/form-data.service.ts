@@ -29,6 +29,7 @@ export class FormDataService {
     this.authService.userData$.subscribe((userData) => {
       this.data = userData;
     });
+    this.loadFormData();
   }
 
   async loadFormData(): Promise<FormData> {
@@ -44,6 +45,10 @@ export class FormDataService {
       console.error('Error loading form data:', error);
       return this.formData;
     }
+  }
+
+  getFormData(): FormData {
+    return this.formData;
   }
 
   setFormData(data: Partial<FormData>): void {

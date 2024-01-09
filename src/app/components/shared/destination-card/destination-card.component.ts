@@ -4,8 +4,8 @@ import { TuiDay } from '@taiga-ui/cdk';
 import { ApiService } from '../../../services/api.service';
 import { firstValueFrom } from 'rxjs';
 import { Destination } from 'src/app/types/destination';
-import * as data from 'src/app/data/destinations.json';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormDataService } from 'src/app/services/form-data.service';
 
 @Component({
   selector: 'app-destination-card',
@@ -16,17 +16,10 @@ export class DestinationCardComponent {
   @Input() region: string = 'All';
   @Input() order: string = 'Popularity';
 
-  //readonly destinations: Destination[];
   originalDestinationsArray: Destination[] = [];
   destinationsArray: Destination[] = [];
 
-  constructor(private router: Router, private apiService: ApiService, private authService: AuthService) {
-  //   this.destinations = { ...data };
-  //   for (let i = 0; i < this.destinations.length; i++) {
-  //     this.destinationsArray.push(this.destinations[i]);
-  //   }
-  //   this.originalDestinationsArray = [...this.destinationsArray];
-   }
+  constructor(private router: Router, private apiService: ApiService, private authService: AuthService, private formDataService: FormDataService) {}
 
   async ngOnInit() {
     console.log(this.destinationsArray);
@@ -76,19 +69,31 @@ export class DestinationCardComponent {
   }
 
   async exploreDestination(destination: string) {
+    let searchForm = this.formDataService.getFormData();
     const nextWeek = TuiDay.currentLocal().append({ day: 7 });
     let cityToId = '';
+    let cityFromId = '';
+    try {
+      const data$ = this.apiService.getLocationId(searchForm.cityFrom);
+      const data: any = await firstValueFrom(data$);
+      cityFromId = data.locations[0].id;
+    } catch (error) {
+      console.error('Error getting location ID:', error);
+    }
     try {
       const data$ = this.apiService.getLocationId(destination);
       const data: any = await firstValueFrom(data$);
       cityToId = data.locations[0].id;
-      console.log(cityToId);
     } catch (error) {
       console.error('Error getting location ID:', error);
     }
+    searchForm.cityTo = destination ;
+    console.log("test", searchForm);
+    //this.formDataService.setFormData(this.searchForm.value);
+
     this.router.navigate(['/results'], {
       queryParams: {
-        cityFrom: 'ZRH',
+        cityFrom: cityFromId,
         cityTo: cityToId,
         departureDate: nextWeek.toString().replace(/\./g, '/'),
       },

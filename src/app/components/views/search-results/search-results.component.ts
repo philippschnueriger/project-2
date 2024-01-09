@@ -32,8 +32,6 @@ export class ResultsComponent implements OnInit {
   loading = false;
 
   ngOnInit() {
-    const formData = this.formDataService.formData;
-    this.formCityTo = formData.cityTo;
     this.route.queryParams.subscribe((params) => {
       this.cityFrom = params['cityFrom'];
       this.cityTo = params['cityTo'];

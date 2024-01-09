@@ -93,7 +93,7 @@ export class SearchFormComponent implements OnInit {
       children: new FormControl(0),
       vehicleType: new FormControl('Aircraft', [Validators.required]),
     });
-    const formData = await this.formDataService.loadFormData();
+    const formData = this.formDataService.getFormData();
     this.searchForm.patchValue({
       tripMode: formData.tripMode,
       cityFrom: formData.cityFrom,
