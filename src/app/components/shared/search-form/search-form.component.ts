@@ -46,8 +46,6 @@ export class SearchFormComponent implements OnInit {
   toLocations: any[] = [];
   toLocations$: any;
 
-  selectedLocation: any = 'Test';
-
   items: string[] = ['Quality', 'Price', 'Duration'];
 
   sort = 'quality';
@@ -71,12 +69,8 @@ export class SearchFormComponent implements OnInit {
         validators: [Validators.required, Validators.minLength(3)],
         asyncValidators: [locationExistsValidator(this.apiService)],
       }),
-      departureAndReturnDate: new FormControl('', [
-        Validators.required,
-      ]),
-      departureDate: new FormControl('', [
-        Validators.required,
-      ]),
+      departureAndReturnDate: new FormControl('', [Validators.required]),
+      departureDate: new FormControl('', [Validators.required]),
       bookingClass: new FormControl('', [Validators.required]),
       adults: new FormControl('', [Validators.required]),
       children: new FormControl(''),
@@ -93,7 +87,7 @@ export class SearchFormComponent implements OnInit {
     this.sort = option;
     this.loadData();
   }
-  
+
   locationExistsValidator(location: string) {
     return async (
       control: AbstractControl
@@ -143,43 +137,45 @@ export class SearchFormComponent implements OnInit {
     }
   }
 
-  async loadData() {
-    this.formDataService.setFormData(this.searchForm.value);
-    let cityFromId = await getLocationId(this.apiService, this.cityFrom.value);
-    let cityToId = await getLocationId(this.apiService, this.cityTo.value);
+  getDateValues(
+    tripMode: string,
+    departureAndReturnDate: any,
+    departureDate: any
+  ): { departure: string; return?: string } {
     let departureDateValue = '';
     let returnDateValue = '';
-
-    if (this.tripMode.value == 'Return') {
-      departureDateValue = this.departureAndReturnDate.value.from
+    if (tripMode == 'Return') {
+      departureDateValue = departureAndReturnDate.value.from
         .toString()
         .replace(/\./g, '/');
-      returnDateValue = this.departureAndReturnDate.value.to
+      returnDateValue = departureAndReturnDate.value.to
         .toString()
         .replace(/\./g, '/');
     } else {
-      departureDateValue = this.departureDate.value
-        .toString()
-        .replace(/\./g, '/');
+      departureDateValue = departureDate.value.toString().replace(/\./g, '/');
     }
+    return { departure: departureDateValue, return: returnDateValue };
+  }
 
-    const bookingClass = mapBookingClass(this.bookingClass.value);
-    const adults = this.adults.value;
-    const children = this.children.value;
-    const vehicleType = this.vehicleType.value;
-    this.router.navigate(['/results'], {
-      queryParams: {
-        cityFrom: cityFromId,
-        cityTo: cityToId,
-        departureDate: departureDateValue,
-        returnDate: returnDateValue,
-        bookingClass: bookingClass,
-        adults: adults,
-        children: children,
-        vehicleType: vehicleType,
-        sort: this.sort,
-      },
-    });
+  async loadData() {
+    this.formDataService.setFormData(this.searchForm.value);
+    const dates = this.getDateValues(
+      this.tripMode.value,
+      this.departureAndReturnDate,
+      this.departureDate
+    );
+    const queryParams = {
+      cityFrom: await getLocationId(this.apiService, this.cityFrom.value),
+      cityTo: await getLocationId(this.apiService, this.cityTo.value),
+      departureDate: dates.departure,
+      returnDate: dates.return,
+      bookingClass: mapBookingClass(this.bookingClass.value),
+      adults: this.adults.value,
+      children: this.children.value,
+      vehicleType: this.vehicleType.value,
+      sort: this.sort,
+    };
+    this.router.navigate(['/results'], { queryParams });
   }
 
   get tripMode() {
