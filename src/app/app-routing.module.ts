@@ -66,6 +66,7 @@ const routes: Routes = [
     title: 'Shared Favourites',
     canActivate: [AuthGuard] 
   },
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({
