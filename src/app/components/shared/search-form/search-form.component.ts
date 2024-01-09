@@ -14,6 +14,7 @@ import { tuiInputNumberOptionsProvider } from '@taiga-ui/kit';
 import { FormDataService } from 'src/app/services/form-data.service';
 import { TripMode, BookingClass, VehicleType } from '../../../types/enums';
 import { locationExistsValidator } from './location-validator';
+import { getLocationId, mapBookingClass } from './search-form-utils';
 
 @Component({
   selector: 'app-search-form',
@@ -52,27 +53,17 @@ export class SearchFormComponent implements OnInit {
   sort = 'quality';
   min = TuiDay.currentLocal();
 
-  mapBookingClass(bookingClass: string): string {
-    switch (bookingClass) {
-      case 'Economy':
-        return 'M';
-      case 'Premium Economy':
-        return 'W';
-      case 'Business Class':
-        return 'C';
-      case 'First Class':
-        return 'F';
-      default:
-        return 'M';
-    }
-  }
-
   searchForm!: FormGroup;
 
   async ngOnInit(): Promise<void> {
+    this.initializeForm();
+    this.setInitialFormValues();
+  }
+
+  private initializeForm(): void {
     this.searchForm = new FormGroup({
-      tripMode: new FormControl('Return'), // Set default value for tripMode
-      cityFrom: new FormControl('Zürich', {
+      tripMode: new FormControl(''),
+      cityFrom: new FormControl('', {
         validators: [Validators.required, Validators.minLength(3)],
         asyncValidators: [locationExistsValidator(this.apiService)],
       }),
@@ -82,39 +73,27 @@ export class SearchFormComponent implements OnInit {
       }),
       departureAndReturnDate: new FormControl('', [
         Validators.required,
-        //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
       ]),
       departureDate: new FormControl('', [
         Validators.required,
-        //Validators.pattern(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
       ]),
-      bookingClass: new FormControl('Economy', [Validators.required]),
-      adults: new FormControl(1, [Validators.required]),
-      children: new FormControl(0),
-      vehicleType: new FormControl('Aircraft', [Validators.required]),
-    });
-    const formData = this.formDataService.getFormData();
-    this.searchForm.patchValue({
-      tripMode: formData.tripMode,
-      cityFrom: formData.cityFrom,
-      cityTo: formData.cityTo,
-      departureAndReturnDate: formData.departureAndReturnDate,
-      departureDate: formData.departureDate,
-      bookingClass: formData.bookingClass,
-      adults: formData.adults,
-      children: formData.children,
-      vehicleType: formData.vehicleType,
+      bookingClass: new FormControl('', [Validators.required]),
+      adults: new FormControl('', [Validators.required]),
+      children: new FormControl(''),
+      vehicleType: new FormControl('', [Validators.required]),
     });
   }
 
-  locationValidator() {
-    return null;
+  private setInitialFormValues(): void {
+    const formData = this.formDataService.getFormData();
+    this.searchForm.patchValue(formData);
   }
 
   updateUrl(option: string): void {
     this.sort = option;
     this.loadData();
   }
+  
   locationExistsValidator(location: string) {
     return async (
       control: AbstractControl
@@ -166,24 +145,11 @@ export class SearchFormComponent implements OnInit {
 
   async loadData() {
     this.formDataService.setFormData(this.searchForm.value);
-    let cityFromId = '';
-    let cityToId = '';
+    let cityFromId = await getLocationId(this.apiService, this.cityFrom.value);
+    let cityToId = await getLocationId(this.apiService, this.cityTo.value);
     let departureDateValue = '';
     let returnDateValue = '';
-    try {
-      const data$ = this.apiService.getLocationId(this.cityFrom.value);
-      const data: any = await firstValueFrom(data$);
-      cityFromId = data.locations[0].id;
-    } catch (error) {
-      console.error('Error getting location ID:', error);
-    }
-    try {
-      const data$ = this.apiService.getLocationId(this.cityTo.value);
-      const data: any = await firstValueFrom(data$);
-      cityToId = data.locations[0].id;
-    } catch (error) {
-      console.error('Error getting location ID:', error);
-    }
+
     if (this.tripMode.value == 'Return') {
       departureDateValue = this.departureAndReturnDate.value.from
         .toString()
@@ -197,7 +163,7 @@ export class SearchFormComponent implements OnInit {
         .replace(/\./g, '/');
     }
 
-    const bookingClass = this.mapBookingClass(this.bookingClass.value);
+    const bookingClass = mapBookingClass(this.bookingClass.value);
     const adults = this.adults.value;
     const children = this.children.value;
     const vehicleType = this.vehicleType.value;
