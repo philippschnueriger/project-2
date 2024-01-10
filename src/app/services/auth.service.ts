@@ -60,9 +60,8 @@ export class AuthService {
     try {
       const user = await firstValueFrom(this.user$);
       return user ? doc(this.firestore, 'users', user.uid) : null;
-    } catch (error: any) {
-      console.error('Error fetching user document reference', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
@@ -73,7 +72,7 @@ export class AuthService {
   async signUp(email: string, password: string): Promise<UserCredential> {
     try {
       return await createUserWithEmailAndPassword(this.afAuth, email, password);
-    } catch (error: any) {
+    } catch (error) {
       this.handleError(error);
     }
   }
@@ -81,7 +80,7 @@ export class AuthService {
   async login(email: string, password: string): Promise<UserCredential> {
     try {
       return await signInWithEmailAndPassword(this.afAuth, email, password);
-    } catch (error: any) {
+    } catch (error) {
       this.handleError(error);
     }
   }
@@ -122,9 +121,8 @@ export class AuthService {
         const favouritesRef = collection(userRef, 'favourites');
         await addDoc(favouritesRef, data);
       }
-    } catch (error: any) {
-      console.error('Error saving favourite connection', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
@@ -138,9 +136,8 @@ export class AuthService {
           querySnapshot.docs.map((doc) => doc.data())
         );
       }
-    } catch (error: any) {
-      console.error('Error loading favourite connections', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
@@ -161,9 +158,8 @@ export class AuthService {
           console.log('No documents found with the specified ID.');
         }
       }
-    } catch (error: any) {
-      console.error('Error deleting favourite connection', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
@@ -174,9 +170,8 @@ export class AuthService {
         const userRef = doc(this.firestore, 'users', user.uid);
         await setDoc(userRef, data);
       }
-    } catch (error: any) {
-      console.error('Error saving user data', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
@@ -186,9 +181,8 @@ export class AuthService {
       if (userRef) {
         await setDoc(userRef, data);
       }
-    } catch (error: any) {
-      console.error('Error saving user data', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
@@ -200,9 +194,8 @@ async getUserPreferences(): Promise<any> {
       return docSnap.data();
     }
     return null;
-  } catch (error: any) {
-    console.error('Error loading user data', error);
-    throw error;
+  } catch (error) {
+    this.handleError(error);
   }
 }
 
@@ -214,9 +207,8 @@ async getUserData(): Promise<void> {
       const docSnap = await getDoc(userRef);
       this.userDataSubject.next(docSnap.data());
     }
-  } catch (error: any) {
-    console.error('Error loading user data', error);
-    throw error;
+  } catch (error) {
+    this.handleError(error);
   }
 }
 
@@ -224,9 +216,8 @@ async getUserData(): Promise<void> {
   async clearData(): Promise<void> {
     try {
       this.userDataSubject.next(null);
-    } catch (error: any) {
-      console.error('Error logging out', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
@@ -258,9 +249,8 @@ async getUserData(): Promise<void> {
           console.error('User document not found.');
         }
       }
-    } catch (error: any) {
-      console.error('Error sharing user data', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
   
@@ -302,9 +292,8 @@ async getUserData(): Promise<void> {
   
         console.log('Shared Data:', flattenedSharedData);
       }
-    } catch (error: any) {
-      console.error('Error loading shared data', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
   
@@ -334,9 +323,8 @@ async getUserData(): Promise<void> {
       const uniqueSharingUsers = Array.from(new Set(sharingUsers.filter(Boolean)));
   
       return uniqueSharingUsers;
-    } catch (error: any) {
-      console.error('Error loading shared data', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
   
@@ -364,9 +352,8 @@ async getUserData(): Promise<void> {
       const filteredAccounts = resolvedAccounts.filter(Boolean) as { uid: string, email: string }[];
   
       return filteredAccounts;
-    } catch (error: any) {
-      console.error('Error loading shared data', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
   
@@ -396,9 +383,8 @@ async getUserData(): Promise<void> {
       } else {
         console.error('Current user not found.');
       }
-    } catch (error: any) {
-      console.error('Error removing user from sharedWith array', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
   async getCurrentUserEmail(): Promise<string> {
@@ -410,9 +396,8 @@ async getUserData(): Promise<void> {
       }
   
       return ''; // Return an empty string if no current user is found
-    } catch (error: any) {
-      console.error('Error loading shared data', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
   async getSharedWithForCurrentUser(): Promise<string[]> {
@@ -435,9 +420,8 @@ async getUserData(): Promise<void> {
         console.error('Current user not found.');
         return [];
       }
-    } catch (error: any) {
-      console.error('Error retrieving sharedWith data for current user', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
   async removeEmailFromSharedWith(emailToRemove: string): Promise<void> {
@@ -465,9 +449,8 @@ async getUserData(): Promise<void> {
       } else {
         console.error('Current user not found.');
       }
-    } catch (error: any) {
-      console.error('Error removing email from sharedWith array', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
   async getSharedDataFromUser(userUid: string): Promise<any[]> {
@@ -489,9 +472,8 @@ async getUserData(): Promise<void> {
         console.error('Current user not found.');
         return [];
       }
-    } catch (error: any) {
-      console.error('Error loading shared data for user', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
@@ -500,9 +482,8 @@ async getUserData(): Promise<void> {
       const destinationsRef = collection(this.firestore, 'destinations');
       const querySnapshot = await getDocs(destinationsRef);
       return querySnapshot.docs.map((doc) => doc.data());
-    } catch (error: any) {
-      console.error('Error loading destinations', error);
-      throw error;
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
