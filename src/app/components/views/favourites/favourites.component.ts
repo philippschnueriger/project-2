@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
+import { SharingService } from 'src/app/services/sharing.service';
 
 @Component({
   selector: 'app-favourites',
@@ -20,7 +21,7 @@ export class FavouritesComponent implements OnInit {
   sharedWith: any;
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthService, private sharingService: SharingService
   ) {
     this.authService.user$.subscribe((user) => {
       this.user = user;
@@ -41,9 +42,9 @@ export class FavouritesComponent implements OnInit {
     this.filters.get('sort')?.valueChanges.subscribe((newValue: any) => {
       this.sortConnections(this.filters.get('sort')?.value);
     });
-    this.sharingUsers = await this.authService.getSharedWithAccounts();
-    this.myEmail = await this.authService.getCurrentUserEmail();
-    this.sharedWith = await this.authService.getSharedWithForCurrentUser();
+    this.sharingUsers = await this.sharingService.getSharedWithAccounts();
+    this.myEmail = await this.sharingService.getCurrentUserEmail();
+    this.sharedWith = await this.sharingService.getSharedWithForCurrentUser();
   }
 
   sortConnections(sort: string) {

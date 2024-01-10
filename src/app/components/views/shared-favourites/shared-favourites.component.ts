@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { SharingService } from 'src/app/services/sharing.service';
 import { User } from 'firebase/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as data from 'src/app/data/destinations.json';
@@ -22,40 +23,40 @@ export class SharedFavouritesComponent {
   data: any;
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthService, private sharingService: SharingService
   ) {}
   async ngOnInit() {
     this.share = new FormGroup({
       email: new FormControl('', { validators: [Validators.required, Validators.email]}),
     });
-    this.sharingUsers = await this.authService.getSharedWithAccounts();
-    this.myEmail = await this.authService.getCurrentUserEmail();
-    this.sharedWith = await this.authService.getSharedWithForCurrentUser();
+    this.sharingUsers = await this.sharingService.getSharedWithAccounts();
+    this.myEmail = await this.sharingService.getCurrentUserEmail();
+    this.sharedWith = await this.sharingService.getSharedWithForCurrentUser();
   }
 
   async shareFavourites() {
     console.log('share favourites' )
     console.log(this.share.get('email')?.value)
-    await this.authService.shareFavourites(this.share.get('email')?.value)
-    this.sharingUsers = await this.authService.getSharedWithAccounts();
-    this.sharedWith = await this.authService.getSharedWithForCurrentUser();
+    await this.sharingService.shareFavourites(this.share.get('email')?.value)
+    this.sharingUsers = await this.sharingService.getSharedWithAccounts();
+    this.sharedWith = await this.sharingService.getSharedWithForCurrentUser();
   }
 
   async getSharedData(){
-    await this.authService.getSharedData();
+    await this.sharingService.getSharedData();
   }
   async deleteSharedUser(user: any){
-    await this.authService.removeCurrentUserFromSharedWith(user.uid);
-    this.sharingUsers = await this.authService.getSharedWithAccounts();
+    await this.sharingService.removeCurrentUserFromSharedWith(user.uid);
+    this.sharingUsers = await this.sharingService.getSharedWithAccounts();
   }
   async deleteSharedWithUser(email: string){
     console.log(email)
-    await this.authService.removeEmailFromSharedWith(email);
-    this.sharedWith = await this.authService.getSharedWithForCurrentUser();
+    await this.sharingService.removeEmailFromSharedWith(email);
+    this.sharedWith = await this.sharingService.getSharedWithForCurrentUser();
   }
   async getSharedDataFromUser(uid: string){
     this.toggleOverlay();
-    this.data = await this.authService.getSharedDataFromUser(uid);
+    this.data = await this.sharingService.getSharedDataFromUser(uid);
     console.log(this.data)
   }
   async getFavouriteConnections() {
