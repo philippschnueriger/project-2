@@ -42,9 +42,9 @@ export interface Destination {
   bus_stations: number;
   subdivision: any;
   autonomous_territory: any;
-  country: Area;
-  region: Area;
-  continent: Area;
+  country: string;
+  region: string;
+  continent: string;
   nearby_country: any;
   location: {
     lat: number;

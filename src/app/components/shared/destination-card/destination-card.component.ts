@@ -33,28 +33,30 @@ export class DestinationCardComponent {
 
   async ngOnInit() {
     this.destinationsArray = await this.userService.getAllDestinations();
-    this.filterByRegion(this.region);
+    this.filterByContinent(this.region);
     this.sort(this.order);
   }
 
   ngOnChanges(changes: SimpleChange) {
     if ('region' in changes) {
-      this.revertFilter();
-      this.filterByRegion(this.region);
+      //this.revertFilter();
+      this.filterByContinent(this.region);
     }
     if ('order' in changes) {
       this.sort(this.order);
     }
   }
 
-  filterByRegion(region: string) {
-    if (region != 'All') {
-      this.destinationsArray = this.destinationsArray.filter(
-        (obj) => obj.continent.name === region
-      );
+  async filterByContinent(continent: string) {
+    this.destinationsArray = await this.userService.getAllDestinations();
+    if (continent !== 'All') {
+      this.destinationsArray = this.destinationsArray.filter((obj) => {
+        return obj.continent === continent;
+      });
       this.sort(this.order);
     }
   }
+  
   sort(order: string) {
     if (order === 'Popularity') {
       this.destinationsArray.sort(
