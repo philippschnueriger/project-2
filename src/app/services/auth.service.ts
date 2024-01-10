@@ -21,6 +21,7 @@ import {
   where,
   deleteDoc,
   updateDoc,
+  DocumentReference,
 } from '@angular/fire/firestore';
 import { Storage} from '@angular/fire/storage';
 
@@ -50,65 +51,74 @@ export class AuthService {
     });
   }
 
+  private handleError(error: any): never {
+    console.error('Error:', error);
+    throw error;
+  }
+
+  private async getUserDocRef(): Promise<DocumentReference | null> {
+    try {
+      const user = await firstValueFrom(this.user$);
+      return user ? doc(this.firestore, 'users', user.uid) : null;
+    } catch (error: any) {
+      console.error('Error fetching user document reference', error);
+      throw error;
+    }
+  }
+
   isAuthenticated(): Observable<boolean> {
     return this.user$.pipe(map((user) => !!user));
   }
 
   async signUp(email: string, password: string): Promise<UserCredential> {
-    return await createUserWithEmailAndPassword(this.afAuth, email, password)
-      .then((userCredential) => {
-        return Promise.resolve(userCredential);
-      })
-      .catch((error) => {
-        return Promise.reject(error.message);
-      });
+    try {
+      return await createUserWithEmailAndPassword(this.afAuth, email, password);
+    } catch (error: any) {
+      this.handleError(error);
+    }
   }
-
+  
   async login(email: string, password: string): Promise<UserCredential> {
-    return await signInWithEmailAndPassword(this.afAuth, email, password)
-      .then((userCredential) => {
-        return Promise.resolve(userCredential);
-      })
-      .catch((error) => {
-        return Promise.reject(error.message);
-      });
+    try {
+      return await signInWithEmailAndPassword(this.afAuth, email, password);
+    } catch (error: any) {
+      this.handleError(error);
+    }
   }
-
+  
   async logout(): Promise<void> {
     try {
       this.userDataSubject.next(null);
       await this.afAuth.signOut();
-      return Promise.resolve();
-    } catch (error: any) {
-      return Promise.reject(error.message);
+    } catch (error) {
+      return this.handleError(error);
     }
   }
-  async resetPassword(email: string) {
-    return await sendPasswordResetEmail(this.afAuth, email)
-      .then(() => {
-        console.log('Password reset email sent to:', email);
-      })
-      .catch((error) => {
-        console.error('Error sending password reset email:', error);
-      });
-  }
-  async changePassword(password: string): Promise<any> {
-    if (!this.afAuth.currentUser) {
-      return Promise.reject('No user logged in');
+  async resetPassword(email: string): Promise<void> {
+    try {
+      await sendPasswordResetEmail(this.afAuth, email);
+      console.log('Password reset email sent to:', email);
+    } catch (error) {
+      this.handleError(error);
     }
-    return await updatePassword(this.afAuth.currentUser, password)
-      .then(() => {
-        console.log('Password updated');
-      })
-      .catch((error) => {
-        console.error('Error updating password:', error);
-      });
   }
+  
+  async changePassword(password: string): Promise<void> {
+    try {
+      if (!this.afAuth.currentUser) {
+        throw new Error('No user logged in');
+      }
+      await updatePassword(this.afAuth.currentUser, password);
+      console.log('Password updated');
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+  
   async saveFavouriteConnection(data: any): Promise<void> {
     try {
-      const user = await firstValueFrom(this.user$);
-      if (user) {
-        const userRef = doc(this.firestore, 'users', user.uid);
+      const userRef = await this.getUserDocRef();
+      if (userRef) {
         const favouritesRef = collection(userRef, 'favourites');
         await addDoc(favouritesRef, data);
       }
@@ -120,9 +130,8 @@ export class AuthService {
 
   async getFavouriteConnections(): Promise<void> {
     try {
-      const user = await firstValueFrom(this.user$);
-      if (user) {
-        const userRef = doc(this.firestore, 'users', user.uid);
+      const userRef = await this.getUserDocRef();
+      if (userRef) {
         const favouritesRef = collection(userRef, 'favourites');
         const querySnapshot = await getDocs(favouritesRef);
         this.favouritesSubject.next(
@@ -137,13 +146,12 @@ export class AuthService {
 
   async deleteFavouriteConnection(id: string): Promise<void> {
     try {
-      const user = await firstValueFrom(this.user$);
-      if (user) {
-        const userRef = doc(this.firestore, 'users', user.uid);
+      const userRef = await this.getUserDocRef();
+      if (userRef) {
         const favouritesRef = collection(userRef, 'favourites');
         const q = query(favouritesRef, where('id', '==', id));
         const querySnapshot = await getDocs(q);
-
+  
         if (querySnapshot.size > 0) {
           const docId = querySnapshot.docs[0].id;
           const docToDeleteRef = doc(favouritesRef, docId);
@@ -171,11 +179,11 @@ export class AuthService {
       throw error;
     }
   }
+
   async saveUserPreferences(data: any): Promise<void> {
     try {
-      const user = await firstValueFrom(this.user$);
-      if (user) {
-        const userRef = doc(this.firestore, 'users', user.uid);
+      const userRef = await this.getUserDocRef();
+      if (userRef) {
         await setDoc(userRef, data);
       }
     } catch (error: any) {
@@ -184,34 +192,34 @@ export class AuthService {
     }
   }
 
-  async getUserPreferences(): Promise<any> {
-    try {
-      const user = await firstValueFrom(this.user$);
-      if (user) {
-        const userRef = doc(this.firestore, 'users', user.uid);
-        const docSnap = await getDoc(userRef);
-        return docSnap.data();
-        //this.userPreferencesSubject.next(docSnap.data());
-      }
-    } catch (error: any) {
-      console.error('Error loading user data', error);
-      throw error;
+async getUserPreferences(): Promise<any> {
+  try {
+    const userRef = await this.getUserDocRef();
+    if (userRef) {
+      const docSnap = await getDoc(userRef);
+      return docSnap.data();
     }
+    return null;
+  } catch (error: any) {
+    console.error('Error loading user data', error);
+    throw error;
   }
+}
 
-  async getUserData(): Promise<void> {
-    try {
-      const user = await firstValueFrom(this.user$);
-      if (user) {
-        const userRef = doc(this.firestore, 'users', user.uid);
-        const docSnap = await getDoc(userRef);
-        this.userDataSubject.next(docSnap.data());
-      }
-    } catch (error: any) {
-      console.error('Error loading user data', error);
-      throw error;
+
+async getUserData(): Promise<void> {
+  try {
+    const userRef = await this.getUserDocRef(); // Fetch user document reference
+    if (userRef) {
+      const docSnap = await getDoc(userRef);
+      this.userDataSubject.next(docSnap.data());
     }
+  } catch (error: any) {
+    console.error('Error loading user data', error);
+    throw error;
   }
+}
+
 
   async clearData(): Promise<void> {
     try {
@@ -224,29 +232,23 @@ export class AuthService {
 
   async shareFavourites(emailToShare: string): Promise<void> {
     try {
-      const currentUser = await firstValueFrom(this.user$);
-      
-      if (currentUser) {
-        const usersRef = doc(this.firestore, 'users', currentUser.uid);
-        const userDoc = await getDoc(usersRef);
+      const userRef = await this.getUserDocRef(); // Fetch user document reference
+      if (userRef) {
+        const userDoc = await getDoc(userRef);
   
-        // Check if the current user document exists
         if (userDoc.exists()) {
           const userData = userDoc.data();
   
-          // Assuming 'sharedWith' is an array field in the user document
           const sharedWith = userData['sharedWith'] || [];
           const sharedFrom = userData['sharedFrom'] || '';
-          
-          // Check if the emailToShare isn't already in the 'sharedWith' array
+  
           if (!sharedWith.includes(emailToShare)) {
             sharedWith.push(emailToShare);
   
-            // Update the 'sharedWith' array in Firestore
-            await updateDoc(usersRef, {
-              sharedWith: sharedWith
+            await updateDoc(userRef, {
+              sharedWith: sharedWith,
+              sharedFrom: sharedFrom || emailToShare // Update sharedFrom if it's empty
             });
-            await updateDoc(usersRef, { sharedFrom: currentUser.email });
   
             console.log(`Data shared successfully with ${emailToShare}.`);
           } else {
@@ -255,14 +257,13 @@ export class AuthService {
         } else {
           console.error('User document not found.');
         }
-      } else {
-        console.error('Current user not found.');
       }
     } catch (error: any) {
       console.error('Error sharing user data', error);
       throw error;
     }
   }
+  
   async getSharedData(): Promise<void> {
     try {
       const currentUser = await firstValueFrom(this.user$);
@@ -270,97 +271,105 @@ export class AuthService {
       if (currentUser) {
         const allUsersRef = collection(this.firestore, 'users');
         const querySnapshot = await getDocs(allUsersRef);
-        
-        const sharedData: any[] = [];
+  
+        const promises: Promise<any[]>[] = [];
   
         for (const userDoc of querySnapshot.docs) {
           const userData = userDoc.data();
   
           if (
             userData['sharedWith'] &&
-            userData['sharedWith'].includes(currentUser?.email)
+            userData['sharedWith'].includes(currentUser.email)
           ) {
             const sharedDataRef = collection(
               this.firestore,
               `users/${userDoc.id}/favourites`
             );
-            const sharedDataSnapshot = await getDocs(sharedDataRef);
-  
-            sharedDataSnapshot.forEach((doc) => {
-              sharedData.push(doc.data());
+            const promise = getDocs(sharedDataRef).then((sharedDataSnapshot) => {
+              return sharedDataSnapshot.docs.map((doc) => doc.data());
             });
+            promises.push(promise);
           }
         }
   
-        console.log('Shared Data:', sharedData);
+        const sharedData = await Promise.all(promises);
+  
+        // Flatten the array of arrays into a single array
+        const flattenedSharedData = sharedData.reduce(
+          (accumulator, currentValue) => accumulator.concat(currentValue),
+          []
+        );
+  
+        console.log('Shared Data:', flattenedSharedData);
       }
     } catch (error: any) {
       console.error('Error loading shared data', error);
       throw error;
     }
   }
+  
   async getEmailsOfSharingUsers(): Promise<string[]> {
     try {
       const currentUser = await firstValueFrom(this.user$);
-    
-      if (currentUser) {
-        const allUsersRef = collection(this.firestore, 'users');
-        const querySnapshot = await getDocs(allUsersRef);
-        
-        const sharingUsers: string[] = [];
+      if (!currentUser) return [];
   
-        for (const userDoc of querySnapshot.docs) {
+      const allUsersRef = collection(this.firestore, 'users');
+      const querySnapshot = await getDocs(allUsersRef);
+  
+      const sharingUsers: string[] = await Promise.all(
+        querySnapshot.docs.map(async (userDoc) => {
           const userData = userDoc.data();
-    
+  
           if (
             userData['sharedWith'] &&
-            userData['sharedWith'].includes(currentUser?.email)
+            userData['sharedWith'].includes(currentUser.email)
           ) {
-            sharingUsers.push(userData?.['sharedFrom']); // Collect the email of the user sharing data
+            return userData?.['sharedFrom']; // Collect the email of the user sharing data
           }
-        }
-    
-        // Return unique email addresses using Set to remove duplicates
-        return Array.from(new Set(sharingUsers));
-      }
+          return null;
+        })
+      );
   
-      return []; // Return an empty array if no current user is found
+      // Filter out null values and return unique email addresses
+      const uniqueSharingUsers = Array.from(new Set(sharingUsers.filter(Boolean)));
+  
+      return uniqueSharingUsers;
     } catch (error: any) {
       console.error('Error loading shared data', error);
       throw error;
     }
   }
+  
   async getSharedWithAccounts(): Promise<{ uid: string, email: string }[]> {
     try {
       const currentUser = await firstValueFrom(this.user$);
+      if (!currentUser) return [];
   
-      if (currentUser) {
-        const allUsersRef = collection(this.firestore, 'users');
-        const querySnapshot = await getDocs(allUsersRef);
-        
-        const sharedWithAccounts: { uid: string, email: string }[] = [];
+      const allUsersRef = collection(this.firestore, 'users');
+      const querySnapshot = await getDocs(allUsersRef);
   
-        querySnapshot.forEach(userDoc => {
-          const userData = userDoc.data();
+      const sharedWithAccounts: Promise<{ uid: string, email: string } | null>[] = querySnapshot.docs.map(async (userDoc) => {
+        const userData = userDoc.data();
   
-          if (userData['sharedWith'] && userData['sharedWith'].includes(currentUser.email)) {
-            const email = userData?.['sharedFrom']
-            const uid = userDoc.id; // Assuming the document ID is also the UID
+        if (userData['sharedWith'] && userData['sharedWith'].includes(currentUser.email)) {
+          const email = userData?.['sharedFrom'];
+          const uid = userDoc.id;
   
-            sharedWithAccounts.push({ uid, email });
-          }
-        });
-        console.log(sharedWithAccounts);
+          return { uid, email };
+        }
+        return null;
+      });
   
-        return sharedWithAccounts;
-      }
+      const resolvedAccounts = await Promise.all(sharedWithAccounts);
+      const filteredAccounts = resolvedAccounts.filter(Boolean) as { uid: string, email: string }[];
   
-      return []; // Return an empty array if no current user is found
+      return filteredAccounts;
     } catch (error: any) {
       console.error('Error loading shared data', error);
       throw error;
     }
-  } 
+  }
+  
   
   async removeCurrentUserFromSharedWith(otherUserUid: string): Promise<void> {
     try {
@@ -496,5 +505,6 @@ export class AuthService {
       throw error;
     }
   }
+
 }
 
