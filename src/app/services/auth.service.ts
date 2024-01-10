@@ -23,7 +23,6 @@ import {
   updateDoc,
   DocumentReference,
 } from '@angular/fire/firestore';
-import { Storage} from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +38,7 @@ export class AuthService {
   );
   favourites$: Observable<any> = this.favouritesSubject.asObservable();
 
-  constructor(private afAuth: Auth, private firestore: Firestore, private storage: Storage) {
+  constructor(private afAuth: Auth, private firestore: Firestore) {
     this.user$ = new Observable((observer) => {
       this.afAuth.onAuthStateChanged((user) => {
         if (user) {
