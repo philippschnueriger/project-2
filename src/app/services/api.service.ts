@@ -15,7 +15,7 @@ export class ApiService {
 
   getData(
     from = 'ZRH',
-    to = 'FRA',
+    to = '',
     departureDate = this.nextWeek.toString().replace(/\./g, '/'),
     returnDate = this.nextWeek.toString().replace(/\./g, '/'),
     bookingClass = 'C',
