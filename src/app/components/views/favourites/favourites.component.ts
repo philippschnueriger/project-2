@@ -1,9 +1,9 @@
-import { Component, OnInit, SimpleChange, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { firstValueFrom } from 'rxjs';
 import { SharingService } from 'src/app/services/sharing.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-favourites',
@@ -21,13 +21,13 @@ export class FavouritesComponent implements OnInit {
   sharedWith: any;
 
   constructor(
-    private authService: AuthService, private sharingService: SharingService
+    private authService: AuthService, private sharingService: SharingService, private userService: UserService
   ) {
     this.authService.user$.subscribe((user) => {
       this.user = user;
       this.getFavouriteConnections();
     });
-    this.authService.favourites$.subscribe((favourites) => {
+    this.userService.favourites$.subscribe((favourites) => {
       this.favourites = favourites;
     });
   }
@@ -64,7 +64,7 @@ export class FavouritesComponent implements OnInit {
   async getFavouriteConnections() {
     let uid = this.user?.uid;
     if (uid) {
-      await this.authService.getFavouriteConnections();
+      await this.userService.getFavouriteConnections();
     } else {
       console.log('no uid');
     }

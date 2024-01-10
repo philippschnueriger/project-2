@@ -6,6 +6,7 @@ import { TripMode, BookingClass, VehicleType } from '../../../types/enums';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { locationExistsValidator } from '../../shared/search-form/location-validator';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-account',
@@ -37,11 +38,12 @@ export class AccountComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private userService: UserService
   ) {}
 
   async ngOnInit() {
-    this.userPreferences = await this.authService.getUserPreferences();
+    this.userPreferences = await this.userService.getUserPreferences();
     this.preferencesForm = new FormGroup({
       tripMode: new FormControl(this.userPreferences.tripMode),
       cityFrom: new FormControl(this.userPreferences.cityFrom, {
@@ -54,9 +56,9 @@ export class AccountComponent implements OnInit {
       vehicleType: new FormControl('Aircraft', [Validators.required]),
     });
     this.passwordForm = new FormGroup({
-      oldPassword: new FormControl('',[ Validators.required]), // Create form controls with validators
-      newPassword: new FormControl('',[ Validators.required]),
-      confirmPassword: new FormControl('',[ Validators.required]),
+      oldPassword: new FormControl('', [Validators.required]), // Create form controls with validators
+      newPassword: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required]),
     });
   }
 
@@ -77,8 +79,7 @@ export class AccountComponent implements OnInit {
   toggleOverlay(content: string) {
     if (content === 'preferences') {
       this.showPreferences = true;
-    }
-    else if (content === 'password') {
+    } else if (content === 'password') {
       this.showPassword = true;
     } else {
       this.showPreferences = false;
@@ -87,8 +88,8 @@ export class AccountComponent implements OnInit {
     this.showOverlay = !this.showOverlay;
   }
   async submitPreferences() {
-    await this.authService.saveUserPreferences(this.preferencesForm.value);
-    this.userPreferences = await this.authService.getUserPreferences();
+    await this.userService.saveUserPreferences(this.preferencesForm.value);
+    this.userPreferences = await this.userService.getUserPreferences();
     this.toggleOverlay('close');
   }
 

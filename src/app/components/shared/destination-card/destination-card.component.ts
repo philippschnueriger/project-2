@@ -9,6 +9,7 @@ import {
   getLocationId,
   mapBookingClass,
 } from '../search-form/search-form-utils';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-destination-card',
@@ -26,11 +27,12 @@ export class DestinationCardComponent {
     private router: Router,
     private apiService: ApiService,
     private authService: AuthService,
-    private formDataService: FormDataService
+    private formDataService: FormDataService,
+    private userService: UserService
   ) {}
 
   async ngOnInit() {
-    this.destinationsArray = await this.authService.getAllDestinations();
+    this.destinationsArray = await this.userService.getAllDestinations();
     this.filterByRegion(this.region);
     this.sort(this.order);
   }

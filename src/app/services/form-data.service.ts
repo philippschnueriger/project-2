@@ -3,6 +3,7 @@ import { TuiDay, TuiDayRange } from '@taiga-ui/cdk';
 import { FormData } from '../types/formData';
 import { BookingClass, TripMode, VehicleType, Sort } from '../types/enums';
 import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class FormDataService {
   };
   data: any;
 
-  constructor(private authService: AuthService) {
-    this.authService.userData$.subscribe((userData) => {
+  constructor(private authService: AuthService, private userService: UserService) {
+    this.userService.userData$.subscribe((userData) => {
       this.data = userData;
     });
     this.loadFormData();
@@ -34,7 +35,7 @@ export class FormDataService {
 
   async loadFormData(): Promise<FormData> {
     try {
-      const data = await this.authService.getUserPreferences();
+      const data = await this.userService.getUserPreferences();
       if (data) {
         this.setFormData(data);
       } else {

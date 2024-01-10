@@ -4,6 +4,7 @@ import { SharingService } from 'src/app/services/sharing.service';
 import { User } from 'firebase/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as data from 'src/app/data/destinations.json';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-shared-favourites',
@@ -23,7 +24,7 @@ export class SharedFavouritesComponent {
   data: any;
 
   constructor(
-    private authService: AuthService, private sharingService: SharingService
+    private authService: AuthService, private sharingService: SharingService, private userService: UserService
   ) {}
   async ngOnInit() {
     this.share = new FormGroup({
@@ -62,7 +63,7 @@ export class SharedFavouritesComponent {
   async getFavouriteConnections() {
     let uid = this.user?.uid;
     if (uid) {
-      await this.authService.getFavouriteConnections();
+      await this.userService.getFavouriteConnections();
     } else {
       console.log('no uid');
     }

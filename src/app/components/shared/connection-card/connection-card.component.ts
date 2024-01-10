@@ -5,6 +5,7 @@ import { ApiService } from '../../../services/api.service';
 import { User } from 'firebase/auth';
 import { TripSummary } from './tripSummary';
 import { getTripSummary } from './trip-summary-utils';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-connection-card',
@@ -24,7 +25,8 @@ export class ConnectionCardComponent {
   expand: boolean = false;
   constructor(
     private authService: AuthService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private userService: UserService
   ) {}
   ngOnInit() {
     this.authService.user$.subscribe((user) => {
@@ -38,15 +40,13 @@ export class ConnectionCardComponent {
   }
   saveFavouriteConnection() {
     if (this.user?.uid) {
-      this.authService.saveFavouriteConnection(this.item);
+      this.userService.saveFavouriteConnection(this.item);
     }
     this.deleteOption = true;
   }
   deleteFavouriteConnection() {
     if (this.user?.uid) {
-      this.authService.deleteFavouriteConnection(
-        this.item.id
-      );
+      this.userService.deleteFavouriteConnection(this.item.id);
     }
     this.deleteOption = false;
   }
