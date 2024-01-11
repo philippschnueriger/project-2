@@ -15,13 +15,9 @@ export class FavouritesComponent implements OnInit {
   favourites: any;
   sort = ['Date', 'Price'];
   filters: any;
-  share: any;
-  sharingUsers: any;
-  myEmail: string = '';
-  sharedWith: any;
 
   constructor(
-    private authService: AuthService, private sharingService: SharingService, private userService: UserService
+    private authService: AuthService, private userService: UserService
   ) {
     this.authService.user$.subscribe((user) => {
       this.user = user;
@@ -33,18 +29,12 @@ export class FavouritesComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.share = new FormGroup({
-      email: new FormControl('', { validators: [Validators.required, Validators.email]}),
-    });
     this.filters = new FormGroup({
       sort: new FormControl(),
     });
     this.filters.get('sort')?.valueChanges.subscribe((newValue: any) => {
       this.sortConnections(this.filters.get('sort')?.value);
     });
-    this.sharingUsers = await this.sharingService.getSharedWithAccounts();
-    this.myEmail = await this.sharingService.getCurrentUserEmail();
-    this.sharedWith = await this.sharingService.getSharedWithForCurrentUser();
   }
 
   sortConnections(sort: string) {
