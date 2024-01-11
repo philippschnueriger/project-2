@@ -19,6 +19,9 @@ import { UserService } from 'src/app/services/user.service';
 export class DestinationCardComponent {
   @Input() region: string = 'All';
   @Input() order: string = 'Popularity';
+  @Input() revert: boolean = false;
+  @Input() limit: boolean = false;
+  
 
   originalDestinationsArray: Destination[] = [];
   destinationsArray: Destination[] = [];
@@ -33,22 +36,29 @@ export class DestinationCardComponent {
 
   async ngOnInit() {
     this.destinationsArray = await this.userService.getAllDestinations();
+    this.originalDestinationsArray = [...this.destinationsArray];
     this.filterByContinent(this.region);
     this.sort(this.order);
+    if (this.limit) {
+      this.destinationsArray = this.destinationsArray.slice(0, 5);
+    }
   }
 
   ngOnChanges(changes: SimpleChange) {
     if ('region' in changes) {
-      //this.revertFilter();
       this.filterByContinent(this.region);
+      
     }
     if ('order' in changes) {
       this.sort(this.order);
     }
+    if ('revert' in changes) {
+      this.destinationsArray.reverse()
+    }
   }
 
   async filterByContinent(continent: string) {
-    this.destinationsArray = await this.userService.getAllDestinations();
+    this.destinationsArray = this.originalDestinationsArray;
     if (continent !== 'All') {
       this.destinationsArray = this.destinationsArray.filter((obj) => {
         return obj.continent === continent;
@@ -74,10 +84,6 @@ export class DestinationCardComponent {
     } else {
       console.log('filter not found');
     }
-  }
-
-  revertFilter() {
-    this.destinationsArray = [...this.originalDestinationsArray];
   }
 
   async exploreDestination(destination: string) {

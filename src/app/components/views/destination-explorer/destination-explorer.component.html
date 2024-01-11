@@ -1,6 +1,7 @@
 <h1>Explore new destinations</h1>
 <div class="container">
   <form [formGroup]="filters" #formDir="ngForm" class="container">
+    <button (click)="reverseList()" class="sort"> <img src="../../../assets/icons/sort.svg" /></button>
     <tui-select tuiTextfieldSize="m" formControlName="region" id="region">
       Regions
       <tui-data-list-wrapper
@@ -20,4 +21,5 @@
 <app-destination-card
   [region]="filters.get('region')?.value"
   [order]="filters.get('order')?.value"
+  [revert]="reverse"
 ></app-destination-card>
