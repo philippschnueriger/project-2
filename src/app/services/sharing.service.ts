@@ -8,7 +8,6 @@ import {
   DocumentReference,
   updateDoc,
 } from '@angular/fire/firestore';
-import { firstValueFrom } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -29,6 +28,10 @@ export class SharingService {
     } catch (error) {
       this.handleError(error);
     }
+  }
+
+  getCollection(path: string) {
+    return collection(this.firestore, path);
   }
 
   async shareFavourites(emailToShare: string): Promise<void> {
@@ -69,8 +72,7 @@ export class SharingService {
       const currentUser = await this.authService.getCurrentUser();
 
       if (currentUser) {
-        const allUsersRef = collection(this.firestore, 'users');
-        const querySnapshot = await getDocs(allUsersRef);
+        const querySnapshot = await getDocs(this.getCollection('users'));
 
         const promises: Promise<any[]>[] = [];
 
@@ -81,11 +83,7 @@ export class SharingService {
             userData['sharedWith'] &&
             userData['sharedWith'].includes(currentUser.email)
           ) {
-            const sharedDataRef = collection(
-              this.firestore,
-              `users/${userDoc.id}/favourites`
-            );
-            const promise = getDocs(sharedDataRef).then(
+            const promise = getDocs(this.getCollection(`users/${userDoc.id}/favourites`)).then(
               (sharedDataSnapshot) => {
                 return sharedDataSnapshot.docs.map((doc) => doc.data());
               }
@@ -114,8 +112,7 @@ export class SharingService {
       const currentUser = await this.authService.getCurrentUser();
       if (!currentUser) return [];
 
-      const allUsersRef = collection(this.firestore, 'users');
-      const querySnapshot = await getDocs(allUsersRef);
+      const querySnapshot = await getDocs(this.getCollection('users'));
 
       const sharingUsers: string[] = await Promise.all(
         querySnapshot.docs.map(async (userDoc) => {
@@ -146,9 +143,7 @@ export class SharingService {
     try {
       const currentUser = await this.authService.getCurrentUser();
       if (!currentUser) return [];
-
-      const allUsersRef = collection(this.firestore, 'users');
-      const querySnapshot = await getDocs(allUsersRef);
+      const querySnapshot = await getDocs(this.getCollection('users'));
 
       const sharedWithAccounts: Promise<{
         uid: string;
@@ -286,11 +281,7 @@ export class SharingService {
 
       if (currentUser) {
         const sharedData: any[] = [];
-        const sharedDataRef = collection(
-          this.firestore,
-          `users/${userUid}/favourites`
-        );
-        const sharedDataSnapshot = await getDocs(sharedDataRef);
+        const sharedDataSnapshot = await getDocs(this.getCollection(`users/${userUid}/favourites`));
 
         sharedDataSnapshot.forEach((doc) => {
           sharedData.push(doc.data());
