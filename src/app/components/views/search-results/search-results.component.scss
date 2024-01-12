@@ -24,9 +24,18 @@
   font-weight: 600;
 }
 
+tui-loader {
+  margin-top: 50px;
+}
+
 /* tablets */
 @media (min-width: 768px) {
   .backButton {
     display: none;
   }
+  tui-loader {
+    margin-top: 100px;
+    margin-bottom: -50px;
+  }
+
 }
