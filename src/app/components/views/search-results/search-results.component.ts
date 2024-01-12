@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChange } from '@angular/core';
 import { TripSegment } from '../../../types/tripSegment';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
-import { firstValueFrom } from 'rxjs';
+import { filter, firstValueFrom } from 'rxjs';
 import { FormDataService } from 'src/app/services/form-data.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-results',
@@ -29,10 +30,18 @@ export class ResultsComponent implements OnInit {
   vehicleType = '';
   sort = '';
   location: string | null = null;
+  filters: any;
+  stops = ['Any', 'Non-stop', '1 stop', '2 stops', '3 stops'];
 
   loading = false;
 
   async ngOnInit() {
+    this.filters = new FormGroup({
+      stops: new FormControl('Any'),
+    });
+    this.filters.get('stops').valueChanges.subscribe((newStopsValue: any) => {
+      this.filterByStops(newStopsValue);
+    });
     this.route.queryParams.subscribe((params) => {
       this.cityFrom = params['cityFrom'];
       this.cityTo = params['cityTo'];
@@ -43,13 +52,37 @@ export class ResultsComponent implements OnInit {
       this.children = params['children'];
       this.vehicleType = params['vehicleType'];
       const newSort = params['sort'];
-      
+
       this.loadData();
     });
     this.location = await this.apiService.getLocationName(this.cityTo);
     this.loadData();
   }
   data: TripSegment[] = [];
+  originalData: TripSegment[] = [];
+
+  filterByStops(stopsFilter: string) {
+    let stops: number;
+    if (stopsFilter === 'Non-stop') {
+      stops = 0;
+    } else if (stopsFilter === '1 stop') {
+      stops = 1;
+    } else if (stopsFilter === '2 stops') {
+      stops = 2;
+    } else if (stopsFilter === '3 stops') {
+      stops = 3;
+    } else {
+      this.data = this.originalData;
+      return;
+    }
+    this.data = this.originalData.filter((item: any) => {
+      if (item.duration.return > 0) {
+        return item.route.length <= 2 * (stops + 1);
+      } else {
+        return item.route.length <= stops + 1;
+      }
+    });
+  }
 
   async loadData() {
     this.loading = true;
@@ -85,6 +118,7 @@ export class ResultsComponent implements OnInit {
         };
         this.data.push(flight);
       }
+      this.originalData = this.data;
       this.loading = false;
     } catch (error) {
       console.error('Error fetching data:', error);
