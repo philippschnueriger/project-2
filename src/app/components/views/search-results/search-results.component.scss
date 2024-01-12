@@ -28,6 +28,16 @@ tui-loader {
   margin-top: 50px;
 }
 
+form {
+  display: flex;
+  margin-top: 20px;
+}
+
+tui-select {
+  width: 150px;
+  margin-right: 10px;
+}
+
 /* tablets */
 @media (min-width: 768px) {
   .backButton {

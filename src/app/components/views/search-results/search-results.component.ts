@@ -32,15 +32,20 @@ export class ResultsComponent implements OnInit {
   location: string | null = null;
   filters: any;
   stops = ['Any', 'Non-stop', '1 stop', '2 stops', '3 stops'];
+  departureTime = ['Any', 'Morning', 'Afternoon', 'Evening'];
 
   loading = false;
 
   async ngOnInit() {
     this.filters = new FormGroup({
       stops: new FormControl('Any'),
+      departureTime: new FormControl('Any'),
     });
     this.filters.get('stops').valueChanges.subscribe((newStopsValue: any) => {
       this.filterByStops(newStopsValue);
+    });
+    this.filters.get('departureTime').valueChanges.subscribe((departureTime: string) => {
+      this.filterByDepartureTime(departureTime);
     });
     this.route.queryParams.subscribe((params) => {
       this.cityFrom = params['cityFrom'];
@@ -84,6 +89,28 @@ export class ResultsComponent implements OnInit {
     });
   }
 
+  filterByDepartureTime(departureTime: string){
+    if (departureTime === 'Any') {
+      this.data = this.originalData;
+      return
+    }
+    this.data = this.data.filter((flight: any) => this.filterTimeOfDay(flight.local_departure) === departureTime);
+    return
+  }
+
+  filterTimeOfDay(dateTimeString: string): string {
+    const dateTime = new Date(dateTimeString);
+    const hour = dateTime.getUTCHours();
+  
+    if (hour >= 6 && hour < 12) {
+      return 'Morning';
+    } else if (hour >= 12 && hour < 18) {
+      return 'Afternoon';
+    } else {
+      return 'Evening';
+    }
+  }
+
   async loadData() {
     this.loading = true;
     this.data = [];
@@ -120,6 +147,7 @@ export class ResultsComponent implements OnInit {
       }
       this.originalData = this.data;
       this.loading = false;
+      console.log(this.data)
     } catch (error) {
       console.error('Error fetching data:', error);
     }
