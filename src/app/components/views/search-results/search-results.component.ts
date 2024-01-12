@@ -28,10 +28,11 @@ export class ResultsComponent implements OnInit {
   children = 0;
   vehicleType = '';
   sort = '';
+  location: string | null = null;
 
   loading = false;
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       this.cityFrom = params['cityFrom'];
       this.cityTo = params['cityTo'];
@@ -42,13 +43,10 @@ export class ResultsComponent implements OnInit {
       this.children = params['children'];
       this.vehicleType = params['vehicleType'];
       const newSort = params['sort'];
-
-      // if (newSort !== this.sort) {
-      //   this.sort = newSort;
-      //   this.loadData();
-      // }
+      
       this.loadData();
     });
+    this.location = await this.apiService.getLocationName(this.cityTo);
     this.loadData();
   }
   data: TripSegment[] = [];

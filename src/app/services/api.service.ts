@@ -45,6 +45,12 @@ export class ApiService {
       `${this.baseUrl}/locations/query?term=${location}&limit=10`
     );
   }
+  async getLocationName(locationId: string): Promise<string> {
+    const response: any = await firstValueFrom(
+      this.http.get(`${this.baseUrl}/locations/query?term=${locationId}&limit=1`)
+    );
+    return response.locations[0].city.name;
+  }
 
   validateBookingToken(booking_token: string) {
     const bnum = '0';

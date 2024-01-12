@@ -1,17 +1,9 @@
-<!-- <button
-    tuiIconButton
-    appearance="outline"
-    type="button"
-    icon="tuiIconArrowLeft"
-    routerLink="/"
-    class="backButton"
-></button> -->
 <button
     routerLink="/"
     class="backButton"
 >
     <img src="../../../assets/icons/arrow.svg" class="backArrowIcon"/>
-    <div class="destination">{{ formCityTo }} </div>
+    <div class="destination">{{ location }} </div>
 </button>
 <app-search-form [filters]="true"></app-search-form>
 <tui-loader [showLoader]="loading"/>
