@@ -10,7 +10,7 @@ export class ConnectionCardDetailComponent {
   @Input() item: any;
   @Input() tripSummary: any;
 
-  expand: boolean = false;
+  expand: boolean = true;
 
   toggleExpand() {
     this.expand = !this.expand;
