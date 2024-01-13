@@ -6,6 +6,7 @@ import { User } from 'firebase/auth';
 import { TripSummary } from './tripSummary';
 import { getTripSummary } from './trip-summary-utils';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-connection-card',
@@ -26,7 +27,8 @@ export class ConnectionCardComponent {
   constructor(
     private authService: AuthService,
     private apiService: ApiService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
   ) {}
   ngOnInit() {
     this.authService.user$.subscribe((user) => {
@@ -41,6 +43,8 @@ export class ConnectionCardComponent {
   saveFavouriteConnection() {
     if (this.user?.uid) {
       this.userService.saveFavouriteConnection(this.item);
+    } else {
+      this.router.navigate(['/login']);
     }
     this.deleteOption = true;
   }
