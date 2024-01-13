@@ -11,3 +11,8 @@
   [deleteOption]="true"
   [favourites]="true"
 ></app-connection-card>
+<div *ngIf="!favourites?.length" class="blankSlate">
+  <img src="../../../../assets/icons/clickOnHeart.svg" alt="click on heart" />
+  <h2>No favourites yet</h2>
+  <button class="primary-button" routerLink="/search">Search connections</button>
+</div>
