@@ -28,39 +28,43 @@
     >
       <img src="../../../assets/icons/favourite-full.svg" alt="Favorite Icon" />
     </div>
+    <div class="clickArea" (click)="toggleOverlay()">
+      <div class="grid-container">
+        <div class="grid-item">
+          {{ tripSummary?.departure?.departureTime | localTime }}
+        </div>
+        <div class="grid-item border">
+          {{ tripSummary?.departure?.duration }}
+        </div>
+        <div class="grid-item">
+          {{ tripSummary?.departure?.arrivalTime | localTime }}
+        </div>
+        <div class="grid-item">{{ tripSummary?.departure?.from }}</div>
+        <div class="grid-item">Stops: {{ tripSummary?.departure?.stops }}</div>
+        <div class="grid-item">{{ tripSummary?.departure?.to }}</div>
+      </div>
 
-    <div class="grid-container" (click)="toggleOverlay()">
-      <div class="grid-item">
-        {{ tripSummary?.departure?.departureTime | localTime }}
+      <div class="grid-container" *ngIf="tripSummary?.return">
+        <div class="grid-item">
+          {{ tripSummary?.return?.departureTime | localTime }}
+        </div>
+        <div class="grid-item border">{{ tripSummary?.return?.duration }}</div>
+        <div class="grid-item">
+          {{ tripSummary?.return?.arrivalTime | localTime }}
+        </div>
+        <div class="grid-item">{{ tripSummary?.return?.from }}</div>
+        <div class="grid-item">Stops: {{ tripSummary?.return?.stops }}</div>
+        <div class="grid-item">{{ tripSummary?.return?.to }}</div>
       </div>
-      <div class="grid-item border">{{ tripSummary?.departure?.duration }}</div>
-      <div class="grid-item">
-        {{ tripSummary?.departure?.arrivalTime | localTime }}
-      </div>
-      <div class="grid-item">{{ tripSummary?.departure?.from }}</div>
-      <div class="grid-item">Stops: {{ tripSummary?.departure?.stops }}</div>
-      <div class="grid-item">{{ tripSummary?.departure?.to }}</div>
     </div>
-
-    <div class="grid-container" *ngIf="tripSummary?.return">
-      <div class="grid-item">
-        {{ tripSummary?.return?.departureTime | localTime }}
-      </div>
-      <div class="grid-item border">{{ tripSummary?.return?.duration }}</div>
-      <div class="grid-item">
-        {{ tripSummary?.return?.arrivalTime | localTime }}
-      </div>
-      <div class="grid-item">{{ tripSummary?.return?.from }}</div>
-      <div class="grid-item">Stops: {{ tripSummary?.return?.stops }}</div>
-      <div class="grid-item">{{ tripSummary?.return?.to }}</div>
-    </div>
-
     <hr />
 
     <div class="booking">
       <h2>CHF {{ item.price }}</h2>
       <a href="{{ item.deep_link }}" target="_blank">
-        <button class="primary-button" [disabled]="!isConnectionAvailable">Book</button>
+        <button class="primary-button" [disabled]="!isConnectionAvailable">
+          Book
+        </button>
       </a>
     </div>
     <p *ngIf="!isConnectionAvailable">
@@ -91,7 +95,9 @@
     <div class="booking">
       <h2>CHF {{ item.price }}</h2>
       <a href="{{ item.deep_link }}" target="_blank">
-        <button class="primary-button" [disabled]="!isConnectionAvailable">Book</button>
+        <button class="primary-button" [disabled]="!isConnectionAvailable">
+          Book
+        </button>
       </a>
     </div>
   </div>
