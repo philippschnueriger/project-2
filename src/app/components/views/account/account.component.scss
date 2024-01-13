@@ -5,13 +5,6 @@
   width: 100%;
 }
 
-// .account {
-//   display: flex;
-//   width: 100vw;
-//   height: 100vh;
-//   justify-content: center;
-// }
-
 .account {
   margin: 0 auto;
   max-width: 600px;
@@ -68,5 +61,34 @@ img {
   background-color: $white;
   padding: 20px;
   overflow-y: auto;
+}
+
+form {
+  max-width: 600px;
+  margin: 200px auto;
+}
+
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-container > * {
+  margin-bottom: 50px;
+}
+tui-input {
+  width: 600px;
+}
+tui-input-number {
+  width: 200px;
+}
+
+tui-select {
+  width: 150px;
+}
+
+tui-input-password {
+  width: 600px;
 }
 

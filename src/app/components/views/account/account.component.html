@@ -42,6 +42,44 @@
             class="cross-validation form-container"
             [class.cross-validation-error]="preferencesForm.errors?.['identityRevealed'] && (preferencesForm.touched || preferencesForm.dirty)"
           >
+          <div class="form-group">
+            <tui-select
+              tuiTextfieldSize="m"
+              formControlName="tripMode"
+              id="tripMode"
+            >
+              Trip mode
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="tripModes"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+          <div class="form-group">
+            <tui-select tuiTextfieldSize="m" formControlName="bookingClass">
+              Booking Class
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="bookingClasses"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+          <div class="form-group">
+            <tui-select
+              tuiTextfieldSize="m"
+              formControlName="vehicleType"
+              id="vehicleType"
+            >
+              Vehicle type
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="vehicleTypes"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
             <div class="form-group">
               <tui-input
                 type="text"
@@ -72,20 +110,6 @@
               </tui-input>
             </div>
             <div class="form-group">
-              <tui-select
-                tuiTextfieldSize="m"
-                formControlName="tripMode"
-                id="tripMode"
-              >
-                Trip mode
-                <input tuiTextfield />
-                <tui-data-list-wrapper
-                  *tuiDataList
-                  [items]="tripModes"
-                ></tui-data-list-wrapper>
-              </tui-select>
-            </div>
-            <div class="form-group">
               <tui-input-number
                 tuiTextfieldSize="m"
                 formControlName="adults"
@@ -106,30 +130,6 @@
               >
                 Children
               </tui-input-number>
-            </div>
-            <div class="form-group">
-              <tui-select tuiTextfieldSize="m" formControlName="bookingClass">
-                Booking Class
-                <input tuiTextfield />
-                <tui-data-list-wrapper
-                  *tuiDataList
-                  [items]="bookingClasses"
-                ></tui-data-list-wrapper>
-              </tui-select>
-            </div>
-            <div class="form-group">
-              <tui-select
-                tuiTextfieldSize="m"
-                formControlName="vehicleType"
-                id="vehicleType"
-              >
-                Vehicle type
-                <input tuiTextfield />
-                <tui-data-list-wrapper
-                  *tuiDataList
-                  [items]="vehicleTypes"
-                ></tui-data-list-wrapper>
-              </tui-select>
             </div>
           </div>
 
