@@ -29,7 +29,7 @@ export class ApiService {
       `&fly_to=${to}` +
       `&date_from=${departureDate}&date_to=${departureDate}` +
       `&return_from=${returnDate}&return_to=${returnDate}` +
-      `&selected_cabins=${bookingClass}` + 
+      `&selected_cabins=${bookingClass}` +
       `&adults=${adults}` +
       `&children=${children}` +
       `&vehicle_type=${vehicleType.toLowerCase()}` +
@@ -47,9 +47,16 @@ export class ApiService {
   }
   async getLocationName(locationId: string): Promise<string> {
     const response: any = await firstValueFrom(
-      this.http.get(`${this.baseUrl}/locations/query?term=${locationId}&limit=1`)
+      this.http.get(
+        `${this.baseUrl}/locations/query?term=${locationId}&limit=1`
+      )
     );
-    return response.locations[0].city.name;
+    const name = response.locations[0]?.name;
+    if (name) {
+      return name
+    } else {
+      return 'N/A';
+    }
   }
 
   validateBookingToken(booking_token: string) {

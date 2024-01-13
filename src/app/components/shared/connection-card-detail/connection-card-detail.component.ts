@@ -16,7 +16,6 @@ export class ConnectionCardDetailComponent {
     this.expand = !this.expand;
   }
   getFlightInformation(leg: any){
-    console.log(leg)
     const airlineName = getAirlineName(leg.airline)
     const flightNumber = leg.airline + leg.flight_no
     return airlineName + " (" + flightNumber + ")"
