@@ -58,7 +58,6 @@ export class SharedFavouritesComponent {
   async getSharedDataFromUser(uid: string){
     this.toggleOverlay();
     this.data = await this.sharingService.getSharedDataFromUser(uid);
-    console.log(this.data)
   }
   async getFavouriteConnections() {
     let uid = this.user?.uid;
@@ -70,7 +69,6 @@ export class SharedFavouritesComponent {
   }
   toggleOverlay() {
     this.showOverlay = !this.showOverlay;
-    console.log(this.showOverlay)
   }
 
 }

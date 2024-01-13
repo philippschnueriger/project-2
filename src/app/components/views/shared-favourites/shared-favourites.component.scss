@@ -1,5 +1,22 @@
 @import "../../../../styles.scss";
 
+tui-input {
+  --tui-base-01: #f1f3f5;
+}
+
+:host ::ng-deep [tuiWrapper][data-appearance="textfield"] {
+  box-shadow: none;
+  border-radius: 10px;
+}
+
+:host {
+  display: block;
+  width: 100%;
+}
+.shared-favourites {
+  max-width: 500px;
+  margin: 0 auto;
+}
 .secondary-button {
   width: 100%;
 }
@@ -35,4 +52,17 @@
   .booking {
     margin: 100px 0;
   }
+}
+
+section {
+  margin-top: 100px;
+  margin-bottom: 200px;
+}
+
+section:last-of-type {
+  margin-bottom: 300px;
+}
+
+.blank {
+  margin-top: 100px;
 }

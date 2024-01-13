@@ -230,7 +230,6 @@ export class SharingService {
 
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          console.log(userData['sharedWith']);
           return userData['sharedWith'] || [];
         } else {
           console.error('User document not found for current user.');
@@ -260,7 +259,6 @@ export class SharingService {
           const updatedSharedWithEmails = sharedWithEmails.filter(
             (email: string) => email !== emailToRemove
           );
-          console.log(updatedSharedWithEmails);
 
           await updateDoc(userDocRef, {
             sharedWith: updatedSharedWithEmails,
@@ -287,7 +285,6 @@ export class SharingService {
           sharedData.push(doc.data());
         });
 
-        console.log('Shared Data:', sharedData);
         return sharedData;
       } else {
         console.error('Current user not found.');
