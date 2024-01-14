@@ -44,17 +44,17 @@ export class ResultsComponent implements OnInit {
       arrivalTime: new FormControl('Any'),
     });
     this.filters.get('stops').valueChanges.subscribe((newStopsValue: any) => {
-      this.filterByStops(newStopsValue);
+      this.filterConnections();
     });
     this.filters
       .get('departureTime')
       .valueChanges.subscribe((departureTime: string) => {
-        this.filterByDepartureTime(departureTime);
+        this.filterConnections();
       });
     this.filters
       .get('arrivalTime')
       .valueChanges.subscribe((arrivalTime: string) => {
-        this.filterByArrivalTime(arrivalTime);
+        this.filterConnections();
       });
     this.route.queryParams.subscribe((params) => {
       this.cityFrom = params['cityFrom'];
@@ -75,6 +75,14 @@ export class ResultsComponent implements OnInit {
   data: TripSegment[] = [];
   originalData: TripSegment[] = [];
 
+  filterConnections() {
+    this.data = this.originalData;
+    this.filterByStops(this.filters.get('stops').value);
+    this.filterByDepartureTime(this.filters.get('departureTime').value);
+    this.filterByArrivalTime(this.filters.get('arrivalTime').value);
+
+  }
+
   filterByStops(stopsFilter: string) {
     let stops: number;
     if (stopsFilter === 'Non-stop') {
@@ -86,7 +94,6 @@ export class ResultsComponent implements OnInit {
     } else if (stopsFilter === '3 stops') {
       stops = 3;
     } else {
-      this.data = this.originalData;
       return;
     }
     this.data = this.originalData.filter((item: any) => {
@@ -100,7 +107,6 @@ export class ResultsComponent implements OnInit {
 
   filterByDepartureTime(departureTime: string) {
     if (departureTime === 'Any') {
-      this.data = this.originalData;
       return;
     }
     this.data = this.data.filter(
@@ -112,7 +118,6 @@ export class ResultsComponent implements OnInit {
 
   filterByArrivalTime(arrivalTime: string) {
     if (arrivalTime === 'Any') {
-      this.data = this.originalData;
       return;
     }
     this.data = this.data.filter(
