@@ -11,11 +11,13 @@ tui-input {
 
 :host {
   display: block;
-  width: 100%;
+  min-height: 100vh;
+  width: 100vw;
 }
+
 .shared-favourites {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: $tablet-width;
+  margin: 20px;
 }
 .secondary-button {
   width: 100%;
@@ -65,4 +67,11 @@ section:last-of-type {
 
 .blank {
   margin-top: 100px;
+}
+
+/* tablets */
+@media (min-width: $tablet-width) {
+  .shared-favourites {
+    margin: 0 auto;
+  }
 }

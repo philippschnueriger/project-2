@@ -1,12 +1,16 @@
 :host {
   display: block;
   min-height: 100vh;
-  width: 100%;
+  width: 100vw;
 }
 
 :host ::ng-deep [tuiWrapper][data-appearance="textfield"] {
   box-shadow: none;
   border-radius: 10px;
+}
+
+.favourites {
+  margin: 20px;
 }
 
 
@@ -32,4 +36,11 @@ tui-select {
 
 .share-button {
   margin-bottom: 60px;
+}
+
+/* larger desktop screens */
+@media (min-width: 1200px) {
+  .favourites {
+    margin: 0 auto;
+  }
 }
