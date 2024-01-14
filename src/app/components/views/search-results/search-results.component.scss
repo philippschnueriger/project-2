@@ -2,8 +2,13 @@
 
 :host {
   display: block;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
+}
+
+.search-results {
+  margin: 20px;
+  max-width: 1200px;
 }
 
 .backArrowIcon {
@@ -48,4 +53,11 @@ tui-select {
     margin-bottom: -50px;
   }
 
+}
+
+/* larger desktop screens */
+@media (min-width: 1200px) {
+  .search-results {
+    margin: 0 auto;
+  }
 }
