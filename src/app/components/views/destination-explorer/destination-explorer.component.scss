@@ -12,6 +12,13 @@ tui-select {
     margin-right: 20px;
 }
 
+.destination-explorer {
+    width: calc(100vw - 40px);
+    min-height: 100vh;
+    margin: 0 20px;
+    max-width: 1200px;
+}
+
 .container {
     display: flex;
     margin-top: 64px;
@@ -31,3 +38,10 @@ tui-select {
 .sort:hover {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+/* larger desktop screens */
+@media (min-width: 1200px) {
+    .destination-explorer {
+      margin: 0 auto;
+    }
+  }

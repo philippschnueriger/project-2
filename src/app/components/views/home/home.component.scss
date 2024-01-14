@@ -2,13 +2,12 @@
 
 :host {
   display: block;
-  width: calc(100vw - 40px);
-  margin: 20px;
+  width: 100vw;
 }
 
-.home > h1 {
-  margin-top: 50px;
-  margin-bottom: 50px;
+.home {
+  max-width: 1200px;
+  margin: 20px;
 }
 
 .image-container {
@@ -41,9 +40,7 @@
   margin-bottom: 100px;
 }
 
-.home {
-  max-width: 1200px;
-}
+
 
 /* tablets */
 @media (min-width: $tablet-width) {
@@ -58,5 +55,12 @@
   .overlay {
     top: 104px;
     left: 64px;
+  }
+}
+
+/* larger desktop screens */
+@media (min-width: 1200px) {
+  .home {
+    margin: 0 auto;
   }
 }
