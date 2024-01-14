@@ -42,31 +42,6 @@ hr {
   align-items: center;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: $white;
-  z-index: 9999;
-}
-
-.overlay-content {
-  position: relative;
-  width: calc(100% - 40px);
-  max-width: 1200px;
-  margin: auto;
-  height: 100%;
-  background-color: $white;
-  padding: 20px;
-  overflow-y: auto;
-
-  .booking {
-    margin: 100px 0;
-  }
-}
-
 .favorite-icon {
   position: absolute;
   top: 10px;
