@@ -173,7 +173,10 @@ hr {
 }
 
 /* tablets */
-@media (min-width: 768px) {
+@media (min-width: $tablet-width) {
+  header {
+    width: calc(100vw - 20px);
+  }
   .container {
     margin: 0 auto;
   }
@@ -191,5 +194,12 @@ hr {
   }
   .mobile-navbar {
     display: none;
+  }
+}
+
+/* larger desktop screens */
+@media (min-width: 1200px) {
+  header .container {
+    margin: 0 auto;
   }
 }

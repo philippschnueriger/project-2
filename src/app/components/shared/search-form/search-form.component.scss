@@ -10,12 +10,6 @@ tui-input-date-range,
 tui-input-date {
   --tui-base-01: #f1f3f5;
 }
-
-form > div {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
 .form-container {
   display: flex;
   flex-wrap: wrap;
@@ -107,7 +101,7 @@ tui-radio-labeled {
 }
 
 /* tablets */
-@media (min-width: 768px) {
+@media (min-width: $tablet-width) {
   .filters {
     button {
       width: 150px;

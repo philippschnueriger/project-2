@@ -1,9 +1,10 @@
 @import '../../../../styles.scss';
 
 .container {
-  width: 100%;
+  width: calc(100vw - 40px);
   display: flex;
   flex-wrap: wrap;
+  max-width: 1200px;
 }
 
 .image-container {
@@ -12,7 +13,6 @@
   height: calc(100vw - 40px);
   overflow: hidden;
   border-radius: 10px;
-  margin-right: 36px;
   margin-bottom: 40px;
 }
 
@@ -39,10 +39,11 @@
 
 
 /* tablets */
-@media (min-width: 768px) {
+@media (min-width: 800px) {
   .image-container {
     width: 250px;
     height: 250px;
+    margin-right: 36px;
   }
   .image-container img {
     width: 150%;

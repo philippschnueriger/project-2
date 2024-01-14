@@ -41,8 +41,12 @@
   margin-bottom: 100px;
 }
 
+.home {
+  max-width: 1200px;
+}
+
 /* tablets */
-@media (min-width: 768px) {
+@media (min-width: $tablet-width) {
   .image-container {
     height: 335px;
   }

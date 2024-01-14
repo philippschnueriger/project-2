@@ -41,7 +41,7 @@ tui-input-password {
 }
 
 /* tablets */
-@media (min-width: 768px) {
+@media (min-width: $tablet-width) {
   form {
     margin: 300px auto auto auto;
     width: 328px;
