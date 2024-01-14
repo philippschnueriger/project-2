@@ -2,7 +2,8 @@
 
 :host {
   display: block;
-  width: 100%;
+  width: calc(100vw - 40px);
+  margin: 20px;
 }
 
 .home > h1 {

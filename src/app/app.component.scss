@@ -17,14 +17,17 @@ footer {
   padding: 10px;
 }
 
+header .container {
+  margin: 0 22px;
+  padding: 20px 0;
+}
+
 footer {
   background-color: $secondary-color;
 }
 
 .container {
   max-width: 1200px;
-  margin: 0 22px;
-  padding: 20px 0;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -36,6 +39,7 @@ header > .container {
 
 footer > .container {
   justify-content: center;
+  height: 150px;
 }
 
 a {
@@ -126,6 +130,8 @@ hr {
   .dark-mode-btn,
   .close-btn {
     position: absolute;
+    top: 30px;
+    right: 70px;
     background: none;
     border: none;
     padding: 0;
@@ -135,12 +141,10 @@ hr {
   }
 
   .account-btn {
-    top: 23px;
     left: 20px;
   }
 
   .dark-mode-btn {
-    top: 23px;
     left: 80px;
   }
 
