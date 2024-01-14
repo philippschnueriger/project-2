@@ -1,4 +1,4 @@
-<tui-root [ngClass]="{'dark-mode': isDarkMode}">
+<tui-root [ngClass]="{ 'dark-mode': isDarkMode }">
   <header>
     <div class="container">
       <div class="logo" routerLink="/">
@@ -19,10 +19,14 @@
         </ul>
       </nav>
       <div class="icons">
-        <button id="dark-mode-btn" class="dark-mode-btn" (click)="toggleDarkMode()">
+        <button
+          id="dark-mode-btn"
+          class="dark-mode-btn"
+          (click)="toggleDarkMode()"
+        >
           <img src="../../../assets/icons/dark-mode.svg" />
         </button>
-        <button id="account-btn" class="account-btn"routerLink="/account" >
+        <button id="account-btn" class="account-btn" routerLink="/account">
           <img src="../../../assets/icons/account.svg" />
         </button>
       </div>
@@ -59,10 +63,12 @@
     </button>
     <ul class="mobile-nav-links">
       <li><a routerLink="/" (click)="toggleNav()">Home</a></li>
-      <li><a routerLink="/favourites" (click)="toggleNav()">Favourites</a></li>
-      <li><a routerLink="/shared-favourites" (click)="toggleNav()">Shared</a></li>
       <li>
         <a routerLink="/destinations" (click)="toggleNav()">Destinations</a>
+      </li>
+      <li><a routerLink="/favourites" (click)="toggleNav()">Favourites</a></li>
+      <li>
+        <a routerLink="/shared-favourites" (click)="toggleNav()">Shared</a>
       </li>
     </ul>
   </div>
