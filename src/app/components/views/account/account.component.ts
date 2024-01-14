@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { TripMode, BookingClass, VehicleType } from '../../../types/enums';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
@@ -55,11 +55,19 @@ export class AccountComponent implements OnInit {
       children: new FormControl(0),
       vehicleType: new FormControl('Aircraft', [Validators.required]),
     });
+    const passwordMatchValidator: any = (control: FormGroup): {[key: string]: boolean} | null => {
+      const newPassword = control.get('newPassword');
+      const confirmPassword = control.get('confirmPassword');
+    
+      // Check if both fields have values and if they are equal
+      return newPassword && confirmPassword && newPassword.value === confirmPassword.value
+        ? null   // Return null if validation passes
+        : { 'passwordMismatch': true }; // Return an object with an error key if validation fails
+    };
     this.passwordForm = new FormGroup({
-      oldPassword: new FormControl('', [Validators.required]), // Create form controls with validators
-      newPassword: new FormControl('', [Validators.required]),
+      newPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required]),
-    });
+    }, { validators: passwordMatchValidator });
   }
 
   async logout() {
