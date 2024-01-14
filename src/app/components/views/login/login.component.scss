@@ -1,13 +1,20 @@
 @import '../../../../styles.scss';
 
-:host {
-  min-height: 100vh;
-  width: 100%;
-}
 
 :host ::ng-deep [tuiWrapper][data-appearance="textfield"] {
   box-shadow: none;
   border-radius: 10px;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.login {
+  max-width: $tablet-width;
+  margin: 20px;
 }
 
 h1 {
@@ -17,17 +24,19 @@ h1 {
 tui-input,
 tui-input-password {
   --tui-base-01: #f1f3f5;
-  width: 100%;
-  margin: 20px 10px 20px 0;
+  width: calc(100vw - 40px);
+  max-width: $tablet-width;
+  margin: 20px 0;
 }
 
 #login-btn, #signup-btn, #reset-btn {
   margin-top: 40px;
-  width: 100%;
+  width: calc(100vw - 40px);
+  max-width: $tablet-width;
 }
 
 .primary-button {
-  margin: 10px 0px 20px 0;
+  margin: 10px 0 20px 0;
   width: 127px;
 }
 
@@ -42,8 +51,7 @@ tui-input-password {
 
 /* tablets */
 @media (min-width: $tablet-width) {
-  form {
-    margin: 300px auto auto auto;
-    width: 328px;
+  .login {
+    margin: 0 auto;
   }
 }
