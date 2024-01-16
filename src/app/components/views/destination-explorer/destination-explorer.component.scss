@@ -1,0 +1,47 @@
+@import '../../../../styles.scss';
+
+:host ::ng-deep [tuiWrapper][data-appearance="textfield"] {
+    box-shadow: none;
+    border-radius: 10px;
+  }
+
+
+tui-select {
+    width: 120px;
+    height: 32px;
+    margin-right: 20px;
+}
+
+.destination-explorer {
+    width: calc(100vw - 40px);
+    min-height: 100vh;
+    margin: 0 20px;
+    max-width: 1200px;
+}
+
+.container {
+    display: flex;
+    margin-top: 64px;
+    margin-bottom: 64px;
+}
+
+.sort {
+    width: 43px;
+    height: 43px;
+    margin-right: 20px;
+    background-color: $white;
+    border: 1px solid $light-grey;
+    padding-top: 4px;
+    transition: box-shadow 0.1s ease-in-out;
+}
+
+.sort:hover {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* larger desktop screens */
+@media (min-width: 1200px) {
+    .destination-explorer {
+      margin: 0 auto;
+    }
+  }

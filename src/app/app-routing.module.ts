@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { HomeComponent } from './components/home/home.component';
-import { AuthGuard } from './shared/auth.guard';
-import { ResultsComponent } from './components/search-results/search-results.component';
-import { FavouriteConnectionsComponent } from './components/favourite-connections/favourite-connections.component';
-import { DestinationsComponent } from './components/destinations/destinations.component';
+import { LoginComponent } from './components/views/login/login.component';
+import { HomeComponent } from './components/views/home/home.component';
+import { AuthGuard } from './services/auth.guard';
+import { ResultsComponent } from './components/views/search-results/search-results.component';
+import { FavouritesComponent } from './components/views/favourites/favourites.component';
+import { DestinationExplorerComponent } from './components/views/destination-explorer/destination-explorer.component';
+import { AccountComponent } from './components/views/account/account.component';
+import { SharedFavouritesComponent } from './components/views/shared-favourites/shared-favourites.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'destinations',
-    component: DestinationsComponent,
+    component: DestinationExplorerComponent,
     title: 'Destinations'
   },
   {
@@ -31,17 +32,35 @@ const routes: Routes = [
     title: 'Login'
   },
   {
-    path: 'profile',
-    component: UserProfileComponent,
-    title: 'Profile',
+    path: 'signup',
+    component: LoginComponent,
+    title: 'Signup'
+  },
+  {
+    path: 'reset-password',
+    component: LoginComponent,
+    title: 'Reset password'
+  },
+  {
+    path: 'account',
+    component: AccountComponent,
+    title: 'Account',
     canActivate: [AuthGuard] 
   },
   {
     path: 'favourites',
-    component: FavouriteConnectionsComponent,
-    title: 'Favorites',
+    component: FavouritesComponent,
+    title: 'Favourites',
     canActivate: [AuthGuard] 
-  }];
+  },
+  {
+    path: 'shared-favourites',
+    component: SharedFavouritesComponent,
+    title: 'Shared Favourites',
+    canActivate: [AuthGuard] 
+  },
+  { path: '**', redirectTo: '/' }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

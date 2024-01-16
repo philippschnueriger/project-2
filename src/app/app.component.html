@@ -1,8 +1,9 @@
-<tui-root>
+<tui-root [ngClass]="{ 'dark-mode': isDarkMode }">
   <header>
     <div class="container">
       <div class="logo" routerLink="/">
-        <img src="assets/logo/logo.svg" alt="logo" />
+        <img *ngIf="!isDarkMode" src="assets/logo/logo.svg" alt="logo" />
+        <img *ngIf="isDarkMode" src="assets/logo/logo_white.svg" alt="logo" />
         <div>TripSearch</div>
       </div>
       <nav>
@@ -10,12 +11,25 @@
           <li><a routerLink="/">Home</a></li>
           <li><a routerLink="/destinations">Destinations</a></li>
           <li><a routerLink="/favourites">Favourites</a></li>
-          <li *ngIf="!user"><a routerLink="/login">Login</a></li>
+          <li><a routerLink="/shared-favourites">Shared</a></li>
+          <!-- <li *ngIf="!user"><a routerLink="/login">Login</a></li>
           <li *ngIf="user" (click)="logout()" class="logout">
             <a routerLink="/login">Logout</a>
-          </li>
+          </li> -->
         </ul>
       </nav>
+      <div class="icons">
+        <button
+          id="dark-mode-btn"
+          class="dark-mode-btn"
+          (click)="toggleDarkMode()"
+        >
+          <img src="../../../assets/icons/dark-mode.svg" />
+        </button>
+        <button id="account-btn" class="account-btn" routerLink="/account">
+          <img src="../../../assets/icons/account.svg" />
+        </button>
+      </div>
       <div class="mobile-navbar">
         <div class="navbar-toggle" (click)="toggleNav()">
           <div class="bar"></div>
@@ -38,17 +52,24 @@
   </footer>
   <!-- Mobile Navigation -->
   <div class="mobile-nav" [ngClass]="{ show: mobileNavOpen }">
+    <button routerLink="/account" (click)="toggleNav()" class="account-btn">
+      <img src="../../../assets/icons/account.svg" />
+    </button>
+    <button class="dark-mode-btn" (click)="toggleDarkMode()">
+      <img src="../../../assets/icons/dark-mode.svg" />
+    </button>
     <button class="close-btn" (click)="toggleNav()">
       <span class="close-icon"></span>
     </button>
     <ul class="mobile-nav-links">
       <li><a routerLink="/" (click)="toggleNav()">Home</a></li>
-      <li><a routerLink="/favourites" (click)="toggleNav()">Favourites</a></li>
       <li>
         <a routerLink="/destinations" (click)="toggleNav()">Destinations</a>
       </li>
-      <li *ngIf="!user"><a routerLink="/login" (click)="toggleNav()">Login</a></li>
-      <li *ngIf="user" (click)="logout() " (click)="toggleNav()"><a routerLink="/login">Logout</a></li>
+      <li><a routerLink="/favourites" (click)="toggleNav()">Favourites</a></li>
+      <li>
+        <a routerLink="/shared-favourites" (click)="toggleNav()">Shared</a>
+      </li>
     </ul>
   </div>
 </tui-root>

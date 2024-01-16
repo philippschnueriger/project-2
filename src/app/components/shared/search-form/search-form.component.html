@@ -1,0 +1,187 @@
+<form [formGroup]="searchForm" #formDir="ngForm">
+  <div>
+    <div
+      class="cross-validation form-container"
+      [class.cross-validation-error]="searchForm.errors?.['identityRevealed'] && (searchForm.touched || searchForm.dirty)"
+    >
+      <div class="form-options">
+        <div class="form-group">
+          <div class="form-group">
+            <tui-select
+              tuiTextfieldSize="m"
+              formControlName="tripMode"
+              id="tripMode"
+            >
+              Trip mode
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="tripModes"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+          <div class="form-group">
+            <tui-input-number
+              tuiTextfieldSize="m"
+              formControlName="adults"
+              [min]="1"
+              [max]="9"
+              value="1"
+            >
+              Adults
+            </tui-input-number>
+          </div>
+          <div class="form-group">
+            <tui-input-number
+              tuiTextfieldSize="m"
+              formControlName="children"
+              [min]="0"
+              [max]="9"
+              value="0"
+            >
+              Children
+            </tui-input-number>
+          </div>
+          <div class="form-group">
+            <tui-select tuiTextfieldSize="m" formControlName="bookingClass">
+              Booking Class
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="bookingClasses"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+          <div class="form-group">
+            <tui-select
+              tuiTextfieldSize="m"
+              formControlName="vehicleType"
+              id="vehicleType"
+            >
+              Vehicle type
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="vehicleTypes"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-inputs" [ngClass]="{ 'show-form-inputs': filters }">
+        <div class="form-group">
+          <tui-input
+            type="text"
+            id="cityFrom"
+            class="form-control"
+            formControlName="cityFrom"
+            required
+            (input)="searchFromLocations()"
+            [tuiTextfieldCleaner]="true"
+          >
+            From
+            <ng-container *ngIf="items?.length">
+              <tui-data-list *tuiDataList>
+                <button
+                  *ngFor="let item of fromLocations"
+                  tuiOption
+                  [value]="item.name"
+                  (click)="setFromLocation(item)"
+                >
+                  <span *ngIf="item.type == 'city'" class="name"
+                    >{{ item.name }} (All)</span
+                  >
+                  <span *ngIf="item.type != 'city'" class="name"
+                    >{{ item.name }} {{ item.code }}</span
+                  >
+                </button>
+              </tui-data-list>
+            </ng-container>
+          </tui-input>
+        </div>
+        <div class="form-group">
+          <tui-input
+            type="text"
+            id="cityTo"
+            class="form-control"
+            formControlName="cityTo"
+            required
+            (input)="searchToLocations()"
+            [tuiTextfieldCleaner]="true"
+          >
+            To
+            <ng-container *ngIf="items?.length">
+              <tui-data-list *tuiDataList>
+                <button
+                  *ngFor="let item of toLocations"
+                  tuiOption
+                  [value]="item.name"
+                  (click)="setToLocation(item)"
+                >
+                  <span *ngIf="item.type == 'city'" class="name"
+                    >{{ item.name }} (All)</span
+                  >
+                  <span *ngIf="item.type != 'city'" class="name"
+                    >{{ item.name }} {{ item.code }}</span
+                  >
+                </button>
+              </tui-data-list>
+            </ng-container>
+          </tui-input>
+        </div>
+        <div *ngIf="tripMode.value == 'Return'" class="form-group">
+          <tui-input-date-range
+            id="departureAndReturnDate"
+            formControlName="departureAndReturnDate"
+            tuiTextfieldSize="l"
+            [min]="min"
+          >
+            Dates
+          </tui-input-date-range>
+        </div>
+        <div *ngIf="tripMode.value == 'One-way'" class="form-group">
+          <tui-input-date
+            id="departureDate"
+            formControlName="departureDate"
+            tuiTextfieldSize="l"
+            [min]="min"
+          >
+            Departure date
+          </tui-input-date>
+        </div>
+        <button
+          type="submit"
+          class="primary-button submit-button"
+          (click)="loadData()"
+          [disabled]="searchForm.invalid"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+<div *ngIf="filters" class="filters">
+  <button
+    (click)="updateUrl('quality')"
+    class="filterButton"
+    [class.active]="sort === 'quality'"
+  >
+    Best
+  </button>
+  <button
+    (click)="updateUrl('price')"
+    class="filterButton"
+    [class.active]="sort === 'price'"
+  >
+    Cheapest
+  </button>
+  <button
+    (click)="updateUrl('duration')"
+    class="filterButton"
+    [class.active]="sort === 'duration'"
+  >
+    Fastest
+  </button>
+</div>

@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+:host ::ng-deep [tuiWrapper][data-appearance="textfield"] {
+  box-shadow: none;
+  border-radius: 10px;
+}
+
+.favourites {
+  margin: 20px;
+}
+
+
+img {
+  height: 43px;
+  width: 43px;
+}
+
+.blankSlate {
+  max-width: 500px;
+  margin: 200px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+tui-select {
+  width: 120px;
+  height: 32px;
+  margin-right: 20px;
+}
+
+.share-button {
+  margin-bottom: 60px;
+}
+
+/* larger desktop screens */
+@media (min-width: 1200px) {
+  .favourites {
+    margin: 0 auto;
+  }
+}

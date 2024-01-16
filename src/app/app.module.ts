@@ -6,40 +6,46 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { LoginComponent } from './components/login/login.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { LoginComponent } from './components/views/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeComponent } from './components/home/home.component';
-import { SearchFormComponent } from './components/search-form/search-form.component';
-import { ResultsComponent } from './components/search-results/search-results.component';
-import { ConnectionCardComponent } from './components/connection-card/connection-card.component';
+import { HomeComponent } from './components/views/home/home.component';
+import { SearchFormComponent } from './components/shared/search-form/search-form.component';
+import { ResultsComponent } from './components/views/search-results/search-results.component';
+import { ConnectionCardComponent } from './components/shared/connection-card/connection-card.component';
 import { CommonModule } from "@angular/common";
-import { FavouriteConnectionsComponent } from './components/favourite-connections/favourite-connections.component';
-import { PopularDestinationsComponent } from './components/popular-destinations/popular-destinations.component';
+import { FavouritesComponent } from './components/views/favourites/favourites.component';
+import { DestinationCardComponent } from './components/shared/destination-card/destination-card.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ApiInterceptor } from './shared/services/http-interceptor';
-import { ConnectionCardDetailComponent } from './components/connection-card-detail/connection-card-detail.component';
-import { DestinationsComponent } from './components/destinations/destinations.component';
+import { ApiInterceptor } from './services/http-interceptor';
+import { ConnectionCardDetailComponent } from './components/shared/connection-card-detail/connection-card-detail.component';
+import { DestinationExplorerComponent } from './components/views/destination-explorer/destination-explorer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LocalTimePipe } from './components/shared/connection-card/local-time.pipe';
+import { AccountComponent } from './components/views/account/account.component';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { SharedFavouritesComponent } from './components/views/shared-favourites/shared-favourites.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UserProfileComponent,
     HomeComponent,
     SearchFormComponent,
     ResultsComponent,
     ConnectionCardComponent,
-    FavouriteConnectionsComponent,
-    PopularDestinationsComponent,
+    FavouritesComponent,
+    DestinationCardComponent,
     ConnectionCardDetailComponent,
-    DestinationsComponent
+    DestinationExplorerComponent,
+    AccountComponent,
+    LocalTimePipe,
+    SharedFavouritesComponent
   ],
   imports: [
     BrowserModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideStorage(() => getStorage()),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     CommonModule,

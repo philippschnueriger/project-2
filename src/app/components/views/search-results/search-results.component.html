@@ -1,0 +1,44 @@
+<div class="search-results">
+  <button routerLink="/" class="backButton">
+    <img src="../../../assets/icons/arrow.svg" class="backArrowIcon" />
+    <div class="destination">{{ location }}</div>
+  </button>
+  <app-search-form [filters]="true"></app-search-form>
+  <form [formGroup]="filters" #formDir="ngForm" class="container">
+    <tui-select tuiTextfieldSize="m" formControlName="stops" id="stops">
+      Stops
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="stops"
+      ></tui-data-list-wrapper>
+    </tui-select>
+    <tui-select
+      tuiTextfieldSize="m"
+      formControlName="departureTime"
+      id="departureTime"
+    >
+      Departure
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="departureTime"
+      ></tui-data-list-wrapper>
+    </tui-select>
+    <tui-select
+      tuiTextfieldSize="m"
+      formControlName="arrivalTime"
+      id="arrivalTime"
+    >
+      Arrival
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="arrivalTime"
+      ></tui-data-list-wrapper>
+    </tui-select>
+  </form>
+  <tui-loader [showLoader]="loading" />
+  <p *ngIf="!loading && data.length === 0">no data available</p>
+  <app-connection-card
+    *ngFor="let item of data"
+    [item]="item"
+  ></app-connection-card>
+</div>

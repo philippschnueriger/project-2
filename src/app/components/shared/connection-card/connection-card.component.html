@@ -1,0 +1,104 @@
+<div>
+  <div *ngIf="favourites">
+    <h2>{{ item.cityFrom }} - {{ item.cityTo }}</h2>
+    <p *ngIf="!tripSummary?.return">
+      {{ tripSummary?.departure?.departureTime | date : "dd/MM/yyyy" }}
+    </p>
+    <p *ngIf="tripSummary?.return">
+      {{ tripSummary?.departure?.departureTime | date : "dd/MM/yyyy" }} -
+      {{ tripSummary?.return?.arrivalTime | date : "dd/MM/yyyy" }}
+    </p>
+  </div>
+  <tui-island>
+    <p>{{ tripSummary?.operators }}</p>
+    <div
+      *ngIf="!deleteOption"
+      class="favorite-icon"
+      (click)="saveFavouriteConnection()"
+    >
+      <img
+        src="../../../assets/icons/favourite-border.svg"
+        alt="Favorite Icon"
+      />
+    </div>
+    <div
+      *ngIf="deleteOption"
+      class="favorite-icon"
+      (click)="deleteFavouriteConnection()"
+    >
+      <img src="../../../assets/icons/favourite-full.svg" alt="Favorite Icon" />
+    </div>
+    <div class="clickArea" (click)="toggleOverlay()">
+      <div class="grid-container">
+        <div class="grid-item">
+          {{ tripSummary?.departure?.departureTime | localTime }}
+        </div>
+        <div class="grid-item border">
+          {{ tripSummary?.departure?.duration }}
+        </div>
+        <div class="grid-item">
+          {{ tripSummary?.departure?.arrivalTime | localTime }}
+        </div>
+        <div class="grid-item">{{ tripSummary?.departure?.from }}</div>
+        <div class="grid-item">Stops: {{ tripSummary?.departure?.stops }}</div>
+        <div class="grid-item">{{ tripSummary?.departure?.to }}</div>
+      </div>
+
+      <div class="grid-container" *ngIf="tripSummary?.return">
+        <div class="grid-item">
+          {{ tripSummary?.return?.departureTime | localTime }}
+        </div>
+        <div class="grid-item border">{{ tripSummary?.return?.duration }}</div>
+        <div class="grid-item">
+          {{ tripSummary?.return?.arrivalTime | localTime }}
+        </div>
+        <div class="grid-item">{{ tripSummary?.return?.from }}</div>
+        <div class="grid-item">Stops: {{ tripSummary?.return?.stops }}</div>
+        <div class="grid-item">{{ tripSummary?.return?.to }}</div>
+      </div>
+    </div>
+    <hr />
+
+    <div class="booking">
+      <h2>CHF {{ item.price }}</h2>
+      <a href="{{ item.deep_link }}" target="_blank">
+        <button class="primary-button" [disabled]="!isConnectionAvailable">
+          Book
+        </button>
+      </a>
+    </div>
+    <p *ngIf="!isConnectionAvailable">
+      This connection is not available anymore
+    </p>
+  </tui-island>
+</div>
+<div id="overlay" class="overlay" *ngIf="showOverlay">
+  <div class="overlay-content">
+    <h1>Details</h1>
+    <button class="close-btn" (click)="toggleOverlay()">
+      <span class="close-icon"></span>
+    </button>
+    <div class="outbound">
+      <h2>Outbound</h2>
+      <app-connection-card-detail
+        [item]="item"
+        [tripSummary]="tripSummary?.departure"
+      ></app-connection-card-detail>
+    </div>
+    <div class="inbound" *ngIf="tripSummary?.return">
+      <h2>Inbound</h2>
+      <app-connection-card-detail
+        [item]="item"
+        [tripSummary]="tripSummary?.return"
+      ></app-connection-card-detail>
+    </div>
+    <div class="booking">
+      <h2>CHF {{ item.price }}</h2>
+      <a href="{{ item.deep_link }}" target="_blank">
+        <button class="primary-button" [disabled]="!isConnectionAvailable">
+          Book
+        </button>
+      </a>
+    </div>
+  </div>
+</div>

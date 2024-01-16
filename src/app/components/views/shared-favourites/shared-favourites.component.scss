@@ -1,0 +1,53 @@
+@import "../../../../styles.scss";
+
+tui-input {
+  --tui-base-01: #f1f3f5;
+}
+
+:host ::ng-deep [tuiWrapper][data-appearance="textfield"] {
+  box-shadow: none;
+  border-radius: 10px;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.shared-favourites {
+  max-width: $tablet-width;
+  margin: 20px;
+}
+.secondary-button {
+  width: 100%;
+}
+.sharing-users {
+  display: flex;
+  flex-direction: row;
+}
+.delete-button {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+
+section {
+  margin-top: 100px;
+  margin-bottom: 200px;
+}
+
+section:last-of-type {
+  margin-bottom: 300px;
+}
+
+.blank {
+  margin-top: 100px;
+}
+
+/* tablets */
+@media (min-width: $tablet-width) {
+  .shared-favourites {
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,198 @@
+<div class="account">
+    <h1>Account</h1>
+    <div class="success">
+      {{ notification}}
+    </div>
+    <tui-island>
+      <div class="edit-button" (click)="toggleOverlay('preferences')">
+        <img src="../../../assets/icons/edit.svg" alt="Favorite Icon" />
+      </div>
+      <h2>Preferences</h2>
+      <div class="grid-container">
+        <div class="grid-item">Homebase</div>
+        <div class="grid-item">{{ userPreferences.cityFrom }}</div>
+        <div class="grid-item">Tripmode</div>
+        <div class="grid-item">{{ userPreferences.tripMode }}</div>
+        <div class="grid-item">Adults</div>
+        <div class="grid-item">{{ userPreferences.adults }}</div>
+        <div class="grid-item">Children</div>
+        <div class="grid-item">{{ userPreferences.children }}</div>
+        <div class="grid-item">Booking Class</div>
+        <div class="grid-item">{{ userPreferences.bookingClass }}</div>
+        <div class="grid-item">Vehicle Type</div>
+        <div class="grid-item">{{ userPreferences.vehicleType }}</div>
+      </div>
+    </tui-island>
+    <button
+      class="secondary-button update-password"
+      (click)="toggleOverlay('password')"
+    >
+      Change Password
+    </button>
+    <button class="primary-button" (click)="logout()">Logout</button>
+</div>
+
+<div id="overlay" class="overlay" *ngIf="showOverlay">
+  <div class="overlay-content">
+    <button class="close-btn" (click)="toggleOverlay('close')">
+      <span class="close-icon"></span>
+    </button>
+    <div *ngIf="showPreferences" class="preferences">
+      <h2>Edit Preferences</h2>
+      <form [formGroup]="preferencesForm" #formDir="ngForm">
+        <div [hidden]="formDir.submitted">
+          <div
+            class="cross-validation form-container"
+            [class.cross-validation-error]="preferencesForm.errors?.['identityRevealed'] && (preferencesForm.touched || preferencesForm.dirty)"
+          >
+          <div class="form-group">
+            <tui-select
+              tuiTextfieldSize="m"
+              formControlName="tripMode"
+              id="tripMode"
+            >
+              Trip mode
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="tripModes"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+          <div class="form-group">
+            <tui-select tuiTextfieldSize="m" formControlName="bookingClass">
+              Booking Class
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="bookingClasses"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+          <div class="form-group">
+            <tui-select
+              tuiTextfieldSize="m"
+              formControlName="vehicleType"
+              id="vehicleType"
+            >
+              Vehicle type
+              <input tuiTextfield />
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="vehicleTypes"
+              ></tui-data-list-wrapper>
+            </tui-select>
+          </div>
+            <div class="form-group">
+              <tui-input
+                type="text"
+                class="form-control"
+                formControlName="cityFrom"
+                required
+                (input)="searchFromLocations()"
+                [tuiTextfieldCleaner]="true"
+              >
+                Homebase
+                <ng-container>
+                  <tui-data-list *tuiDataList>
+                    <button
+                      *ngFor="let item of fromLocations"
+                      tuiOption
+                      [value]="item.name"
+                      (click)="setFromLocation(item)"
+                    >
+                      <span *ngIf="item.type == 'city'" class="name"
+                        >{{ item.name }} (All)</span
+                      >
+                      <span *ngIf="item.type != 'city'" class="name"
+                        >{{ item.name }} {{ item.code }}</span
+                      >
+                    </button>
+                  </tui-data-list>
+                </ng-container>
+              </tui-input>
+            </div>
+            <div class="form-group">
+              <tui-input-number
+                tuiTextfieldSize="m"
+                formControlName="adults"
+                [min]="1"
+                [max]="9"
+                value="1"
+              >
+                Adults
+              </tui-input-number>
+            </div>
+            <div class="form-group">
+              <tui-input-number
+                tuiTextfieldSize="m"
+                formControlName="children"
+                [min]="0"
+                [max]="9"
+                value="0"
+              >
+                Children
+              </tui-input-number>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="primary-button submit-button"
+            (click)="submitPreferences()"
+            [disabled]="preferencesForm.invalid"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="showPassword" class="change-password">
+      <h2>Change Password</h2>
+      <form [formGroup]="passwordForm" #formDir="ngForm">
+        <div [hidden]="formDir.submitted">
+          <div
+            class="cross-validation form-container"
+            [class.cross-validation-error]="passwordForm.errors?.['identityRevealed'] && (passwordForm.touched || passwordForm.dirty)"
+          >
+            <div class="form-group">
+              <tui-input-password
+                type="password"
+                class="form-control"
+                formControlName="newPassword"
+                required
+              >
+                New Password
+              </tui-input-password>
+            </div>
+            <div *ngIf="passwordForm.get('newPassword')?.hasError('minlength') && passwordForm.get('newPassword')?.touched">
+              <p class="warning">Password must be at least 8 characters long.</p>
+            </div>
+            <div class="form-group">
+              <tui-input-password
+                type="password"
+                class="form-control"
+                formControlName="confirmPassword"
+                required
+              >
+                Confirm Password
+              </tui-input-password>
+            </div>
+            <div *ngIf="passwordForm.hasError('passwordMismatch') && (passwordForm.get('newPassword')?.dirty &&  passwordForm.get('confirmPassword')?.dirty)">
+              <p class="warning">Passwords do not match!</p>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="primary-button submit-button"
+            (click)="submitPassword()"
+            [disabled]="passwordForm.invalid"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

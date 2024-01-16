@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { BehaviorSubject} from 'rxjs';
 import { User } from 'firebase/auth';
 import { AppModule } from './app.module';

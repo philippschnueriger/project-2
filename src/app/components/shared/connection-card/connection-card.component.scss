@@ -1,0 +1,63 @@
+@import '../../../../styles.scss';
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+tui-island {
+  margin: 20px 0;
+}
+
+.border {
+  border-bottom: 1px solid $black;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0px;
+}
+
+.grid-item {
+  padding: 10px;
+  text-align: center;
+}
+
+.full-width {
+  grid-column: 1 / span 3;
+  height: 2px;
+}
+
+hr {
+  height: 1px;
+  margin: 0 -15px;
+}
+
+.booking {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 4px;
+  margin-bottom: -10px;
+  align-items: center;
+}
+
+.favorite-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  img {
+    margin: auto;
+  }
+}
+
+.clickArea {
+  height: 240px;
+  padding-top: 40px;
+  cursor: pointer;
+}

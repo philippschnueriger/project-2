@@ -1,0 +1,18 @@
+<div class="home">
+  <h1>Where do you want to go?</h1>
+  <app-search-form></app-search-form>
+  <div class="image-container">
+    <img src="../../../assets/images/explore.jpg" alt="Image" />
+    <div class="img-overlay">
+      <h1>Explore Everywhere</h1>
+      <button class="secondary-button" (click)="exploreDestinations()">Explore</button>
+    </div>
+  </div>
+  <h2>Popular right now</h2>
+  <app-destination-card [order]="'Favourites'" [limit]="true"></app-destination-card>
+  <div class="align-right">
+    <button class="secondary-button" [routerLink]="['/destinations']">
+      Show more
+    </button>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+@import '../../../../styles.scss';
+
+:host {
+  display: block;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.search-results {
+  margin: 20px;
+  max-width: 1200px;
+}
+
+.backArrowIcon {
+  position: absolute;
+  left: 20px;
+  margin-top: 4px;
+}
+
+.backButton {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  background-color: $secondary-color;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+tui-loader {
+  margin-top: 50px;
+}
+
+form {
+  display: flex;
+  margin-top: 20px;
+}
+
+tui-select {
+  width: 150px;
+  margin-right: 10px;
+}
+
+/* tablets */
+@media (min-width: $tablet-width) {
+  .backButton {
+    display: none;
+  }
+  tui-loader {
+    margin-top: 100px;
+    margin-bottom: -50px;
+  }
+
+}
+
+/* larger desktop screens */
+@media (min-width: 1200px) {
+  .search-results {
+    margin: 0 auto;
+  }
+}

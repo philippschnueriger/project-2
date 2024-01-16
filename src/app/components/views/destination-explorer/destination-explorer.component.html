@@ -1,0 +1,27 @@
+<div class="destination-explorer">
+  <h1>Explore new destinations</h1>
+  <div class="container">
+    <form [formGroup]="filters" #formDir="ngForm" class="container">
+      <button (click)="reverseList()" class="sort"> <img src="../../../assets/icons/sort.svg" /></button>
+      <tui-select tuiTextfieldSize="m" formControlName="region" id="region">
+        Regions
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="regions"
+        ></tui-data-list-wrapper>
+      </tui-select>
+      <tui-select tuiTextfieldSize="m" formControlName="order" id="order">
+        Order
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="order"
+        ></tui-data-list-wrapper>
+      </tui-select>
+    </form>
+  </div>
+  <app-destination-card
+    [region]="filters.get('region')?.value"
+    [order]="filters.get('order')?.value"
+    [revert]="reverse"
+  ></app-destination-card>
+</div>

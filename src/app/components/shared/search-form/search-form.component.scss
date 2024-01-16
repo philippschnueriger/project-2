@@ -1,0 +1,146 @@
+@import "../../../../styles.scss";
+
+:host ::ng-deep [tuiWrapper][data-appearance="textfield"] {
+  box-shadow: none;
+  border-radius: 10px;
+}
+
+tui-input,
+tui-input-date-range,
+tui-input-date {
+  --tui-base-01: #f1f3f5;
+}
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+tui-input {
+  width: 100%;
+  margin: 20px 10px 20px 0;
+}
+
+tui-input-date-range {
+  width: 100%;
+  margin: 20px 10px 20px 0;
+}
+
+tui-input-date {
+  width: 240px;
+  margin: 20px 10px 20px 0;
+}
+
+tui-select {
+  width: 100px;
+  font-size: 12px;
+  margin: 0 10px 20px 0;
+}
+
+tui-input-number {
+  width: 100px;
+  margin: 0 10px 20px 0;
+}
+
+button {
+  width: 100%;
+}
+
+.submit-button {
+  height: 56px;
+  width: 100%;
+  margin: 20px 20px 20px 0;
+}
+
+tui-radio-labeled {
+  width: 100px;
+}
+
+.form-options {
+  width: 100%;
+  margin-top: 32px;
+}
+.form-options > * {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-inputs {
+  width: 100%;
+}
+
+.show-form-inputs {
+  display: none;
+}
+
+.filters {
+  display: flex;
+  width: calc(100vw - 40px);
+  button:nth-child(1) {
+    width: 33%;
+    max-width: 150px;
+    border-radius: 10px 0px 0px 10px;
+  }
+  button:last-child {
+    width: 33%;
+    max-width: 150px;
+    border-radius: 0px 10px 10px 0px;
+  }
+  button {
+    width: 34%;
+    max-width: 150px;
+    height: 50px;
+    color: $primary-color;
+    border-radius: 0px;
+    background-color: $white;
+    border: 1px solid $primary-color;
+  }
+  .active {
+    color: $white;
+    background-color: $primary-color;
+  }
+}
+
+/* tablets */
+@media (min-width: $tablet-width) {
+  .filters {
+    button {
+      width: 150px;
+    }
+  }
+
+  .show-form-inputs {
+    display: block;
+  }
+
+  .form-inputs {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  tui-select {
+    width: 150px;
+    margin: 20px 10px 20px 0;
+  }
+  
+  tui-input-number {
+    margin: 20px 10px 20px 0;
+  }
+
+  tui-input {
+    width: 240px;
+    margin: 20px 10px 20px 0;
+  }
+
+  tui-input-date-range {
+    width: 240px;
+    margin: 20px 10px 20px 0;
+  }
+
+  tui-input-date {
+    width: 240px;
+    margin: 20px 10px 20px 0;
+  }
+  .submit-button {
+    width: 80px;
+  }
+}

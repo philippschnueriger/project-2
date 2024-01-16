@@ -1,0 +1,75 @@
+<div class="shared-favourites">
+  <h1>Shared Connections</h1>
+  <section>
+    <h2>Shared with me</h2>
+    <div *ngIf="!sharingUsers?.length">
+      <p>No connections are currently shared with you.</p>
+    </div>
+    <div *ngFor="let user of sharingUsers">
+      <div class="sharing-users">
+        <button
+          class="secondary-button"
+          (click)="getSharedDataFromUser(user.uid)"
+        >
+          {{ user.email }}
+        </button>
+        <button class="delete-button" (click)="deleteSharedUser(user)">
+          <img src="../../../assets/icons/delete.svg" />
+        </button>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Share your connections</h2>
+    <form [formGroup]="share" #formDir="ngForm">
+      <tui-input
+        formControlName="email"
+        id="shareFavourites"
+        type="email"
+        required
+        [tuiTextfieldCleaner]="true"
+        >E-Mail</tui-input
+      >
+      <button
+        class="primary-button share-button"
+        type="submit"
+        (click)="shareFavourites()"
+        [disabled]="share.invalid"
+      >
+        Share
+      </button>
+    </form>
+    <p>Your account: {{ myEmail }}</p>
+  </section>
+  <section>
+    <div *ngIf="sharedWith?.length">
+      <h2>I share with</h2>
+      <div *ngFor="let email of sharedWith">
+        <div class="sharing-users">
+          <button class="secondary-button" disabled>{{ email }}</button>
+          <button class="delete-button" (click)="deleteSharedWithUser(email)">
+            <img src="../../../assets/icons/delete.svg" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="overlay" class="overlay" *ngIf="showOverlay">
+    <div class="overlay-content">
+      <h1>Shared favourites</h1>
+      <button class="close-btn" (click)="toggleOverlay()">
+        <span class="close-icon"></span>
+      </button>
+      <app-connection-card
+        *ngFor="let item of data"
+        [item]="item"
+        [deleteOption]="false"
+        [favourites]="true"
+      ></app-connection-card>
+      <div *ngIf="!data?.length" class="blank">
+        <p>This user has no favourites yet</p>
+      </div>
+    </div>
+  </div>
+</div>
