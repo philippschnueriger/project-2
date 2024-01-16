@@ -38,8 +38,6 @@ export class FormDataService {
       const data = await this.userService.getUserPreferences();
       if (data) {
         this.setFormData(data);
-      } else {
-        console.log('No user data');
       }
       return this.formData;
     } catch (error) {

@@ -85,7 +85,7 @@
         [tripSummary]="tripSummary?.departure"
       ></app-connection-card-detail>
     </div>
-    <div class="inbound">
+    <div class="inbound" *ngIf="tripSummary?.return">
       <h2>Inbound</h2>
       <app-connection-card-detail
         [item]="item"
