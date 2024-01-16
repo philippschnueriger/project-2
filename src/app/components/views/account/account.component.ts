@@ -34,6 +34,7 @@ export class AccountComponent implements OnInit {
   showPreferences: boolean = false;
   showPassword: boolean = false;
   passwordForm!: FormGroup;
+  notification: string = '';
 
   constructor(
     private authService: AuthService,
@@ -80,10 +81,6 @@ export class AccountComponent implements OnInit {
       console.log(error);
     }
   }
-  async updatePassword() {
-    console.log('update password');
-    //await this.authService.changePassword(password) // TODO
-  }
   toggleOverlay(content: string) {
     if (content === 'preferences') {
       this.showPreferences = true;
@@ -125,5 +122,6 @@ export class AccountComponent implements OnInit {
     if (this.passwordForm.valid) {
       this.authService.changePassword(this.passwordForm.value.newPassword);
     }
+    this.notification = 'Password changed';
   }
 }

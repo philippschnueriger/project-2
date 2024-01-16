@@ -54,11 +54,7 @@ export class AuthService {
   }
   
   async login(email: string, password: string): Promise<UserCredential> {
-    try {
-      return await signInWithEmailAndPassword(this.afAuth, email, password);
-    } catch (error) {
-      this.handleError(error);
-    }
+    return await signInWithEmailAndPassword(this.afAuth, email, password);
   }
   
   async logout(): Promise<void> {
@@ -71,7 +67,6 @@ export class AuthService {
   async resetPassword(email: string): Promise<void> {
     try {
       await sendPasswordResetEmail(this.afAuth, email);
-      console.log('Password reset email sent to:', email);
     } catch (error) {
       this.handleError(error);
     }
@@ -83,7 +78,6 @@ export class AuthService {
         throw new Error('No user logged in');
       }
       await updatePassword(this.afAuth.currentUser, password);
-      console.log('Password updated');
     } catch (error) {
       this.handleError(error);
     }

@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +15,14 @@ export class LoginComponent implements OnInit {
   error: string | null = null;
   loginForm: FormGroup;
   currentRoute: string = '';
+  notification: string = '';
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -37,7 +40,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onLogin() {
     this.login(this.loginForm.value.email, this.loginForm.value.password);
   }
 
@@ -52,8 +55,18 @@ export class LoginComponent implements OnInit {
   async signUp(email: string, password: string) {
     try {
       await this.authService.signUp(email, password);
-      this.router.navigate(['/favourites']);
       this.error = null;
+      await this.authService.login(email, password);
+      const defaultPreferences = {
+        adults: 1,
+        vehicleType: 'Aircraft',
+        children: 0,
+        bookingClass: 'Economy',
+        cityFrom: 'Zürich',
+        tripMode: 'Return',
+      };
+      await this.userService.saveUserPreferences(defaultPreferences);
+      this.router.navigate(['/favourites']);
     } catch (error: any) {
       if (error.code === 'auth/email-already-in-use') {
         this.error = 'Email already in use';
@@ -92,6 +105,7 @@ export class LoginComponent implements OnInit {
     try {
       await this.authService.resetPassword(email);
       this.error = null;
+      this.notification = `Password reset email sent to: ${email}`;
     } catch (error: any) {
       this.error = 'unknown error';
       console.log(error);

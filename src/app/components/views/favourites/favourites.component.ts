@@ -52,11 +52,6 @@ export class FavouritesComponent implements OnInit {
   }
 
   async getFavouriteConnections() {
-    let uid = this.user?.uid;
-    if (uid) {
-      await this.userService.getFavouriteConnections();
-    } else {
-      console.log('no uid');
-    }
+    await this.userService.getFavouriteConnections();
   }
 }
