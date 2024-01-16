@@ -1,5 +1,5 @@
 <form [formGroup]="searchForm" #formDir="ngForm">
-  <div [hidden]="formDir.submitted">
+  <div>
     <div
       class="cross-validation form-container"
       [class.cross-validation-error]="searchForm.errors?.['identityRevealed'] && (searchForm.touched || searchForm.dirty)"
