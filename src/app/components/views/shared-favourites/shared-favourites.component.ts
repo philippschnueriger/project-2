@@ -35,8 +35,6 @@ export class SharedFavouritesComponent {
   }
 
   async shareFavourites() {
-    console.log('share favourites' )
-    console.log(this.share.get('email')?.value)
     await this.sharingService.shareFavourites(this.share.get('email')?.value)
     this.sharingUsers = await this.sharingService.getSharedWithAccounts();
     this.sharedWith = await this.sharingService.getSharedWithForCurrentUser();
@@ -50,14 +48,12 @@ export class SharedFavouritesComponent {
     this.sharingUsers = await this.sharingService.getSharedWithAccounts();
   }
   async deleteSharedWithUser(email: string){
-    console.log(email)
     await this.sharingService.removeEmailFromSharedWith(email);
     this.sharedWith = await this.sharingService.getSharedWithForCurrentUser();
   }
   async getSharedDataFromUser(uid: string){
     this.toggleOverlay();
     this.data = await this.sharingService.getSharedDataFromUser(uid);
-    console.log(this.data)
   }
   async getFavouriteConnections() {
     let uid = this.user?.uid;

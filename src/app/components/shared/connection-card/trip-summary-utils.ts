@@ -72,7 +72,7 @@ function calculateLayoverTime(route: any): Route[] {
   return route;
 }
 
-export function getTripSummary(item: TripSegment) {
+export function getTripSummary(item: any) {
   let tripSummary: TripSummary = {
     operators: getOperators(item.route),
     departure: {

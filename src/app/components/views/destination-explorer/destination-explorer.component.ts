@@ -9,7 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class DestinationExplorerComponent {
   regions = ['All', 'Europe', 'Asia', 'North America', 'South America', 'Africa', 'Australia'];
   order = ['Popularity', 'Alphabetical', 'Random'];
-  filters: any;
+  filters!: FormGroup;
   reverse: boolean = false;
 
   ngOnInit(): void {
