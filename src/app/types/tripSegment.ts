@@ -13,8 +13,8 @@ export interface Route {
 
 export interface TripSegment {
   id: string;
-  flyFrom: string,
-  flyTo: string,
+  flyFrom: string;
+  flyTo: string;
   cityFrom: string;
   cityTo: string;
   price: number;
@@ -23,7 +23,5 @@ export interface TripSegment {
   local_departure: string;
   local_arrival: string;
   route: Array<Route>;
-  duration: { departure: number,
-                return: number,
-                total: number};
+  duration: { departure: number; return: number; total: number };
 }
