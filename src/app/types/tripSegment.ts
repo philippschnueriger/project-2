@@ -20,8 +20,8 @@ export interface TripSegment {
   price: number;
   airlines?: Array<string>;
   deep_link?: string;
-  local_departure?: string;
-  local_arrival?: string;
+  local_departure: string;
+  local_arrival: string;
   route: Array<Route>;
   duration: { departure: number,
                 return: number,

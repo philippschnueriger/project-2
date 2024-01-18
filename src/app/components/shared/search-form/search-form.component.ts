@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { TuiDay } from '@taiga-ui/cdk';
 import { ApiService } from '../../../services/api.service';
-import { firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { tuiInputNumberOptionsProvider } from '@taiga-ui/kit';
 import { FormDataService } from 'src/app/services/form-data.service';
 import { TripMode, BookingClass, VehicleType } from '../../../types/enums';
@@ -28,7 +28,7 @@ import { getDateValues, getLocationId, mapBookingClass } from './search-form-uti
   ],
 })
 export class SearchFormComponent implements OnInit {
-  @Input() filters: any;
+  @Input() filters: boolean = false;
 
   constructor(
     private router: Router,

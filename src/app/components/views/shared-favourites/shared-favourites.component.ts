@@ -3,8 +3,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SharingService } from 'src/app/services/sharing.service';
 import { User } from 'firebase/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import * as data from 'src/app/data/destinations.json';
 import { UserService } from 'src/app/services/user.service';
+import { TripSegment } from 'src/app/types/tripSegment';
 
 @Component({
   selector: 'app-shared-favourites',
@@ -13,18 +13,17 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class SharedFavouritesComponent {
   user: User | null = null;
-  favourites: any;
+  favourites: boolean = false;
   sort = ['Date', 'Price'];
-  filters: any;
-  share: any;
-  sharingUsers: any;
+  share!: FormGroup;
+  sharingUsers!: {uid: string, email: string}[];
   myEmail: string = '';
-  sharedWith: any;
+  sharedWith: string[] = [];
   showOverlay: boolean = false;
-  data: any;
+  data: TripSegment[] = [];
 
   constructor(
-    private authService: AuthService, private sharingService: SharingService, private userService: UserService
+    private sharingService: SharingService, private userService: UserService
   ) {}
   async ngOnInit() {
     this.share = new FormGroup({
@@ -46,7 +45,7 @@ export class SharedFavouritesComponent {
   async getSharedData(){
     await this.sharingService.getSharedData();
   }
-  async deleteSharedUser(user: any){
+  async deleteSharedUser(user: { uid: string; email: string; }){
     await this.sharingService.removeCurrentUserFromSharedWith(user.uid);
     this.sharingUsers = await this.sharingService.getSharedWithAccounts();
   }
@@ -58,6 +57,7 @@ export class SharedFavouritesComponent {
   async getSharedDataFromUser(uid: string){
     this.toggleOverlay();
     this.data = await this.sharingService.getSharedDataFromUser(uid);
+    console.log(this.data)
   }
   async getFavouriteConnections() {
     let uid = this.user?.uid;

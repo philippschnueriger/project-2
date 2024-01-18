@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase/auth';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SharingService } from 'src/app/services/sharing.service';
+import { Form, FormControl, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import { TripSegment } from 'src/app/types/tripSegment';
 
 @Component({
   selector: 'app-favourites',
@@ -12,9 +12,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class FavouritesComponent implements OnInit {
   user: User | null = null;
-  favourites: any;
+  favourites: TripSegment[] = [];
   sort = ['Date', 'Price'];
-  filters: any;
+  filters!: FormGroup;
 
   constructor(
     private authService: AuthService, private userService: UserService
@@ -32,7 +32,7 @@ export class FavouritesComponent implements OnInit {
     this.filters = new FormGroup({
       sort: new FormControl(),
     });
-    this.filters.get('sort')?.valueChanges.subscribe((newValue: any) => {
+    this.filters.get('sort')?.valueChanges.subscribe(() => {
       this.sortConnections(this.filters.get('sort')?.value);
     });
   }
@@ -40,14 +40,14 @@ export class FavouritesComponent implements OnInit {
   sortConnections(sort: string) {
     if (sort === 'Date') {
       this.favourites.sort(
-        (a: any, b: any) => {
+        (a: TripSegment, b: TripSegment) => {
           const dateA = new Date(a.local_departure).getTime();
           const dateB = new Date(b.local_departure).getTime();
           return dateA - dateB;
         }
       );
     } else if (sort === 'Price') {
-      this.favourites.sort((a: any, b: any) => b.price - a.price);
+      this.favourites.sort((a: TripSegment, b: TripSegment) => b.price - a.price);
     }
   }
 

@@ -1,9 +1,8 @@
-import { Component, OnInit, SimpleChange } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TripSegment } from '../../../types/tripSegment';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
-import { filter, firstValueFrom } from 'rxjs';
-import { FormDataService } from 'src/app/services/form-data.service';
+import { firstValueFrom } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -17,7 +16,6 @@ export class ResultsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private formDataService: FormDataService
   ) {}
 
   cityFrom = '';
@@ -43,17 +41,17 @@ export class ResultsComponent implements OnInit {
       departureTime: new FormControl('Any'),
       arrivalTime: new FormControl('Any'),
     });
-    this.filters.get('stops').valueChanges.subscribe((newStopsValue: any) => {
+    this.filters.get('stops').valueChanges.subscribe(() => {
       this.filterConnections();
     });
     this.filters
       .get('departureTime')
-      .valueChanges.subscribe((departureTime: string) => {
+      .valueChanges.subscribe(() => {
         this.filterConnections();
       });
     this.filters
       .get('arrivalTime')
-      .valueChanges.subscribe((arrivalTime: string) => {
+      .valueChanges.subscribe(() => {
         this.filterConnections();
       });
     this.route.queryParams.subscribe((params) => {
@@ -65,7 +63,6 @@ export class ResultsComponent implements OnInit {
       this.adults = params['adults'];
       this.children = params['children'];
       this.vehicleType = params['vehicleType'];
-      const newSort = params['sort'];
 
       this.loadData();
     });
@@ -96,7 +93,7 @@ export class ResultsComponent implements OnInit {
     } else {
       return;
     }
-    this.data = this.originalData.filter((item: any) => {
+    this.data = this.originalData.filter((item: TripSegment) => {
       if (item.duration.return > 0) {
         return item.route.length <= 2 * (stops + 1);
       } else {
@@ -110,7 +107,7 @@ export class ResultsComponent implements OnInit {
       return;
     }
     this.data = this.data.filter(
-      (flight: any) =>
+      (flight: TripSegment) =>
         this.filterTimeOfDay(flight.local_departure) === departureTime
     );
     return;
@@ -121,7 +118,7 @@ export class ResultsComponent implements OnInit {
       return;
     }
     this.data = this.data.filter(
-      (flight: any) =>
+      (flight: TripSegment) =>
         this.filterTimeOfDay(flight.local_arrival) === arrivalTime
     );
     return;

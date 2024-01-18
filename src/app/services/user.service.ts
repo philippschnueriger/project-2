@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Firestore, doc, setDoc, getDoc, DocumentReference, collection, addDoc, getDocs, deleteDoc, query, where, updateDoc } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, getDoc, DocumentReference, collection, addDoc, getDocs, deleteDoc, query, where, updateDoc, DocumentData } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { AuthService } from './auth.service';
+import { UserPreferences } from '../types/userPreferences';
+import { Destination } from '../types/destination';
 
 @Injectable({
   providedIn: 'root',
@@ -98,7 +100,7 @@ export class UserService {
     }
   }
 
-  async saveUserPreferences(data: any): Promise<void> {
+  async saveUserPreferences(data: UserPreferences): Promise<void> {
     try {
       const userRef = await this.getUserDocRef();
       if (userRef) {
@@ -109,7 +111,7 @@ export class UserService {
     }
   }
 
-async getUserPreferences(): Promise<any> {
+async getUserPreferences(): Promise<DocumentData | undefined | null> {
   try {
     const userRef = await this.getUserDocRef();
     if (userRef) {
@@ -146,11 +148,11 @@ async getUserData(): Promise<void> {
 
   
 
-  async getAllDestinations(): Promise<any> {
+  async getAllDestinations(): Promise<Destination[]> {
     try {
       const destinationsRef = collection(this.firestore, 'destinations');
       const querySnapshot = await getDocs(destinationsRef);
-      return querySnapshot.docs.map((doc) => doc.data());
+      return querySnapshot.docs.map((doc) => doc.data() as Destination);
     } catch (error) {
       this.handleError(error);
     }
