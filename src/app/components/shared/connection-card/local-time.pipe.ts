@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'localTime'
 })
 export class LocalTimePipe implements PipeTransform {
-  transform(value: any): any {
+  transform(value: string | undefined): string | null {
     if (value) {
         const date = new Date(value);
         const hours = ('0' + date.getUTCHours()).slice(-2); // Extract UTC hours

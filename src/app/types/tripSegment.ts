@@ -1,4 +1,4 @@
-interface Route {
+export interface Route {
   id: string;
   flyFrom: string;
   flyTo: string;
@@ -22,7 +22,7 @@ export interface TripSegment {
   deep_link?: string;
   local_departure?: string;
   local_arrival?: string;
-  route?: Array<Route>;
+  route: Array<Route>;
   duration: { departure: number,
                 return: number,
                 total: number};

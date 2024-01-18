@@ -21,7 +21,7 @@
   <div *ngIf="expand">
     <hr />
     <div
-      *ngFor="let leg of tripSummary.route; let last = last"
+      *ngFor="let leg of tripSummary?.route ?? []; let last = last"
       class="connection-details"
     >
       <div>{{ getFlightInformation(leg) }}</div>

@@ -1,5 +1,8 @@
 describe('Login Functionality', () => {
-  let credentials: any;
+  let credentials: {
+    username: string;
+    password: string;
+  };
   beforeEach(() => {
     cy.fixture('credentials').then((creds) => {
       credentials = creds;
