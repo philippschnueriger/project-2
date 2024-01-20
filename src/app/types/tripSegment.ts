@@ -1,4 +1,4 @@
-interface Route {
+export interface Route {
   id: string;
   flyFrom: string;
   flyTo: string;
@@ -13,17 +13,15 @@ interface Route {
 
 export interface TripSegment {
   id: string;
-  flyFrom: string,
-  flyTo: string,
+  flyFrom: string;
+  flyTo: string;
   cityFrom: string;
   cityTo: string;
   price: number;
   airlines?: Array<string>;
   deep_link?: string;
-  local_departure?: string;
-  local_arrival?: string;
-  route?: Array<Route>;
-  duration: { departure: number,
-                return: number,
-                total: number};
+  local_departure: string;
+  local_arrival: string;
+  route: Array<Route>;
+  duration: { departure: number; return: number; total: number };
 }

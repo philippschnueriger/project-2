@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { getAirlineName } from '../connection-card/trip-summary-utils';
+import { TripSegment } from 'src/app/types/tripSegment';
+import { TripSummaryDeparture } from '../connection-card/tripSummary';
 
 @Component({
   selector: 'app-connection-card-detail',
@@ -7,8 +9,8 @@ import { getAirlineName } from '../connection-card/trip-summary-utils';
   styleUrls: ['./connection-card-detail.component.scss'],
 })
 export class ConnectionCardDetailComponent {
-  @Input() item: any;
-  @Input() tripSummary: any;
+  @Input() item!: TripSegment;
+  @Input() tripSummary: TripSummaryDeparture | undefined;
 
   expand: boolean = true;
 

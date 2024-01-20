@@ -1,7 +1,8 @@
+import { Route, TripSegment } from 'src/app/types/tripSegment';
 import { TripSummary } from './tripSummary';
 import { airlines } from 'src/app/data/airlines';
 
-function findIndexByFlyTo(data: any) {
+function findIndexByFlyTo(data: TripSegment): number {
   for (let i = 0; i < data.route.length; i++) {
     if (data.route[i].flyTo === data.flyTo) {
       return i;
@@ -10,7 +11,7 @@ function findIndexByFlyTo(data: any) {
   return -1;
 }
 
-function getOperators(data: any) {
+function getOperators(data: Route[]): string {
   // array of all operators of current route
   const allOperators = data.map((data: any) => {
     let operator = data.operating_carrier !== '' ? data.operating_carrier : data.airline;
@@ -23,7 +24,7 @@ function getOperators(data: any) {
     return operator;
   });
   // map all operators to their airline name from airlines.ts
-  const operatorsWithAirlines = allOperators.map((operator: any) => {
+  const operatorsWithAirlines = allOperators.map((operator: string) => {
     const airline = airlines.find(airline => airline.iata === operator && airline.active === "Y");
     return airline?.name || operator;
   });
@@ -49,7 +50,7 @@ function calculateLegDuration (route: any) {
   return route;
 }
 
-function getDuration(duration: any) {
+function getDuration(duration: number | undefined) {
   if (duration === undefined) {
     return '';
   }
@@ -58,7 +59,7 @@ function getDuration(duration: any) {
   return `${hours}h ${minutes}m`;
 }
 
-function calculateLayoverTime(route: any) {
+function calculateLayoverTime(route: any): Route[] {
 
   for (let i = 0; i < route.length - 1; i++) {
     let arrivalTime = new Date(route[i].local_arrival).getTime();

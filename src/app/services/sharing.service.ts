@@ -53,8 +53,6 @@ export class SharingService {
               sharedWith: sharedWith,
               sharedFrom: sharedFrom || emailToShare, // Update sharedFrom if it's empty
             });
-
-            console.log(`Data shared successfully with ${emailToShare}.`);
           } else {
             console.log(`Data is already shared with ${emailToShare}.`);
           }
@@ -99,8 +97,6 @@ export class SharingService {
           (accumulator, currentValue) => accumulator.concat(currentValue),
           []
         );
-
-        console.log('Shared Data:', flattenedSharedData);
       }
     } catch (error) {
       this.handleError(error);
@@ -193,10 +189,6 @@ export class SharingService {
           await updateDoc(otherUsersRef, {
             sharedWith: updatedSharedWithEmails,
           });
-
-          console.log(
-            `Removed ${currentUser.email} from sharedWith array of user with UID: ${otherUserUid}`
-          );
         } else {
           console.error('User document not found for UID:', otherUserUid);
         }
@@ -254,7 +246,6 @@ export class SharingService {
         if (userDoc.exists()) {
           const userData = userDoc.data();
           const sharedWithEmails = userData['sharedWith'] || [];
-          console.log(sharedWithEmails);
 
           const updatedSharedWithEmails = sharedWithEmails.filter(
             (email: string) => email !== emailToRemove

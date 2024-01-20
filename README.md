@@ -1,20 +1,22 @@
-# Project2
+# TripSearch
 
-Preview: https://project-2-30dc2.web.app/
+TripSearch is a travel search engine for airplane, train and bus. This project was developed as part of the CAS Frontend Engineering (CAS FEE) program at the Eastern Switzerland University of Applied Sciences.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+## Preview
+
+Visit the live preview of TripSearch at [https://tripsearch.ch/](https://tripsearch.ch/)
+
+## Initial Setup
+
+When using for the first time, the dependencies must be installed with the following command: `npm install`.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+To run the development server, execute the following command: `ng serve`. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Deployment
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To deploy the project to Google Firebase, run: `ng deploy`.
 
 ## Running unit tests
 
@@ -22,8 +24,6 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `npm run cypress:headless` to execute the end-to-end tests in the console.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Run `npm run cypress:open` to open the cypress user-interface.

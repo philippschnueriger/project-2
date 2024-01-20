@@ -24,7 +24,6 @@ export class HomeComponent {
     searchForm.vehicleType = VehicleType.Aircraft
     searchForm.departureDate = TuiDay.currentLocal().append({ day: 7 });
     this.formDataService.setFormData(searchForm);
-    console.log(searchForm.bookingClass)
     
     const queryParams = {
       cityFrom: await getLocationId(this.apiService, searchForm.cityFrom),
